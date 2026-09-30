@@ -1,0 +1,42 @@
+{
+  "gateway": "v1.21.1",
+  "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "tests": {
+    "rtsp_multi_audio": {
+      "passed": true,
+      "codecs": [
+        "h264",
+        "aac",
+        "aac"
+      ]
+    },
+    "enhanced_rtmp_multi_audio": {
+      "passed": true,
+      "codecs": [
+        "h264",
+        "aac",
+        "aac"
+      ]
+    },
+    "selected_audio_relay": {
+      "passed": true,
+      "audio_tracks": 1,
+      "audio_identity_verified": false
+    },
+    "independent_process_failure": {
+      "passed": true,
+      "limitation": "connection refusal, not stalled-socket/backpressure qualification"
+    },
+    "hls_playlist": {
+      "passed": true,
+      "browser_playback_verified": false
+    }
+  },
+  "limitations": [
+    "Synthetic source, not real OBS",
+    "No Twitch or other platform delivery tested",
+    "No authenticated browser WebRTC playback tested",
+    "No hardware qualification or long soak",
+    "No application worker/publisher integration"
+  ]
+}

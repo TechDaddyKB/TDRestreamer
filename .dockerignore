@@ -1,0 +1,11 @@
+.git
+.tools
+node_modules
+web/node_modules
+web/dist
+runtime
+data
+backups
+.env
+.env.*
+coverage

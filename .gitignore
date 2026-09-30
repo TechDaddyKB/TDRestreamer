@@ -1,0 +1,31 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+secrets/
+# Runtime data (fixtures remain tracked)
+/runtime/
+/data/
+/backups/
+*.dump
+*.log
+# Tools, builds and dependencies
+.tools/
+node_modules/
+web/dist/
+bin/
+dist/
+coverage/
+*.test
+playwright-report/
+test-results/
+.cache/
+# Personal editor state
+.idea/
+.vscode/
+.DS_Store
