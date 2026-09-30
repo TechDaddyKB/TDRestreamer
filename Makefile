@@ -1,5 +1,6 @@
 GO ?= go
-.PHONY: setup check fmt lint unit integration browser media m0 m0-dual docs build image generate
+COVERAGE ?= uvx --from coverage==7.10.7 coverage
+.PHONY: setup check fmt lint unit coverage integration browser media m0 m0-dual docs build image generate
 setup:
 	cd web && npm ci --ignore-scripts
 fmt:
@@ -12,6 +13,12 @@ unit:
 	python3 -m unittest discover -s tests/m0 -p 'test_*.py'
 	$(GO) test -race -cover ./...
 	cd web && npm test
+coverage:
+	mkdir -p coverage
+	$(GO) test -race -coverprofile=coverage/go.out ./...
+	cd web && npm run test:coverage
+	$(COVERAGE) run -m unittest discover -s tests/m0 -p 'test_*.py'
+	$(COVERAGE) xml
 integration:
 	$(GO) test -race -tags=integration ./tests/integration/... -count=1
 browser:

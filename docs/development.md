@@ -34,7 +34,37 @@ Install its browser with `cd web && npx playwright install chromium` first.
 `make media` runs real FFmpeg crop/fill/blur pixel tests and the loopback-only spike; set MEDIAMTX_BIN if not using
 `.tools/mediamtx/mediamtx`. Generated logs/results stay in ignored runtime/.
 
-## Architecture
+## Test coverage and SonarQube Cloud
+
+Run `make coverage` after `make setup` (requires `uv`, or override
+`COVERAGE='python3 -m coverage'` with coverage.py 7.10.7 installed). It runs
+race-enabled Go unit tests, Vitest V8 coverage, and Python unittest coverage.
+Reports stay ignored: `coverage/go.out`, `web/coverage/lcov.info`, and
+`coverage/python.xml`. The pinned Vitest coverage provider matches Vitest.
+
+CI uploads these reports for seven days and a separate `sonar` job imports them
+using `sonar-project.properties`, then waits for the existing quality gate.
+Only generated sqlc code/API types and test files are excluded from production
+analysis. Untested production files remain visible at zero coverage; integration,
+browser and media qualification runs are not counted in these unit reports.
+Coverage does not establish M0 media or platform acceptance.
+
+The project must use CI analysis: automatic analysis does not import coverage.
+See [SonarQube coverage setup](https://docs.sonarsource.com/sonarqube-cloud/analyzing-source-code/test-coverage/overview).
+The repository secret `SONAR_TOKEN` supplies scanner authentication only to the
+scan step. The dedicated token expires 2026-12-29; rotate it in SonarQube account
+security settings and replace the GitHub Actions repository secret before expiry.
+Never put the token in a command argument, report, commit, or workflow file.
+Fork and Dependabot PRs still generate coverage but skip authenticated analysis;
+review their changes before moving them to a trusted maintainer branch. Do not
+use `pull_request_target` to execute contributor code with this secret.
+
+For missing coverage, check the CI artifact contains all three nonempty reports,
+then check scanner logs for successful Go, LCOV, and Python imports. LCOV paths
+must resolve under `web/src`; Python uses relative paths. Do not suppress a
+coverage failure by excluding application code or lowering the quality gate.
+
+## Runtime architecture
 
 `cmd/control` serves the React build and REST API. `cmd/admin migrate` applies
 embedded ordered SQL migrations under an advisory lock. The application database
