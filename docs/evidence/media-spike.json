@@ -21,7 +21,8 @@
     "selected_audio_relay": {
       "passed": true,
       "audio_tracks": 1,
-      "audio_identity_verified": false
+      "audio_identity_verified": true,
+      "expected_tone_hz": 880
     },
     "independent_process_failure": {
       "passed": true,

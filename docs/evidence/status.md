@@ -36,9 +36,10 @@ compatibility approval, light theme, API reference and logout. Dashboard and pla
 screenshots visually inspected. Screenshots remain ignored synthetic test artifacts.
 
 MediaMTX 1.21.1 / host FFmpeg 9.0.1: see media-spike.json. Synthetic two-AAC-track
-RTSP and enhanced-RTMP preservation, selected-track relay, isolated publisher
+RTSP and enhanced-RTMP preservation, selected-track relay with decoded 880 Hz
+tone identity verification, isolated publisher
 connection refusal and HLS playlist generation passed. This does not establish
-OBS, audible identity, WebRTC, platform compatibility or full fault qualification.
+OBS, live/VOD semantics, WebRTC, platform compatibility or full fault qualification.
 
 Docker image built; isolated Compose fresh start and control restart both returned
 ready. Control bound to loopback only; database not host-published in appliance mode.

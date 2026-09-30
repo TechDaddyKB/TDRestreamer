@@ -20,3 +20,9 @@ release blocker; a successful build or mocked test is not media certification.
 
 Every milestone includes code, meaningful automated tests, documentation and
 recorded evidence. See CONTRIBUTING.md for the Git workflow.
+
+## Current interface
+
+The development UI exposes configuration and clearly marks media execution as unavailable.
+
+![Development workspace with synthetic fixture data](docs/assets/overview.png)

@@ -18,7 +18,7 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 | R12 | Recommend transcoding profiles while retaining user choice | Partial | Explicit conversion consent in planner UI; applied profiles pending |
 | R13 | Software x264 fallback, strongly discouraged | Pending | — |
 | R14 | Automatic GPU assignment, including multiple GPUs | Partial | Reservation/selection unit tests; real GPU capability discovery and scheduler pending |
-| R15 | Multiple audio tracks; supported services use them; choose track for single-track services | Partial | Synthetic dual-AAC transport spike passed; audible identity and live/VOD/platform behavior unverified |
+| R15 | Multiple audio tracks; supported services use them; choose track for single-track services | Partial | Synthetic dual-AAC transport and selected 880 Hz tone verified; live/VOD/platform behavior unverified |
 | R16 | “none in v1?” for recording: tentative exclusion requiring confirmation | Ratified exclusion | Recording excluded by approved plan; no recording feature implemented |
 | R17 | No replay/DVR | Ratified exclusion | No replay or DVR feature; synthetic test artifacts are not product recording |
 | R18 | Test live OBS feed, stats, browser preview, validation, H/V processing, destination review; send nothing externally | Partial | Desired test state and publish denial implemented; live OBS validation/preview pending |
@@ -64,7 +64,7 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 | A05 | Preset/custom combined-canvas rectangles produce expected pixels and dimensions; invalid geometry is rejected; all vertical generation modes render correctly | R06–07 | Pending |
 | A06 | Selected common profiles satisfy all hard rules; conflicting service rules create explained separate renditions; overrides validate; identical jobs share encodes | R10–12 | Partial: deterministic generic planner unit tests; platform hard-rule intersection pending |
 | A07 | Each named destination has actual delivery evidence, credential/API behavior, and declared H/V capability; missing account access is a blocker, not a pass | R08–09 | Pending |
-| A08 | Distinct test tones/speech identify live and VOD tracks end to end; single-track service gets the selected mix; missing mix never silently substitutes another | R15 | Partial: transport preserves two AAC tracks; audible/live/VOD identity pending |
+| A08 | Distinct test tones/speech identify live and VOD tracks end to end; single-track service gets the selected mix; missing mix never silently substitutes another | R15 | Partial: two AAC tracks and selected tone verified; OBS/platform live/VOD identity pending |
 | A09 | Test mode sends zero forbidden packets/API actions under Q01's boundary, including restart, retry replay, automatic mode, and Streamer.bot triggers | R18, R20 | Partial: worker execution absent and Go Live disabled; complete egress tests pending |
 | A10 | WebRTC preview works on supported browsers; blocked ICE falls back to HLS; unauthorized readers fail; buffers expire | R19 | Pending |
 | A11 | Manual mode waits; automatic mode follows saved policy; repeated start/stop requests do not duplicate outputs; Stop cancels retries durably | R20–21 | Partial: desired-state revision/idempotency/stop tests; real retry/execution pending |
