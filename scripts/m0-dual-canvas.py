@@ -144,7 +144,7 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def loaded_system_modules(log_path):
+def loaded_system_modules(log_path, pid):
     lines = log_path.read_text().splitlines()
     marker = "info:   Loaded Modules:"
     require(marker in lines, "OBS module list absent")
@@ -158,8 +158,21 @@ def loaded_system_modules(log_path):
         names.append(name)
     require("obs-nvenc.so" in names and "vertical-canvas.so" in names,
             "required OBS module absent")
-    root = Path("/usr/lib/obs-plugins")
-    return {name: digest(root / name) for name in sorted(set(names))}
+    root = Path("/usr/lib/obs-plugins").resolve()
+    mapped = {}
+    for line in Path(f"/proc/{pid}/maps").read_text().splitlines():
+        parts = line.split(maxsplit=5)
+        if len(parts) == 6 and parts[5].startswith("/"):
+            path = Path(parts[5]).resolve()
+            if path.suffix == ".so" and path.is_relative_to(root):
+                mapped.setdefault(path.name, set()).add(path)
+    result = {}
+    for name in sorted(set(names)):
+        paths = mapped.get(name, set())
+        require(len(paths) == 1 and next(iter(paths)).parent == root,
+                f"OBS module path ambiguous or outside system plugin root: {name}")
+        result[name] = digest(next(iter(paths)))
+    return result
 
 
 def observe(lab, path, ladder=False):
@@ -611,6 +624,8 @@ MultitrackVideoConfigOverride="""
             "DBUS_SESSION_BUS_ADDRESS",
             "QT_QPA_PLATFORMTHEME",
             "QT_IM_MODULE",
+            "OBS_PLUGINS_PATH",
+            "OBS_PLUGINS_DATA_PATH",
         ]:
             env.pop(key, None)
         if ladder:
@@ -646,7 +661,7 @@ MultitrackVideoConfigOverride="""
         obs = lab.start("obs", obs_args, env)
         lab.port(19447, obs)
         if ladder:
-            report["loaded_module_sha256"] = loaded_system_modules(work / "obs.log")
+            report["loaded_module_sha256"] = loaded_system_modules(work / "obs.log", obs.pid)
         report["obs"] = json.loads(
             lab.run(
                 [

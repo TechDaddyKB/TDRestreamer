@@ -1,6 +1,6 @@
 {
   "status": "passed_local_twitch_ladder",
-  "recorded_at": "2026-09-30T20:36:15Z",
+  "recorded_at": "2026-09-30T20:40:57Z",
   "isolation": {
     "initial_interfaces": [
       "lo"
@@ -259,11 +259,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 13969098.6
+          "opposite_power_ratio": 7500447.74
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 13458566.27
+          "opposite_power_ratio": 4425970.19
         }
       ]
     },
@@ -550,11 +550,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 8307485.51
+          "opposite_power_ratio": 14824638.81
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 6459976.76
+          "opposite_power_ratio": 4952759.04
         }
       ]
     }
@@ -569,7 +569,7 @@
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
   "gateway": "v1.21.1",
   "harness_sha256": {
-    "scripts/m0-dual-canvas.py": "30f54745167b3a56141199cd51803d230e1e675c7e3b3e514b503c13df709372",
+    "scripts/m0-dual-canvas.py": "1d3e5c0d6139550c98242caa38938a3d398682ca654a1686f69d02793d4fa100",
     "scripts/m0_dual_checks.py": "ddbbc8cc8257f2d7d7937775a59ca3559dd2e7c71222f0a67c92c56bd4783a0c",
     "scripts/m0_flv_checks.py": "0188e4c904a07c05beefc58ff8021d2561124cf1c4279a37893b9314daab85fb",
     "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
@@ -682,6 +682,6 @@
         }
       }
     ],
-    "bytes": 1192684
+    "bytes": 1211875
   }
 }

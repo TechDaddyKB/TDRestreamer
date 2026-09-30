@@ -13,8 +13,9 @@ loopback and that both route tables were empty, then used OBS 32.2.2 with the
 installed RTX 4090 NVENC encoder and Aitum vertical canvas. NVENC could not
 initialize under the fixture's `bwrap` filesystem sandbox, so this mode ran OBS
 directly in the network namespace with a private XDG configuration. The report
-hashes the 30 installed OBS modules actually listed as loaded, including the
-installed Aitum binary. It sent synthetic
+hashes the 30 installed OBS modules listed as loaded and verifies each binary's
+mapped path through the OBS process, including the installed Aitum binary.
+It sent synthetic
 red horizontal video, blue vertical video, and separate 440 Hz live / 880 Hz VOD
 audio to a loopback MediaMTX instance. FFmpeg copied the RTSP output to a second
 loopback enhanced-RTMP sink. No Twitch or cloud endpoint was contacted.
