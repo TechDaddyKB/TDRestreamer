@@ -64,11 +64,12 @@ class Lab:
             "unexpected fixture executable",
         )
 
-    def run(self, args, timeout=25):
+    def run(self, args, timeout=25, env=None):
         # Fixed executables and synthetic argv; no shell or user-supplied commands.
         self.check_command(args)
         p = sp.Popen(  # nosemgrep: python.lang.security.audit.dangerous-subprocess-use-audit
-            args, stdout=sp.PIPE, stderr=sp.PIPE, start_new_session=True, shell=False
+            args, stdout=sp.PIPE, stderr=sp.PIPE, start_new_session=True,
+            shell=False, env=env
         )
         try:
             out, err = p.communicate(timeout=timeout)

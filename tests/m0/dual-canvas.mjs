@@ -24,7 +24,7 @@ if (!["rtmp://127.0.0.1:19350/dual", "rtmp://127.0.0.1:19351/dual",
   throw new Error("Unexpected local OBS destination");
 const { ready, request, close } = obsConnection(
   "ws://127.0.0.1:19447",
-  cfg.password,
+  obsControl ? process.env.M0_OBS_WS_PASSWORD : cfg.password,
 );
 const timeout = setTimeout(() => {
   console.error("Dual-canvas setup timed out");

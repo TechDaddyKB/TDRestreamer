@@ -9,8 +9,8 @@ const expected = path.join("/dev/shm", "tdrestreamer-obs-control-" + runId,
   "controller.json");
 if (fs.realpathSync(expected) !== expected)
   throw new Error("Symlinked control configuration refused");
-const cfg = JSON.parse(fs.readFileSync(expected, "utf8"));
-const { ready, request, close } = obsConnection("ws://127.0.0.1:19447", cfg.password);
+const { ready, request, close } = obsConnection(
+  "ws://127.0.0.1:19447", process.env.M0_OBS_WS_PASSWORD);
 const timeout = setTimeout(() => process.exit(1), 15000);
 try {
   await ready;

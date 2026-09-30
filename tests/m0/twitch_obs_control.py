@@ -79,16 +79,20 @@ def create_obs_profile(work, config):
     password = secrets.token_urlsafe(24)
     ws = cfgdir / "plugin_config/obs-websocket"
     ws.mkdir(parents=True)
+    # OBS requires this clear-text value in its config. The directory is private
+    # tmpfs (0700), the file inherits umask 077, and the tree is removed at stop.
+    # codeql[py/clear-text-storage-sensitive-data]
     (ws / "config.json").write_text(json.dumps({
         "server_enabled": True, "server_port": 19447, "auth_required": True,
         "server_password": password, "first_load": False, "alerts_enabled": False,
     }))
     (work / "controller.json").write_text(json.dumps({
-        "password": password, "server": TWITCH_DESTINATION,
+        "server": TWITCH_DESTINATION,
         **{name: str(work / f"{name}.{ext}") for name, ext in (
             ("horizontal", "mp4"), ("vertical", "mp4"),
             ("live", "wav"), ("vod", "wav"))},
     }))
+    return password
 
 
 def obs_environment(work):
@@ -133,7 +137,7 @@ def main():
         report["negotiated_nominal_kbps"] = kbps
         stage = "synthetic_fixture"
         create_assets(lab, work)
-        create_obs_profile(work, config)
+        password = create_obs_profile(work, config)
         stage = "obs_start"
         display = lab.start("xvfb", ["Xvfb", ":199", "-screen", "0", "1280x720x24",
                                       "-nolisten", "tcp", "-ac"])
@@ -142,8 +146,9 @@ def main():
                                 "--profile", "M0", "--collection", "M0"],
                         obs_environment(work))
         lab.port(19447, obs)
+        ws_env = dict(os.environ, M0_OBS_WS_PASSWORD=password)
         result = lab.run(["node", str(ROOT / "tests/m0/dual-canvas.mjs"),
-                          "--obs-control", run_id], timeout=55)
+                          "--obs-control", run_id], timeout=55, env=ws_env)
         report["obs_initial_status"] = json.loads(result)
         stage = "twitch_delivery"
         report["broadcast_start_utc"] = utc_now()
@@ -159,7 +164,7 @@ def main():
         report["obs_exited_early"] = obs.poll() is not None
         stage = "obs_stop"
         stop_result = lab.run(["node", str(ROOT / "tests/m0/obs-control-stop.mjs"),
-                               run_id], timeout=20) if obs.poll() is None else b"{}"
+                               run_id], timeout=20, env=ws_env) if obs.poll() is None else b"{}"
         report["obs_stop_status"] = json.loads(stop_result)
         report["broadcast_end_utc"] = utc_now()
         report["status"] = "direct_obs_delivered" if report["helix_live_observed"] \
@@ -170,7 +175,10 @@ def main():
         report["error_stage"] = stage
         raise
     finally:
-        lab.close()
+        try:
+            lab.close()
+        finally:
+            shutil.rmtree(work)
         if "client_id" in locals() and "token" in locals():
             try:
                 offline_deadline = time.monotonic() + 30
@@ -179,7 +187,6 @@ def main():
                 report["helix_offline_after_stop"] = not channel_live(client_id, token)
             except Exception:
                 report["helix_offline_check_failed"] = True
-        shutil.rmtree(work)
         (report_dir / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         print(f"M0_EVIDENCE {report_dir / 'report.json'}", flush=True)
 
