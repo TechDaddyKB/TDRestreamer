@@ -78,7 +78,30 @@ version comment beside the commit pin, and run the complete workflow to validate
 checkout, dependency caches, report transfer, and scanner import. Do not opt back
 into an insecure Node.js runtime to suppress deprecation annotations.
 
-## Application architecture
+## Repository and deployment contents
+
+GitHub retains source, tests, documentation, the original specification,
+sanitized acceptance evidence, migrations, deployment definitions, dependency
+lockfiles, and generated API/sqlc source. These are needed to review, test,
+reproduce, maintain, and qualify the application even when they are not runtime
+files. Raw test output and private working files belong in ignored `runtime/`,
+`coverage/`, `.tools/`, `.venv/`, `data/`, `backups/`, or `secrets/` directories.
+Environment files, private keys, dependencies, builds, browser artifacts, and
+tool/editor caches stay local. Sanitized `.env.example` files remain tracked.
+
+`.gitignore` affects untracked files; it does not unpublish an already tracked
+file. Before pushing, inspect `git status --short`, `git diff --cached`, and
+`git ls-files -ci --exclude-standard`, then run secret scanning. Avoid `git add
+-f` for local artifacts. If a harmless local file was tracked accidentally,
+`git rm --cached -- path` stops tracking it while retaining the local copy;
+credential exposure also requires rotation and history assessment.
+
+`.dockerignore` independently limits the build context. The Dockerfile's final
+stage contains the three Go executables, compiled UI, license, and base runtime
+dependencies. Development documentation, test results, source dependencies, and
+local credentials are not copied into the released image.
+
+## Runtime architecture
 
 `cmd/control` serves the React build and REST API. `cmd/admin migrate` applies
 embedded ordered SQL migrations under an advisory lock. The application database
