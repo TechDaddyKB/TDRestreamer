@@ -1,0 +1,352 @@
+{
+  "status": "passed_local_dual_canvas",
+  "recorded_at": "2026-09-30T15:58:34Z",
+  "isolation": {
+    "initial_interfaces": [
+      "lo"
+    ],
+    "routes": {
+      "-4": [],
+      "-6": []
+    }
+  },
+  "tests": {
+    "obs_ingest_rtsp": {
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 360,
+          "height": 640
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        }
+      ],
+      "video_identity": [
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ]
+      ],
+      "audio_identity": [
+        {
+          "expected_hz": 440,
+          "opposite_power_ratio": 4340534.61
+        },
+        {
+          "expected_hz": 880,
+          "opposite_power_ratio": 6143632.48
+        }
+      ]
+    },
+    "enhanced_copy_publisher": {
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 360,
+          "height": 640
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        }
+      ],
+      "video_identity": [
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ]
+      ],
+      "audio_identity": [
+        {
+          "expected_hz": 440,
+          "opposite_power_ratio": 7393274.26
+        },
+        {
+          "expected_hz": 880,
+          "opposite_power_ratio": 5322322.84
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Local synthetic configuration, not a Twitch negotiation response",
+    "No platform broadcasting, OAuth, cloud calls, preview, GPU or soak qualification",
+    "Standalone feasibility, not application integration; anonymous loopback fixture sinks",
+    "Pixel/color and audio identity only; no timing, motion, latency or A/V sync qualification"
+  ],
+  "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "gateway": "v1.21.1",
+  "harness_sha256": {
+    "scripts/m0-dual-canvas.py": "a2e9f9447bdfb7abe8b1cc710f8488613e6cf6a041df8dd7d7c69073ce00f9c9",
+    "scripts/m0_dual_checks.py": "0b8471fb219d2d955ca96dbdd91c378e2f9d49b2d2591aeb8c6b8d9242cc46d9",
+    "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
+    "tests/m0/dual-canvas.mjs": "3aaa251be6fd1221d75d8e55af93449eff9bc92eb2ddd28cdf38d9f35cdeb3bb",
+    "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180"
+  },
+  "python_optimized": true,
+  "module_sha256": {
+    "obs-websocket.so": "836b301a98d8e1e4e37a02aaa88218c0248b067b20e4bd94a5627baa7813edd9",
+    "obs-outputs.so": "1c1530b06963d4cbfd4840b48060ebea1797a9d66feb2ff4962b465015b38efb",
+    "obs-x264.so": "cf8e0c7e7b5fe3fa085f178fe9324dbee4029e878d3befcb549df45a8401c665",
+    "obs-ffmpeg.so": "e7871202aaf6d40fc7cb49108d9b57d4a51c412d9ef40ff6e5fa9982df63b679",
+    "image-source.so": "2c95e9a38fef445af8c7af80520f92d5fddc2329928455703bef377f1fb3983a",
+    "obs-transitions.so": "d07d486bef080f01aa15e2749777b0507915bbdfa9660ffad441f3aa529dabfd",
+    "rtmp-services.so": "86542820f8f79f62459c3e022e7f1509d8b0affa9b55add7002e8d34a6632c97",
+    "obs-filters.so": "f386df23a9004070e2078a4f1422710c7be7d2273f02f5ac71e0d785bfb90477",
+    "text-freetype2.so": "b7ca285a5f177291c28f5aa2393331b7f2055fd1c52d9bb2eec3d4c32811992a",
+    "vertical-canvas.so": "484c9663d00f3a2c2322600e6178833b7edde71019c2537b6eb35cf81e71e346"
+  },
+  "obs": {
+    "obsVersion": "32.2.2",
+    "websocketVersion": "5.7.4",
+    "canvases": [
+      {
+        "name": "Main",
+        "video": {
+          "baseHeight": 360,
+          "baseWidth": 640,
+          "fpsDenominator": 1,
+          "fpsNumerator": 30,
+          "outputHeight": 360,
+          "outputWidth": 640
+        }
+      },
+      {
+        "name": "Aitum Vertical",
+        "video": {
+          "baseHeight": 1920,
+          "baseWidth": 1080,
+          "fpsDenominator": 1,
+          "fpsNumerator": 30,
+          "outputHeight": 1920,
+          "outputWidth": 1080
+        }
+      }
+    ],
+    "bytes": 668041
+  }
+}
