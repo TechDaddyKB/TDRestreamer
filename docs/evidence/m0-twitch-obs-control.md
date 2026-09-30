@@ -1,6 +1,6 @@
 # M0 direct OBS control broadcast
 
-Observed 2026-09-30 UTC on the public TechDaddy channel. These were two
+Observed 2026-09-30 UTC on the public TechDaddy channel. These were three
 synthetic, bounded broadcasts using an isolated OBS profile and Twitch's
 account-negotiated four-video/two-audio configuration. The profile and its
 credential-bearing override were created in private tmpfs and removed after
@@ -13,8 +13,11 @@ publishing, Helix live observation, a 4,720 kbps nominal negotiated ladder,
 and no early OBS exit. The first report's immediate `helix_offline_after_stop`
 is false because Twitch had not yet reported the stop; a later Helix read
 returned offline. The second run waited for OBS to stop and Helix to become
-offline, and records both successfully. No test listeners or private profile
-directories remained afterward.
+offline, and records both successfully. After the control harness moved its
+WebSocket password handoff from a second tmpfs file to the local controller's
+process environment, a [30-second smoke run](m0-twitch-obs-control-smoke.json)
+again observed Helix live, clean OBS stop and Helix offline. No test listeners
+or private profile directories remained afterward.
 
 During the second run, the Creator Dashboard reported **360p +1 Horizontal**
 and **720p +3 Vertical**, about 4,414 kb/s and 30 fps with **Excellent** stream

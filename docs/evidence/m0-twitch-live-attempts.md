@@ -46,6 +46,7 @@ This control used the negotiated ladder, but the sink was local.
 | 5 | 22:09:18 | Same startup with primary H.264 converted to enhanced single-track `avc1` FLV tags | RTMPS media write returned EOF after about four seconds; [sanitized report](m0-twitch-fifth-attempt.json) records Helix never live and channel offline after stop |
 | 6 | 22:44:07 | [Direct isolated OBS control](m0-twitch-obs-control.md), 90 seconds | Helix live and public red horizontal playback; 1:30 VOD with 880 Hz audio |
 | 7 | 22:48:14 | Same direct OBS control, 150 seconds | Helix live; dashboard showed horizontal and vertical renditions, red H and blue V viewer previews; graceful stop and offline check passed |
+| 8 | 23:01:37 | Direct OBS control, 30-second smoke after WebSocket password-handoff change | Helix live, graceful OBS stop and offline check passed; [sanitized report](m0-twitch-obs-control-smoke.json) |
 
 None of the five **copy-publisher** attempts produced a Helix live-stream result.
 After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
