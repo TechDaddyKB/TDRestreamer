@@ -4,7 +4,8 @@
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence and unresolved
-Twitch and additional OBS input-mode gates; M1 has an implemented local control foundation but still
+Twitch delivery and application API eligibility gates. Additional OBS input modes remain
+later media qualification work; M1 has an implemented local control foundation but still
 needs OAuth, invitations and additional identity/operational hardening.
 
 ## Implemented and exercised
@@ -45,8 +46,10 @@ on its own. The later [OBS and preview harness](m0-local.md) and
 internal RTSP and enhanced-RTMP relay audio identity, authenticated Chromium WebRTC
 playback, forced HLS fallback, fresh-client access denials, RTMPS certificate
 validation and encrypted-SRT transport/denials. Platform/provider documentation
-is inventoried separately; it does not prove account-specific eligibility. Application preview
-integration and Twitch live/VOD semantics remain unverified.
+is inventoried separately; it does not prove account-specific eligibility. The later
+[authenticated account checks](m0-account-eligibility.md) establish dashboard access
+and AWS read permissions, with application OAuth/API permissions still unverified.
+Application preview integration and Twitch live/VOD semantics remain unverified.
 
 Real FFmpeg frame tests also passed for crop, fill and blur output geometry,
 black fill padding, foreground preservation and positioned red/blue crop selection.
@@ -72,8 +75,10 @@ importable Streamer.bot workflows; complete release images/SBOM/notices.
 
 ## External qualification blockers
 
-Owner instruction: **local tests only for now**. No public broadcasting, provider
-spending or external account tests were performed. Actual Twitch behavior,
-YouTube/Kick/X/Rumble account approvals, AWS/RunPod lifecycle and billing access,
+Current owner instruction: **Check account eligibility first; approve broadcasts separately.**
+Authenticated platform dashboards and AWS Free Plan/EC2 read access were checked; see
+[the account eligibility record](m0-account-eligibility.md). No broadcasts, provisioning
+or provider spending were performed. Actual Twitch delivery/live-VOD behavior,
+application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,
 N100/Intel/AMD/ARM64/multi-GPU reference hardware, eight-hour soaks and comprehensive
 accessibility review remain unverified. They do not remove any v1 requirement.

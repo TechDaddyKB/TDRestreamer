@@ -77,9 +77,11 @@ handling. Never expose session-bearing URLs in logs or share them as public link
 ## Remaining gates
 
 Actual Twitch Enhanced Broadcasting horizontal/vertical delivery, Twitch live/VOD
-semantics, other platform eligibility and provider account capabilities remain
-unverified under the owner's local-only restriction. Additional OBS video/input
-modes still need local qualification. Browser audio
+semantics remain unverified and require separate broadcast approval. Since this
+local run, the owner authorized eligibility checks; the [account eligibility record](m0-account-eligibility.md)
+documents platform dashboard and AWS read access, with application OAuth/API and
+provider lifecycle capabilities still unverified. Additional OBS video/input
+modes still need qualification in later media milestones. Browser audio
 is negotiated but only server-side decoded audio identity is measured here;
 preview latency, A/V synchronization, packet-loss behavior and long soaks are not
 established by this short test. These limitations do not remove v1 requirements.
