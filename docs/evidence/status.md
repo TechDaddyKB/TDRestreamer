@@ -3,8 +3,10 @@
 ## Release status
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
-milestone is certified complete. M0 has local OBS/transport/browser-preview evidence and unresolved
-Twitch delivery and remaining application API eligibility gates. Additional OBS input modes remain
+milestone is certified complete. M0 has local OBS/transport/browser-preview evidence,
+account-specific Twitch negotiation and two failed bounded Twitch publisher
+attempts; delivery and remaining application API eligibility gates are unresolved.
+Additional OBS input modes remain
 later media qualification work; M1 has an implemented local control foundation but still
 needs OAuth, invitations and additional identity/operational hardening.
 
@@ -79,8 +81,10 @@ importable Streamer.bot workflows; complete release images/SBOM/notices.
 
 Current owner instruction: **Check account eligibility first; approve broadcasts separately.**
 Authenticated platform dashboards and AWS Free Plan/EC2 read access were checked; see
-[the account eligibility record](m0-account-eligibility.md). No broadcasts, provisioning
-or provider spending were performed. Actual Twitch delivery/live-VOD behavior,
+[the account eligibility record](m0-account-eligibility.md). The owner then approved
+two bounded Twitch attempts; both failed at external ingest, as recorded in
+[the attempt record](m0-twitch-live-attempts.md). No provider provisioning or
+spending was performed. Actual Twitch delivery/live-VOD behavior,
 remaining application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,
 N100/Intel/AMD/ARM64/multi-GPU reference hardware, eight-hour soaks and comprehensive
 accessibility review remain unverified. They do not remove any v1 requirement.
