@@ -94,9 +94,10 @@ The instance-type catalog returned:
 
 This proves catalog and inventory read access. It does **not** prove launch
 permission, quota, capacity, media performance, GPU support, billing attribution,
-or availability of every operation under the new AWS experience. No RunInstances
-or DryRun was issued; Cost Explorer queries were not made. Free Plan expiry is
-distinct from the credit instrument's expiry shown in AWS Settings.
+or availability of every operation under the new AWS experience. A later
+permission-only DryRun is recorded below; Cost Explorer queries were not made.
+Free Plan expiry is distinct from the credit instrument's expiry shown in AWS
+Settings.
 
 ### Regional quota follow-up
 
@@ -132,6 +133,22 @@ AWS [defines these On-Demand limits as vCPU quotas](https://docs.aws.amazon.com/
 and [describes the offerings API as a location catalog](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceTypeOfferings.html).
 No quota increase was requested. GPU qualification on this AWS project requires
 a separate eligibility and spending decision before any launch attempt.
+
+### Non-launching EC2 permission check
+
+On 2026-09-30 the official AWS MCP connection returned the same Free Plan expiry
+as the `index-zero` CLI preflight above, consistent with the same project. It
+found an available default VPC in `us-east-2` and resolved AWS's
+public Amazon Linux 2023 x86-64 AMI parameter. A single `RunInstances` call for
+one `t3.micro`, with `DryRun=True`, returned `DryRunOperation`. Per the
+[EC2 API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html),
+this response means the principal has the permissions for that specific
+operation without launching an instance. No instance or other resource was
+created. The result does **not** establish successful launch, available capacity,
+network reachability, media performance, GPU launch eligibility, cleanup rights,
+or billed cost attribution. No GPU DryRun was attempted; the account's G/VT and
+P GPU vCPU quotas remain zero. The AMI ID, VPC ID, principal and account ID are
+omitted from this public record.
 
 The [toolkit setup](aws-agent-toolkit.md) separately passed MCP initialization and
 catalog discovery. Those tools were not used to provision anything.
