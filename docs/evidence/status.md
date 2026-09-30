@@ -41,6 +41,10 @@ tone identity verification, isolated publisher
 connection refusal and HLS playlist generation passed. This does not establish
 OBS, live/VOD semantics, WebRTC, platform compatibility or full fault qualification.
 
+Real FFmpeg frame tests also passed for crop, fill and blur output geometry,
+black fill padding, foreground preservation and positioned red/blue crop selection.
+These validate the software filter builder, not GPU or application execution.
+
 Docker image built; isolated Compose fresh start and control restart both returned
 ready. Control bound to loopback only; database not host-published in appliance mode.
 No Redis and no media listener in the appliance foundation.

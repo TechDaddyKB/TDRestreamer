@@ -31,7 +31,7 @@ project exposes PostgreSQL only on loopback port 55432; its data is temporary.
 
 `make browser` runs Playwright against TDR_E2E_URL (default localhost:8080).
 Install its browser with `cd web && npx playwright install chromium` first.
-`make media` runs the loopback-only spike; set MEDIAMTX_BIN if not using
+`make media` runs real FFmpeg crop/fill/blur pixel tests and the loopback-only spike; set MEDIAMTX_BIN if not using
 `.tools/mediamtx/mediamtx`. Generated logs/results stay in ignored runtime/.
 
 ## Architecture

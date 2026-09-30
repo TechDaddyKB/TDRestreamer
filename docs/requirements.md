@@ -10,7 +10,7 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 | R04 | Plain RTMP allowed on private LAN by default; no default public exposure | Partial | No production media ports published; actual LAN ingress policy pending |
 | R05 | Standard, dual-input, combined-canvas modes | Pending | Synthetic multi-track relay only; application modes not integrated |
 | R06 | Layout presets and custom rectangles | Partial | Rectangle validation unit tests; canvas editor and rendered geometry pending |
-| R07 | Automatic vertical generation: center/positioned crop, blur/fill | Partial | Filter builder for crop/fill/blur; media execution pending |
+| R07 | Automatic vertical generation: center/positioned crop, blur/fill | Partial | Filter builder and real FFmpeg pixel/geometry tests passed; application/GPU execution pending |
 | R08 | YouTube H/V, Twitch H/V, Kick, X, Rumble, generic RTMP/RTMPS in v1 where supported | Pending | — |
 | R09 | Platform OAuth/API integration in v1 where supported | Pending | — |
 | R10 | Recommended common profile plus advanced per-service profiles/settings | Partial | Generic codec/geometry proposal; full common/per-service profiles pending |
@@ -61,7 +61,7 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 | A02 | Discord/Google identities link safely; local bootstrap cannot be replayed; revoked sessions fail; tenant B cannot access tenant A through API, preview, events, history, or jobs | R01–03 | Partial: bootstrap replay, logout, viewer denial and pooled RLS tests; OAuth/invitations/preview/jobs pending |
 | A03 | Stored credentials never appear in API reads, logs, errors, telemetry, or diagnostic exports; rotation and encrypted restore work | R27, R37 | Partial: encrypted storage, metadata reads, token hashes and scoped tamper tests; restore/rotation/log audit pending |
 | A04 | Standard/dual compatible feeds preserve encoded video without a video encoder; incompatible audio can be converted independently | R05, R10–12, R15 | Partial: local synthetic copy relay; application execution pending |
-| A05 | Preset/custom combined-canvas rectangles produce expected pixels and dimensions; invalid geometry is rejected; all vertical generation modes render correctly | R06–07 | Pending |
+| A05 | Preset/custom combined-canvas rectangles produce expected pixels and dimensions; invalid geometry is rejected; all vertical generation modes render correctly | R06–07 | Partial: real crop/fill/blur pixel tests and invalid rectangle tests pass; canvas UI and GPU execution pending |
 | A06 | Selected common profiles satisfy all hard rules; conflicting service rules create explained separate renditions; overrides validate; identical jobs share encodes | R10–12 | Partial: deterministic generic planner unit tests; platform hard-rule intersection pending |
 | A07 | Each named destination has actual delivery evidence, credential/API behavior, and declared H/V capability; missing account access is a blocker, not a pass | R08–09 | Pending |
 | A08 | Distinct test tones/speech identify live and VOD tracks end to end; single-track service gets the selected mix; missing mix never silently substitutes another | R15 | Partial: two AAC tracks and selected tone verified; OBS/platform live/VOD identity pending |

@@ -16,6 +16,7 @@ integration:
 browser:
 	cd web && npm run test:e2e
 media:
+	$(GO) test -tags=media ./tests/media/...
 	python3 scripts/media-spike.py
 build:
 	mkdir -p bin

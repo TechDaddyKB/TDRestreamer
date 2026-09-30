@@ -45,5 +45,7 @@ jobs:
       - run: make setup build
       - run: cd web && npx playwright install --with-deps chromium
       - run: bash scripts/browser-integration.sh
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: ffmpeg -version && go test -tags=media ./tests/media/...
       - run: docker compose --env-file .env -f deploy/compose/test.yaml down -v
         if: always()
