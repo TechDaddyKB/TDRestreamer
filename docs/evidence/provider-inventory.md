@@ -21,7 +21,10 @@ EC2's [RunInstances API](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/
 supports client-token idempotency, tags, explicit subnets/security groups and a
 permission-checking DryRun. The implementation must persist operation/resource
 IDs and reconcile inventory; a successful launch response does not prove worker
-readiness. DryRun was not invoked, and does not itself prove regional capacity.
+readiness. A permission-only `t3.micro` DryRun subsequently returned
+`DryRunOperation` for the authenticated project in `us-east-2`; see the
+[account preflight](m0-account-eligibility.md#non-launching-ec2-permission-check).
+It does not prove regional capacity or an actual launch.
 
 An EC2 ingress edge can be configured with TCP and UDP security-group rules;
 [AWS's rule guide](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/security-group-rules-reference.html)
