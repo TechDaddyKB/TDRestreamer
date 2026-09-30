@@ -1,5 +1,5 @@
 {
-  "status": "passed_local_obs_preview",
+  "status": "passed_local_obs_preview_transports",
   "external_routes": [],
   "tests": {
     "obs_tracks": {
@@ -13,17 +13,18 @@
     "obs_audio_identity": [
       {
         "expected_hz": 440,
-        "opposite_tone_power_ratio": 5419563.09
+        "opposite_tone_power_ratio": 10560149.44
       },
       {
         "expected_hz": 880,
-        "opposite_tone_power_ratio": 8269877.17
+        "opposite_tone_power_ratio": 14268656.41
       }
     ],
     "preview": {
+      "browserVersion": "153.0.8010.12",
       "webrtc": {
         "frames": 31,
-        "time": 1.02,
+        "time": 1.019,
         "tracks": [
           "audio",
           "video"
@@ -33,7 +34,7 @@
       "hls": {
         "fallbackTriggered": true,
         "frames": 31,
-        "time": 0.829173
+        "time": 0.82896
       },
       "access_denials": [
         {
@@ -53,32 +54,32 @@
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/7d094bd7ced6_video1_init.mp4",
+          "path": "/a/hls/efd4e017411f_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/7d094bd7ced6_video1_seg0.mp4",
+          "path": "/a/hls/efd4e017411f_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/7d094bd7ced6_audio2_init.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg0.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/7d094bd7ced6_video1_seg1.mp4",
+          "path": "/a/hls/efd4e017411f_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg1.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -103,32 +104,32 @@
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/7d094bd7ced6_video1_init.mp4",
+          "path": "/a/hls/efd4e017411f_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/7d094bd7ced6_video1_seg0.mp4",
+          "path": "/a/hls/efd4e017411f_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/7d094bd7ced6_audio2_init.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg0.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/7d094bd7ced6_video1_seg1.mp4",
+          "path": "/a/hls/efd4e017411f_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg1.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -153,62 +154,32 @@
         },
         {
           "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_video1_init.mp4",
+          "path": "/a/hls/efd4e017411f_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_video1_seg0.mp4",
+          "path": "/a/hls/efd4e017411f_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_audio2_init.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg0.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_video1_seg1.mp4",
+          "path": "/a/hls/efd4e017411f_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg1.mp4",
-          "status": 401
-        },
-        {
-          "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_video1_seg2.mp4",
-          "status": 401
-        },
-        {
-          "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg2.mp4",
-          "status": 401
-        },
-        {
-          "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg3.mp4",
-          "status": 401
-        },
-        {
-          "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_video1_seg3.mp4",
-          "status": 401
-        },
-        {
-          "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_audio2_seg4.mp4",
-          "status": 401
-        },
-        {
-          "identity": "expired",
-          "path": "/a/hls/7d094bd7ced6_video1_seg4.mp4",
+          "path": "/a/hls/efd4e017411f_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -227,13 +198,69 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_tone_power_ratio": 4201599.81
+          "opposite_tone_power_ratio": 11969184.6
         },
         {
           "expected_hz": 880,
-          "opposite_tone_power_ratio": 13048614.11
+          "opposite_tone_power_ratio": 9055180.23
         }
       ]
+    },
+    "secure_transports": {
+      "tls": {
+        "version": "TLSv1.3",
+        "cipher": "TLS_AES_128_GCM_SHA256",
+        "untrusted_certificate": "rejected",
+        "wrong_hostname": "rejected"
+      },
+      "rtmps": {
+        "codecs": [
+          "h264",
+          "aac",
+          "aac"
+        ],
+        "audio_identity": [
+          {
+            "expected_hz": 440,
+            "opposite_tone_power_ratio": 9320073.47
+          },
+          {
+            "expected_hz": 880,
+            "opposite_tone_power_ratio": 4486762.76
+          }
+        ]
+      },
+      "encrypted_srt": {
+        "codecs": [
+          "h264",
+          "aac",
+          "aac"
+        ],
+        "audio_identity": [
+          {
+            "expected_hz": 440,
+            "opposite_tone_power_ratio": 8928792.76
+          },
+          {
+            "expected_hz": 880,
+            "opposite_tone_power_ratio": 4418845.94
+          }
+        ],
+        "denials": {
+          "missing_encryption": {
+            "exit_code": 251,
+            "rejected": true
+          },
+          "wrong_encryption": {
+            "exit_code": 251,
+            "rejected": true
+          },
+          "wrong_tenant": {
+            "exit_code": 251,
+            "rejected": true
+          }
+        }
+      }
     }
   },
   "limitations": [
@@ -241,10 +268,19 @@
     "Twitch H/V and platform live/VOD acceptance remain unverified",
     "Standalone feasibility harness, not application media integration",
     "Denied credential fixture does not prove clock-based expiry or active-session revocation",
-    "Single horizontal OBS video input; no Twitch H/V, RTMPS or encrypted SRT qualification in this report",
-    "Browser preview audio negotiated; no browser audio sample analysis or latency measurement"
+    "Single horizontal OBS video input; no dual-video or combined-canvas qualification",
+    "Browser audio is negotiated but not sample-analyzed; no latency, synchronization or soak qualification"
   ],
-  "recorded_at": "2026-09-30T14:07:41Z",
+  "harness_sha256": {
+    "scripts/m0-local.py": "774d919afd827a3f3ed6b40ea52e58b391e965928682b21d7dbee12b910d01cb",
+    "scripts/m0_protocols.py": "af63e354ebeac29d03eb6451dd4ed5cb1c245c5d2a94982887af76df365c28ff",
+    "tests/m0/obs-control.mjs": "eb8a0dfd97db5baec16d89366384ea0f9dc23a6f4bb719a0d6e503af289b0118",
+    "tests/m0/preview.mjs": "ccecda73ea0111f0df84e614f2e7d0e5ff35311ba9da605b4f418f71cfe718ca",
+    "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180",
+    "web/package-lock.json": "890995d5d6a64de1348e1f0a9d900009e267aa131f91ae14a77106762797c9ab"
+  },
+  "python_optimized": true,
+  "recorded_at": "2026-09-30T14:17:31Z",
   "gateway": "v1.21.1",
   "gateway_sha256": "2b45b2999f22c8a1ecd376ce407b6337b68466fdeac54a8fdc448a79f818474f",
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
@@ -284,7 +320,7 @@
         "group": "default",
         "txqlen": 1000,
         "link_type": "ether",
-        "address": "46:b8:dd:15:fc:fe",
+        "address": "7a:ed:54:32:d0:36",
         "broadcast": "ff:ff:ff:ff:ff:ff"
       }
     ],
@@ -313,7 +349,7 @@
     "obsVersion": "32.2.2",
     "websocketVersion": "5.7.4",
     "active": true,
-    "bytes": 361834
+    "bytes": 367879
   },
   "auth_events": [
     {
@@ -485,6 +521,20 @@
       "allowed": false
     },
     {
+      "user": "expired",
+      "path": "a/hls",
+      "action": "read",
+      "protocol": "hls",
+      "allowed": false
+    },
+    {
+      "user": "reader-b",
+      "path": "a/hls",
+      "action": "read",
+      "protocol": "hls",
+      "allowed": false
+    },
+    {
       "user": "",
       "path": "a/webrtc",
       "action": "read",
@@ -493,23 +543,9 @@
     },
     {
       "user": "reader-b",
-      "path": "a/hls",
-      "action": "read",
-      "protocol": "hls",
-      "allowed": false
-    },
-    {
-      "user": "reader-b",
       "path": "a/webrtc",
       "action": "read",
       "protocol": "webrtc",
-      "allowed": false
-    },
-    {
-      "user": "expired",
-      "path": "a/hls",
-      "action": "read",
-      "protocol": "hls",
       "allowed": false
     },
     {
@@ -665,6 +701,321 @@
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "publish",
+      "protocol": "rtmp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "publish",
+      "protocol": "srt",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/denied-missing_encryption",
+      "action": "publish",
+      "protocol": "srt",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/denied-wrong_encryption",
+      "action": "publish",
+      "protocol": "srt",
+      "allowed": true
+    },
+    {
+      "user": "reader-b",
+      "path": "a/denied-wrong_tenant",
+      "action": "publish",
+      "protocol": "srt",
+      "allowed": false
     }
   ]
 }

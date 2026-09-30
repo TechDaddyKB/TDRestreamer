@@ -4,7 +4,7 @@
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence and unresolved
-Twitch, additional protocol and capability gates; M1 has an implemented local control foundation but still
+Twitch and additional OBS input-mode gates; M1 has an implemented local control foundation but still
 needs OAuth, invitations and additional identity/operational hardening.
 
 ## Implemented and exercised
@@ -43,7 +43,9 @@ OBS, live/VOD semantics, WebRTC, platform compatibility or full fault qualificat
 on its own. The later [OBS and preview harness](m0-local.md) and
 [machine-readable results](m0-obs-preview.json) establish real OBS dual-audio ingest,
 internal RTSP and enhanced-RTMP relay audio identity, authenticated Chromium WebRTC
-playback, forced HLS fallback, and fresh-client access denials. Application preview
+playback, forced HLS fallback, fresh-client access denials, RTMPS certificate
+validation and encrypted-SRT transport/denials. Platform/provider documentation
+is inventoried separately; it does not prove account-specific eligibility. Application preview
 integration and Twitch live/VOD semantics remain unverified.
 
 Real FFmpeg frame tests also passed for crop, fill and blur output geometry,

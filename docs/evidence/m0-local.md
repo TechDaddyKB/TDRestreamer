@@ -6,7 +6,7 @@ M0 as complete or establish platform account eligibility.
 
 The [recorded successful run](m0-obs-preview.json) passed OBS ingest, both decoded
 audio identities after enhanced-RTMP relay, authenticated WebRTC, forced HLS
-fallback, and fresh-client access denials.
+fallback, fresh-client access denials, RTMPS and encrypted-SRT preservation.
 
 ## Reproduce
 
@@ -14,7 +14,8 @@ On Linux install OBS Studio 32.2.2 with its bundled obs-websocket 5.7.4 plugin,
 FFmpeg 9.0.1, Xvfb, Node and Python 3. Install the locked browser dependencies with
 `make setup` and `cd web && npx playwright install chromium`. Put the
 checksum-verified MediaMTX 1.21.1 release binary at `.tools/mediamtx/mediamtx`.
-Run `make m0` from the project root. Unprivileged user/network namespaces and
+The Linux amd64 MediaMTX binary checksum and all tool versions are enforced by
+[the toolchain manifest](../../tests/m0/toolchain.json). Run `make m0` from the project root. Unprivileged user/network namespaces and
 creation of a dummy network interface must be available. This is an explicitly
 configured local qualification target, not a silently skipped CI test.
 
@@ -50,6 +51,16 @@ The processes are terminated on completion/failure, including command timeout.
   credential must receive 401/403 for playlists, observed init/media fragments
   and WHEP. Query session credentials and cookies are removed for these checks.
 
+- RTMPS verifies the generated test certificate and preserves both tracks.
+  TLS rejects an untrusted certificate and a wrong hostname. Encrypted SRT
+  preserves both tracks and rejects missing/wrong passphrases and wrong-tenant
+  publishing. These secure-transport publishers use FFmpeg with OBS-origin media;
+  native OBS RTMPS/SRT configuration itself is not certified.
+- Qualification guards remain active with `PYTHONOPTIMIZE=1`; the recorded run
+  uses that setting. Three guard regression tests run in `make unit` and CI.
+  The report records hashes of its producing scripts and the browser version,
+  and is copied unedited from the successful run.
+
 ## Authentication finding
 
 MediaMTX 1.21.1 creates HLS sessions after initial authentication. Subsequent
@@ -67,8 +78,8 @@ handling. Never expose session-bearing URLs in logs or share them as public link
 
 Actual Twitch Enhanced Broadcasting horizontal/vertical delivery, Twitch live/VOD
 semantics, other platform eligibility and provider account capabilities remain
-unverified under the owner's local-only restriction. RTMPS/encrypted-SRT and
-additional OBS video/input modes still need local qualification. Browser audio
+unverified under the owner's local-only restriction. Additional OBS video/input
+modes still need local qualification. Browser audio
 is negotiated but only server-side decoded audio identity is measured here;
 preview latency, A/V synchronization, packet-loss behavior and long soaks are not
 established by this short test. These limitations do not remove v1 requirements.

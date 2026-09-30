@@ -5,7 +5,12 @@ const require = createRequire(
   new URL("../../web/package.json", import.meta.url),
 );
 const { chromium, request } = require("@playwright/test");
-const cfg = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
+const cfg = JSON.parse(
+  fs.readFileSync(
+    new URL("../../runtime/m0/controller.json", import.meta.url),
+    "utf8",
+  ),
+);
 const server = http.createServer((req, res) => {
   if (req.url === "/hls.js") {
     res.setHeader("Content-Type", "application/javascript");
@@ -119,51 +124,60 @@ try {
     time: document.querySelector("video").currentTime,
   }));
   if (!results.hls.fallbackTriggered)
-    throw Error("HLS fallback was not exercised");
+    throw new Error("HLS fallback was not exercised");
   if (![...mediaURLs].some((x) => x.includes(".mp4")))
-    throw Error("No HLS fragment decoded");
-  results.access_denials = [];
-  for (const [identity, password] of [
-    ["anonymous", null],
-    ["reader-b", cfg.otherPassword],
-    ["expired", cfg.expiredPassword],
-  ]) {
-    const headers = password
-      ? {
-          Authorization:
-            "Basic " +
-            Buffer.from(identity + ":" + password).toString("base64"),
-        }
-      : {};
-    const anonymousClient = await request.newContext();
-    for (const credentialedURL of [...mediaURLs]) {
-      const url = new URL(credentialedURL);
-      url.search = "";
-      const r = await anonymousClient.get(url.href, { headers });
-      if (![401, 403].includes(r.status()))
-        throw Error("HLS unauthorized request accepted: " + r.status());
-      results.access_denials.push({
-        identity,
-        path: new URL(url).pathname,
-        status: r.status(),
-      });
-    }
-    const r = await anonymousClient.post(
-      "http://127.0.0.1:18889/a/webrtc/whep",
-      {
-        headers: { ...headers, "Content-Type": "application/sdp" },
-        data: "v=0\r\n",
-      },
-    );
-    if (![401, 403].includes(r.status()))
-      throw Error("WHEP unauthorized request accepted: " + r.status());
-    results.access_denials.push({
-      identity,
-      path: "/a/webrtc/whep",
-      status: r.status(),
-    });
-    await anonymousClient.dispose();
-  }
+    throw new Error("No HLS fragment decoded");
+  // Freeze the observed resource set before testing independent unauthorized clients.
+  await page.evaluate(() => window.hls.destroy());
+  const observedMediaURLs = Array.from(mediaURLs);
+  const denialResults = await Promise.all(
+    [
+      ["anonymous", null],
+      ["reader-b", cfg.otherPassword],
+      ["expired", cfg.expiredPassword],
+    ].map(async ([identity, password]) => {
+      const headers = password
+        ? {
+            Authorization:
+              "Basic " +
+              Buffer.from(identity + ":" + password).toString("base64"),
+          }
+        : {};
+      const client = await request.newContext();
+      try {
+        const resources = await Promise.all(
+          observedMediaURLs.map(async (credentialedURL) => {
+            const url = new URL(credentialedURL);
+            url.search = "";
+            const response = await client.get(url.href, { headers });
+            if (![401, 403].includes(response.status()))
+              throw new Error(
+                "HLS unauthorized request accepted: " + response.status(),
+              );
+            return { identity, path: url.pathname, status: response.status() };
+          }),
+        );
+        const response = await client.post(
+          "http://127.0.0.1:18889/a/webrtc/whep",
+          {
+            headers: { ...headers, "Content-Type": "application/sdp" },
+            data: "v=0\r\n",
+          },
+        );
+        if (![401, 403].includes(response.status()))
+          throw new Error(
+            "WHEP unauthorized request accepted: " + response.status(),
+          );
+        return [
+          ...resources,
+          { identity, path: "/a/webrtc/whep", status: response.status() },
+        ];
+      } finally {
+        await client.dispose();
+      }
+    }),
+  );
+  results.access_denials = denialResults.flat();
   console.log(JSON.stringify(results));
 } catch (error) {
   console.error(

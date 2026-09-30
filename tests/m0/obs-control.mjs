@@ -1,6 +1,11 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
-const cfg = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
+const cfg = JSON.parse(
+  fs.readFileSync(
+    new URL("../../runtime/m0/controller.json", import.meta.url),
+    "utf8",
+  ),
+);
 const ws = new WebSocket("ws://127.0.0.1:19445");
 const pending = new Map();
 let counter = 0;
@@ -55,7 +60,7 @@ try {
   await ready;
   const version = await request("GetVersion");
   let { currentProgramSceneName: scene } = await request("GetSceneList");
-  for (const [name, kind, settings] of [
+  const inputDefinitions = [
     [
       "Pattern",
       "ffmpeg_source",
@@ -71,29 +76,30 @@ try {
       "ffmpeg_source",
       { local_file: cfg.vod, is_local_file: true, looping: true },
     ],
-  ]) {
-    const inputs = await request("GetInputList");
-    if (inputs.inputs.some((i) => i.inputName === name))
-      await request("RemoveInput", { inputName: name });
-    await request("CreateInput", {
-      sceneName: scene,
-      inputName: name,
-      inputKind: kind,
-      inputSettings: settings,
-      sceneItemEnabled: true,
-    });
-    await request("SetInputAudioTracks", {
-      inputName: name,
-      inputAudioTracks: {
-        1: name === "Live440",
-        2: name === "Vod880",
-        3: false,
-        4: false,
-        5: false,
-        6: false,
-      },
-    });
-  }
+  ];
+  // Inputs are independent; creation must precede track assignment for each input.
+  await Promise.all(
+    inputDefinitions.map(async ([name, kind, settings]) => {
+      await request("CreateInput", {
+        sceneName: scene,
+        inputName: name,
+        inputKind: kind,
+        inputSettings: settings,
+        sceneItemEnabled: true,
+      });
+      await request("SetInputAudioTracks", {
+        inputName: name,
+        inputAudioTracks: {
+          1: name === "Live440",
+          2: name === "Vod880",
+          3: false,
+          4: false,
+          5: false,
+          6: false,
+        },
+      });
+    }),
+  );
   await request("SetStreamServiceSettings", {
     streamServiceType: "rtmp_custom",
     streamServiceSettings: {

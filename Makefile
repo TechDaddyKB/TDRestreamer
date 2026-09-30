@@ -9,6 +9,7 @@ lint:
 	cd web && npm run typecheck
 	cd web && npm run format:check
 unit:
+	python3 -m unittest discover -s tests/m0 -p 'test_*.py'
 	$(GO) test -race -cover ./...
 	cd web && npm test
 integration:
