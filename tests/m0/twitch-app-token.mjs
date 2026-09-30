@@ -1,5 +1,7 @@
 // Read-only M0 account preflight. Credentials and the short-lived token stay in memory.
 import { execFileSync } from "node:child_process";
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 
 const lookup = (kind) =>
   execFileSync(
@@ -19,6 +21,9 @@ const lookup = (kind) =>
 const report = {
   observedAt: new Date().toISOString(),
   node: process.version,
+  harnessSha256: createHash("sha256")
+    .update(readFileSync(new URL(import.meta.url)))
+    .digest("hex"),
   credentialSource: "local Secret Service keyring",
   tokenStatus: null,
   tokenObtained: false,
