@@ -81,11 +81,12 @@ def create_obs_profile(work, config):
     ws.mkdir(parents=True)
     # OBS requires this clear-text value in its config. The directory is private
     # tmpfs (0700), the file inherits umask 077, and the tree is removed at stop.
-    # codeql[py/clear-text-storage-sensitive-data]
-    (ws / "config.json").write_text(json.dumps({
+    ws_config = json.dumps({
         "server_enabled": True, "server_port": 19447, "auth_required": True,
         "server_password": password, "first_load": False, "alerts_enabled": False,
-    }))
+    })
+    # codeql[py/clear-text-storage-sensitive-data]
+    (ws / "config.json").write_text(ws_config)
     (work / "controller.json").write_text(json.dumps({
         "server": TWITCH_DESTINATION,
         **{name: str(work / f"{name}.{ext}") for name, ext in (
