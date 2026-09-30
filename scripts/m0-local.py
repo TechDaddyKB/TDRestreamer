@@ -26,20 +26,18 @@ RELAY_PATH = "a/relay"
 WORK.mkdir(parents=True, exist_ok=True)
 WORK.chmod(0o700)
 if "--isolated" not in sys.argv:
-    args = [
-        "unshare",
-        "--user",
-        "--map-root-user",
-        "--net",
-        sys.executable,
-        str(Path(__file__).resolve()),
-        "--isolated",
-    ]
-    # No shell is invoked: every executable/argument is supplied by this local harness.
-    exit_status = (
-        sp.call(  # nosemgrep: python.lang.security.audit.dangerous-subprocess-use-audit
-            args, shell=False
-        )
+    # The executable is fixed; the path arguments are passed without shell parsing.
+    exit_status = sp.call(
+        [
+            "unshare",
+            "--user",
+            "--map-root-user",
+            "--net",
+            sys.executable,
+            str(Path(__file__).resolve()),
+            "--isolated",
+        ],
+        shell=False,
     )
     raise SystemExit(exit_status)
 initial_links = json.loads(sp.check_output(["ip", "-j", "link", "show"]))

@@ -29,3 +29,8 @@ remaining subprocess audit annotations were moved to the call sites so formattin
 does not detach them; the same no-shell rationale applies. Full media qualification
 was rerun after these changes. All tracked files also passed SonarQube CLI 1.9.0
 deterministic secrets scanning before subsequent inspection.
+
+The last launcher audit finding was addressed by making the fixed `unshare`
+argument vector explicit at the call site, with `shell=False`; no suppression is
+needed for that call. The full optimized-Python media run passed again and the
+report was regenerated from that exact source revision.
