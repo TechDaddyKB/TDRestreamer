@@ -1,6 +1,6 @@
 {
   "status": "passed_local_twitch_ladder",
-  "recorded_at": "2026-09-30T20:40:57Z",
+  "recorded_at": "2026-09-30T22:20:53Z",
   "isolation": {
     "initial_interfaces": [
       "lo"
@@ -259,11 +259,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 7500447.74
+          "opposite_power_ratio": 3823449.43
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 4425970.19
+          "opposite_power_ratio": 15535284.4
         }
       ]
     },
@@ -550,14 +550,333 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 14824638.81
+          "opposite_power_ratio": 11729561.62
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 4952759.04
+          "opposite_power_ratio": 16004753.44
         }
       ]
-    }
+    },
+    "libavformat_copy_publisher": {
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 284,
+          "height": 160
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 360,
+          "height": 640
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        }
+      ],
+      "video_identity": [
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ]
+      ],
+      "audio_identity": [
+        {
+          "expected_hz": 440,
+          "opposite_power_ratio": 4047979.9
+        },
+        {
+          "expected_hz": 880,
+          "opposite_power_ratio": 15321699.24
+        }
+      ]
+    },
+    "libavformat_startup_missing_timestamps": [
+      2,
+      2,
+      2,
+      2,
+      0,
+      0
+    ],
+    "libavformat_keyframes": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "libavformat_first_key_pts_ms": [
+      886,
+      886,
+      941,
+      907
+    ],
+    "libavformat_bpm_ts": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "libavformat_bpm_sm": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "libavformat_bpm_erm": [
+      10,
+      10,
+      10,
+      10
+    ],
+    "libavformat_keyframes_with_bpm": [
+      9,
+      9,
+      9,
+      9
+    ],
+    "libavformat_dropped_bpm": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "libavformat_first_ready_pts_ms": [
+      2886,
+      2886,
+      2941,
+      2906
+    ],
+    "libavformat_first_output_key_pts_ms": [
+      2000,
+      2000,
+      2000,
+      2000
+    ],
+    "libavformat_enhanced_primary_tags": 571
   },
   "limitations": [
     "Local synthetic configuration with sanitized account-negotiated encoder settings",
@@ -569,17 +888,21 @@
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
   "gateway": "v1.21.1",
   "harness_sha256": {
-    "scripts/m0-dual-canvas.py": "1d3e5c0d6139550c98242caa38938a3d398682ca654a1686f69d02793d4fa100",
+    "scripts/m0-dual-canvas.py": "fc02959793b3552b9f1d4be131c23df3063ed737b9ee3c02a056e06d945eaccb",
     "scripts/m0_dual_checks.py": "ddbbc8cc8257f2d7d7937775a59ca3559dd2e7c71222f0a67c92c56bd4783a0c",
     "scripts/m0_flv_checks.py": "0188e4c904a07c05beefc58ff8021d2561124cf1c4279a37893b9314daab85fb",
     "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
-    "tests/m0/dual-canvas.mjs": "02cdb6fc6d99ac261757e4408990b9d1f22662dd58e280e289792b9a4ecafcca",
+    "tests/m0/dual-canvas.mjs": "a5932ee7c5edc74396638db0be4034d2a817eec4d9f6cb89e2e2a139c1d8086a",
     "tests/m0/obs-rpc.mjs": "1e91784568bbe1c3a8f614387857f2fc35703ce29e76bf57188a065f2f07e0eb",
     "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180",
     "scripts/m0_twitch_config.py": "67b11180e29f0fa46dd42d46a0de1a36f8efcb05a590073268cd35d0d1e11e30",
-    "tests/m0/twitch-ladder-local.json": "92d55afe6e93598b02126be61d5470625018ff6aa590df91441e6790f61b5811"
+    "scripts/m0_socket_bridge.py": "9a9448e543b2c2791802743e83eacd69e38e055e8ede2b2805d77ec2e0cb49f0",
+    "scripts/m0_rtmp_tap.py": "08f3723815c024c4e68b74cbc88252deaf10a71e5236bf9f402e2fe3cc22b6b0",
+    "tests/m0/twitch-ladder-local.json": "92d55afe6e93598b02126be61d5470625018ff6aa590df91441e6790f61b5811",
+    "tests/m0/twitch_copy.c": "ad2af7b6964c053b09378f15c3b55694dd88d593e71af4b9fe4792cd5186be47"
   },
   "python_optimized": false,
+  "copy_binary_sha256": "4d2ae54da123a8f60d3e7b73e249d9d7203474f5bf9bcf8ce6d4b71fcbd88c61",
   "ladder_mapping": {
     "video": [
       {
@@ -682,6 +1005,15 @@
         }
       }
     ],
-    "bytes": 1211875
+    "bytes": 1148140
+  },
+  "obs_rtmp_bpm_tap": {
+    "connections": 2,
+    "upstream_bytes": 36923408,
+    "uuid_counts": {
+      "bpm_ts": 128,
+      "bpm_sm": 128,
+      "bpm_erm": 128
+    }
   }
 }

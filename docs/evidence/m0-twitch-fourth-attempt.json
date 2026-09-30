@@ -1,0 +1,89 @@
+{
+  "status": "failed",
+  "recorded_at": "2026-09-30T22:00:14Z",
+  "mode": "one_approved_broadcast",
+  "limits": {
+    "duration_seconds": 300,
+    "nominal_kbps": 6000
+  },
+  "copy_binary_sha256": "6dc92e8342a707602af88e1bc40322b035305ef4ff45595f3790ecca533d10ea",
+  "source_sha256": {
+    "tests/m0/twitch_copy.c": "a30b5190fc38da9d6da8d8eed07b62f9dd3ab0751153a6cc11dfe8acead8c760",
+    "scripts/m0-dual-canvas.py": "2cca7011ae632baca70d3be84ee0cb938e6f3e0c2b4230c4e1bc958b3997b1fa",
+    "scripts/m0_socket_bridge.py": "9a9448e543b2c2791802743e83eacd69e38e055e8ede2b2805d77ec2e0cb49f0",
+    "tests/m0/twitch_live.py": "40499bbb657c634bd99063350c2ad1a6d213cb2551f91d6e7d5b9b5405dd5fad"
+  },
+  "local_copy": "six_streams_passed",
+  "local_copy_diagnostics": {
+    "startup_missing_timestamps": [
+      2,
+      2,
+      2,
+      2,
+      0,
+      0
+    ],
+    "keyframes": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "first_key_pts_ms": [
+      1014,
+      1025,
+      1061,
+      1039
+    ],
+    "bpm_ts": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "bpm_sm": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "bpm_erm": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "keyframes_with_bpm": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "dropped_bpm": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "first_ready_pts_ms": [
+      3014,
+      3024,
+      3061,
+      3038
+    ],
+    "first_output_key_pts_ms": [
+      2000,
+      2000,
+      2000,
+      2000
+    ]
+  },
+  "negotiated_nominal_kbps": 4720,
+  "broadcast_start_utc": "2026-09-30T22:00:44Z",
+  "helix_live_observed": false,
+  "broadcast_end_utc": "2026-09-30T22:00:47Z",
+  "publisher_exit_code": 1,
+  "error_type": "RuntimeError",
+  "error_stage": "Twitch copy publisher failed",
+  "helix_offline_after_stop": true
+}

@@ -107,17 +107,17 @@ response differs, record the difference and qualify it before sending media.
    disabled. A later [four-rendition run](m0-twitch-ladder-local.md) uses
    sanitized account-negotiated encoder settings, checks order, dimensions,
    identities and FLV track IDs 0–3. Neither fixture proves Twitch delivery.
-2. Implement the qualification publisher's negotiation and track mapping against
-   the observed contract, using the offline guard as an initial check. Do not
+2. The [bounded publisher and local bridge](m0-twitch-copy-candidate.md) now
+   pass a six-stream local control against the observed negotiation contract. Do not
    claim that ordinary FFmpeg two-key fanout or a
    mocked response meets Twitch's contract. A direct OBS test is only a reference
    control; the chosen appliance transport/publisher path must also pass.
-3. Prepare a new broadcast approval request once the corrected executable path is
-   ready. Specify TechDaddy as the destination, synthetic content only, maximum
-   duration/attempt count, bandwidth cap, viewer visibility and VOD retention.
-   The two approved attempts in the [diagnostic record](m0-twitch-live-attempts.md)
-   were used; no further broadcast is authorized.
-4. With approval, use credentials during execution to obtain the actual negotiated
+3. The owner authorized any additional broadcast testing necessary for this
+   goal after the first two attempts. The [bounded attempts](m0-twitch-live-attempts.md)
+   still failed at external ingest after locally qualifying BPM-aware startup,
+   aligned first output IDRs, and enhanced primary H.264 tags. Compare the
+   remaining wire format and per-track settings with OBS before another run.
+4. During the authorized tests, obtain the actual negotiated
    H/V ladder and audio track roles. Redact credentials from retained evidence,
    logs and artifacts. Verify labeled horizontal and vertical viewer playback
    within the same Twitch broadcast, then verify intended live/VOD audio identity.

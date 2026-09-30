@@ -4,8 +4,9 @@
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence,
-including a [four-rendition local ladder run](m0-twitch-ladder-local.md),
-account-specific Twitch negotiation and two failed bounded Twitch publisher
+including a [four-rendition local ladder run](m0-twitch-ladder-local.md) and a
+[bounded local bridge control](m0-twitch-copy-candidate.md),
+account-specific Twitch negotiation and five failed bounded Twitch publisher
 attempts; delivery and remaining application API eligibility gates are unresolved.
 Additional OBS input modes remain
 later media qualification work; M1 has an implemented local control foundation but still
@@ -80,10 +81,11 @@ importable Streamer.bot workflows; complete release images/SBOM/notices.
 
 ## External qualification blockers
 
-Current owner instruction: **Check account eligibility first; approve broadcasts separately.**
+The owner approved further broadcast testing necessary to complete M0 after the
+first two bounded attempts. This does not authorize provider provisioning.
 Authenticated platform dashboards and AWS Free Plan/EC2 read access were checked; see
-[the account eligibility record](m0-account-eligibility.md). The owner then approved
-two bounded Twitch attempts; both failed at external ingest, as recorded in
+[the account eligibility record](m0-account-eligibility.md). Five bounded Twitch
+attempts failed at external ingest, as recorded in
 [the attempt record](m0-twitch-live-attempts.md). No provider provisioning or
 spending was performed. Actual Twitch delivery/live-VOD behavior,
 remaining application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,

@@ -15,6 +15,8 @@ const configPath = fs.realpathSync(expectedConfig);
 if (configPath !== expectedConfig)
   throw new Error("Symlinked fixture configuration refused");
 const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
+if (!["rtmp://127.0.0.1:19350/dual", "rtmp://127.0.0.1:19351/dual"].includes(cfg.server))
+  throw new Error("Unexpected local OBS destination");
 const { ready, request, close } = obsConnection(
   "ws://127.0.0.1:19447",
   cfg.password,
@@ -97,7 +99,7 @@ try {
   await request("SetStreamServiceSettings", {
     streamServiceType: "rtmp_custom",
     streamServiceSettings: {
-      server: "rtmp://127.0.0.1:19351/dual",
+      server: cfg.server,
       key: "obs",
       use_auth: false,
     },

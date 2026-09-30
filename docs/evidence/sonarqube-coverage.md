@@ -64,3 +64,12 @@ not product code; its NVENC path cannot execute in hosted CI. The shared FLV
 and stream-checking helpers remain in source coverage, with negative controls
 for the four-rendition ladder. This classification does not change coverage
 thresholds or exclude application code.
+
+The later bounded Twitch qualification uses `scripts/m0_socket_bridge.py` only
+to carry a test RTSP stream between a route-free OBS namespace and a host-side
+publisher. It is classified with the same test/source patterns; it is not an
+application transport component. Its behavior is exercised by the retained
+local bridge run, while product transport code remains under coverage.
+The `scripts/m0_rtmp_tap.py` diagnostic is also test-only. It counts BPM UUIDs
+on the local OBS RTMP hop without retaining media and is included in both
+matching Sonar test/source patterns.

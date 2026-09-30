@@ -30,7 +30,16 @@ Preview edge/TCP relay design still needs provider validation. This preserves th
 approved ingress requirements without claiming direct SRT-to-Pod support.
 See [provider evidence](../evidence/provider-inventory.md).
 
-No mandatory MediaMTX transport failure was observed in the qualified local paths,
-so the conditional SRS contingency has not been triggered. Neither MediaMTX nor
-SRS can be declared Twitch-dual-format compatible without the missing external
-negotiation/delivery evidence. Keep dependent platform integration gated.
+The later [four-video Twitch ladder control](../evidence/m0-twitch-copy-candidate.md)
+found 128 occurrences of each BPM UUID at OBS's loopback RTMP output. The
+markers also reached the MediaMTX RTSP → libavformat copy path in separate
+packets. The first observed IDR on each track lacked a complete preceding BPM
+set, so the bounded publisher now starts at the next complete set and rebases
+first output IDRs to one PTS. This passed local six-stream decode, but Twitch
+still closed the session at ingest. The earlier two-track controls did not test
+these ingest requirements. A MediaMTX RTMP reader exposed fewer than six tracks
+in a separate local trial. SRS remains a conditional contingency if the current
+path cannot meet the remaining requirements. Neither
+MediaMTX nor SRS can be declared Twitch-dual-format compatible without a
+passing external delivery and viewer/VOD qualification. Keep dependent
+platform integration gated.
