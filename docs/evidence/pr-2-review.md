@@ -21,3 +21,11 @@ results must be inspected before merge.
 No broad analyzer exclusions or lowered quality thresholds were added. Any new
 finding on the revised PR still requires review; this record does not claim
 reviewer approval or M0 completion.
+
+Follow-up review: Sonar reported three maintainability findings in the new secure-
+transport helper. TLS context managers were combined, and transport readiness,
+track checks and rejection checks were separated into focused functions. The two
+remaining subprocess audit annotations were moved to the call sites so formatting
+does not detach them; the same no-shell rationale applies. Full media qualification
+was rerun after these changes. All tracked files also passed SonarQube CLI 1.9.0
+deterministic secrets scanning before subsequent inspection.

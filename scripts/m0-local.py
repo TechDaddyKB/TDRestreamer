@@ -36,11 +36,12 @@ if "--isolated" not in sys.argv:
         "--isolated",
     ]
     # No shell is invoked: every executable/argument is supplied by this local harness.
-    raise SystemExit(
-        sp.call(
+    exit_status = (
+        sp.call(  # nosemgrep: python.lang.security.audit.dangerous-subprocess-use-audit
             args, shell=False
-        )  # nosemgrep: python.lang.security.audit.dangerous-subprocess-use-audit
+        )
     )
+    raise SystemExit(exit_status)
 initial_links = json.loads(sp.check_output(["ip", "-j", "link", "show"]))
 require(
     [link["ifname"] for link in initial_links] == ["lo"],
