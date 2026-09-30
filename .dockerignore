@@ -9,3 +9,10 @@ backups
 .env
 .env.*
 coverage
+*.key
+*.pem
+*.crt
+*.p12
+*.pfx
+secrets
+bin

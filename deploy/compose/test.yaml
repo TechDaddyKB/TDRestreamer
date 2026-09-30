@@ -1,0 +1,17 @@
+name: tdr-test
+services:
+  postgres:
+    image: postgres:18@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722
+    environment:
+      POSTGRES_USER: tdr_owner
+      POSTGRES_DB: tdr_test
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Generate test configuration}
+      TDR_DB_PASSWORD: ${TDR_DB_PASSWORD:?Generate test configuration}
+    ports: ["127.0.0.1:55432:5432"]
+    volumes: ["./init-db.sh:/docker-entrypoint-initdb.d/01-app.sh:ro"]
+    tmpfs: [/var/lib/postgresql]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U tdr_owner -d tdr_test"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
