@@ -64,7 +64,21 @@ then check scanner logs for successful Go, LCOV, and Python imports. LCOV paths
 must resolve under `web/src`; Python uses relative paths. Do not suppress a
 coverage failure by excluding application code or lowering the quality gate.
 
-## Runtime architecture
+## GitHub Actions runtime
+
+The CI workflow pins the official actions to reviewed release commits:
+checkout 7.0.1, setup-go 7.0.0, setup-node 7.0.0, upload-artifact 7.0.1,
+and download-artifact 8.0.1. Their action manifests use Node.js 24; this runtime
+is independent of the application's Node.js 26.7.0 toolchain. GitHub-hosted
+Ubuntu 24.04 runners support it. Downloaded artifacts retain digest verification;
+the newer download action fails on a digest mismatch.
+
+When updating actions, verify the official release and `action.yml`, retain the
+version comment beside the commit pin, and run the complete workflow to validate
+checkout, dependency caches, report transfer, and scanner import. Do not opt back
+into an insecure Node.js runtime to suppress deprecation annotations.
+
+## Application architecture
 
 `cmd/control` serves the React build and REST API. `cmd/admin migrate` applies
 embedded ordered SQL migrations under an advisory lock. The application database

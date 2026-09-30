@@ -20,6 +20,22 @@ reported 18.4% coverage, 17.6% line coverage, 24.6% branch coverage, and 1,810
 lines to cover. These are the initial imported snapshot, not release targets.
 The main-branch dashboard updates after the merged workflow runs.
 
+## Main-branch result
+
+PR #7 merged as `8e2359c`. Its final PR checks all passed, including SonarQube,
+Sourcery, Gitar, and CodeQL. The first
+[main CI run](https://github.com/camarokris/TDRestreamer/actions/runs/36745440744)
+passed tests, integration, and builds and published the same 18.4% overall
+coverage. Its quality gate **failed** on new-code coverage: 5.4% against the
+existing 80% requirement. The main new-code period starts at the previous-version
+baseline (2026-09-30 14:10:58 UTC); it covers more code than the configuration-only
+PR diff. This is exposed testing debt, not an import failure. Do not reset that
+baseline, lower the threshold, or exclude production code to make it green.
+
+The `sonar` GitHub Actions check is now required by main branch protection,
+alongside `checks` and `integration`. Coverage reporting is operational; the
+main-branch coverage gate is not yet satisfied.
+
 The scan correctly failed its gate on `githubactions:S8541`: pip could install
 a source distribution. The workflow now uses `--only-binary :all:`. Gate
 thresholds and issue severity were not reduced to bypass this finding.
