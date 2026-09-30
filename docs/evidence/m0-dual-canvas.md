@@ -11,10 +11,12 @@ The current runner targets Linux amd64 with OBS plugins in `/usr/lib/obs-plugins
 and plugin data in `/usr/share/obs/obs-plugins` (the tested Arch package layout).
 Other filesystem layouts require a reviewed runner change, not silent skipping.
 It requires OBS 32.2.2, obs-websocket 5.7.4, FFmpeg 9.0.1, Node with native
-WebSocket support, Xvfb, bubblewrap, iproute2, Python 3, and a Fontconfig font for
+WebSocket support, Xvfb, xdpyinfo, bubblewrap, iproute2, Python 3, and a Fontconfig font for
 fixture labels. Install the checksum-pinned MediaMTX binary as described in
 [the original local harness](m0-local.md). User/network and bubblewrap mount
 namespaces must work; X display `:199` must be free.
+The runner rejects an occupied display and polls an actual X connection before
+starting OBS; a fixed sleep is not treated as display readiness.
 
 Stage Aitum Vertical 1.6.4 from its [official release](https://github.com/Aitum/obs-vertical-canvas/releases/tag/1.6.4)
 without installing it into the user's OBS profile or system plugins:
@@ -56,7 +58,10 @@ separate authenticated transport and tenant-denial qualification.
 - Copy all four tracks through FFmpeg into enhanced RTMP, then repeat the same
   decoded identity and ordering checks at the receiving gateway.
 - Negative unit controls reject swapped video identities/orientations, black or
-  truncated samples, and missing audio. They run in `make unit`; the real media
+  truncated samples, missing audio and cross-type reordering. The controller also
+  rejects path-shaped arguments before reading a file; only a 12-digit hexadecimal
+  fixture ID under the fixed runtime root is accepted, and symlink redirection is
+  rejected. Tests run in `make unit`; the real media
   fixture is an explicitly configured local target, not an implicitly skipped CI job.
 
 Each attempt writes a private `runtime/m0-dual-<random>/report.json` with status,
@@ -73,3 +78,18 @@ The configuration exercises OBS's real multitrack path but cannot establish
 Twitch's accepted encoder configuration, wire-purpose metadata, viewer H/V
 association or live/VOD playback. Follow the [Twitch procedure](m0-twitch-qualification.md)
 for those remaining requirements and the separate broadcast approval boundary.
+
+## Security review disposition
+
+The controller's SHA-256 operation implements the authentication challenge in the
+[OBS WebSocket 5.7.4 protocol](https://github.com/obsproject/obs-websocket/blob/5.7.4/docs/docs/partials/introduction.md#creating-an-authentication-string).
+It is not application password storage: each isolated run generates a fresh
+192-bit random credential. Replacing this operation with a password-storage KDF
+would violate the protocol. CodeQL's insufficient-password-hash alert is therefore
+recorded as a false positive for this specific protocol operation.
+
+The two process-launch audit findings were reviewed against every call site:
+executables are allowlisted, arguments are fixed commands or generated local
+fixture values, no webpage/configuration supplies executable commands, and shell
+parsing is disabled. The narrow audit annotations document that boundary rather
+than changing command arguments with shell escaping.

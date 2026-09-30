@@ -1,7 +1,20 @@
 import { createHash } from "node:crypto";
 import fs from "node:fs";
+import path from "node:path";
 
-const cfg = JSON.parse(fs.readFileSync(process.argv[2], "utf8"));
+const runId = process.argv[2];
+if (!/^[a-f0-9]{12}$/.test(runId ?? ""))
+  throw new Error("Invalid fixture run ID");
+const runtimeRoot = fs.realpathSync(new URL("../../runtime/", import.meta.url));
+const expectedConfig = path.join(
+  runtimeRoot,
+  "m0-dual-" + runId,
+  "controller.json",
+);
+const configPath = fs.realpathSync(expectedConfig);
+if (configPath !== expectedConfig)
+  throw new Error("Symlinked fixture configuration refused");
+const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
 const ws = new WebSocket("ws://127.0.0.1:19447");
 const pending = new Map();
 let counter = 0;
@@ -13,6 +26,8 @@ const ready = new Promise((resolve, reject) => {
     const msg = JSON.parse(data);
     if (msg.op === 0) {
       const a = msg.d.authentication;
+      // OBS WebSocket v5 mandates this challenge response, not a password-storage KDF.
+      // The fixture uses a fresh 192-bit random credential in its isolated network.
       const sha = (x) => createHash("sha256").update(x).digest("base64");
       ws.send(
         JSON.stringify({
@@ -64,60 +79,64 @@ try {
     parameterName: "MultitrackExtraCanvas",
     parameterValue: vertical.canvasUuid,
   });
-  for (const [canvas, name, file] of [
-    [main, "Horizontal", cfg.horizontal],
-    [vertical, "Vertical", cfg.vertical],
-  ]) {
-    const sceneList = await request("GetSceneList", {
-      canvasUuid: canvas.canvasUuid,
-    });
-    if (sceneList.scenes.length !== 1)
-      throw new Error("Expected one fixture scene per canvas");
-    const sceneName = sceneList.scenes[0].sceneName;
-    const { sceneItemId } = await request("CreateInput", {
-      canvasUuid: canvas.canvasUuid,
-      sceneName,
-      inputName: name,
-      inputKind: "ffmpeg_source",
-      inputSettings: { local_file: file, is_local_file: true, looping: true },
-      sceneItemEnabled: true,
-    });
-    const width = name === "Horizontal" ? 640 : 360;
-    const height = name === "Horizontal" ? 360 : 640;
-    await request("SetSceneItemTransform", {
-      canvasUuid: canvas.canvasUuid,
-      sceneName,
-      sceneItemId,
-      sceneItemTransform: {
-        positionX: 0,
-        positionY: 0,
-        scaleX: canvas.canvasVideoSettings.baseWidth / width,
-        scaleY: canvas.canvasVideoSettings.baseHeight / height,
-      },
-    });
-  }
+  await Promise.all(
+    [
+      [main, "Horizontal", cfg.horizontal],
+      [vertical, "Vertical", cfg.vertical],
+    ].map(async ([canvas, name, file]) => {
+      const sceneList = await request("GetSceneList", {
+        canvasUuid: canvas.canvasUuid,
+      });
+      if (sceneList.scenes.length !== 1)
+        throw new Error("Expected one fixture scene per canvas");
+      const sceneName = sceneList.scenes[0].sceneName;
+      const { sceneItemId } = await request("CreateInput", {
+        canvasUuid: canvas.canvasUuid,
+        sceneName,
+        inputName: name,
+        inputKind: "ffmpeg_source",
+        inputSettings: { local_file: file, is_local_file: true, looping: true },
+        sceneItemEnabled: true,
+      });
+      const width = name === "Horizontal" ? 640 : 360;
+      const height = name === "Horizontal" ? 360 : 640;
+      await request("SetSceneItemTransform", {
+        canvasUuid: canvas.canvasUuid,
+        sceneName,
+        sceneItemId,
+        sceneItemTransform: {
+          positionX: 0,
+          positionY: 0,
+          scaleX: canvas.canvasVideoSettings.baseWidth / width,
+          scaleY: canvas.canvasVideoSettings.baseHeight / height,
+        },
+      });
+    }),
+  );
   const { currentProgramSceneName: sceneName } = await request("GetSceneList", {
     canvasUuid: main.canvasUuid,
   });
-  for (const [name, file, track] of [
-    ["Live440", cfg.live, 1],
-    ["Vod880", cfg.vod, 2],
-  ]) {
-    await request("CreateInput", {
-      canvasUuid: main.canvasUuid,
-      sceneName,
-      inputName: name,
-      inputKind: "ffmpeg_source",
-      inputSettings: { local_file: file, is_local_file: true, looping: true },
-      sceneItemEnabled: true,
-    });
-    await request("SetInputAudioTracks", {
-      inputName: name,
-      inputAudioTracks: Object.fromEntries(
-        [1, 2, 3, 4, 5, 6].map((i) => [i, i === track]),
-      ),
-    });
-  }
+  await Promise.all(
+    [
+      ["Live440", cfg.live, 1],
+      ["Vod880", cfg.vod, 2],
+    ].map(async ([name, file, track]) => {
+      await request("CreateInput", {
+        canvasUuid: main.canvasUuid,
+        sceneName,
+        inputName: name,
+        inputKind: "ffmpeg_source",
+        inputSettings: { local_file: file, is_local_file: true, looping: true },
+        sceneItemEnabled: true,
+      });
+      await request("SetInputAudioTracks", {
+        inputName: name,
+        inputAudioTracks: Object.fromEntries(
+          [1, 2, 3, 4, 5, 6].map((i) => [i, i === track]),
+        ),
+      });
+    }),
+  );
   await request("SetStreamServiceSettings", {
     streamServiceType: "rtmp_custom",
     streamServiceSettings: {

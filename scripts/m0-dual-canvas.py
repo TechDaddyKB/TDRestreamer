@@ -40,9 +40,25 @@ class Lab:
     def __init__(self, work):
         self.work, self.processes, self.files = work, [], []
 
+    def check_command(self, args):
+        require(
+            args
+            and args[0]
+            in {
+                "ffmpeg",
+                "ffprobe",
+                "node",
+                "Xvfb",
+                "bwrap",
+                str(ROOT / ".tools/mediamtx/mediamtx"),
+            },
+            "unexpected fixture executable",
+        )
+
     def run(self, args, timeout=25):
         # Fixed executables and synthetic argv; no shell or user-supplied commands.
-        p = sp.Popen(
+        self.check_command(args)
+        p = sp.Popen(  # nosemgrep: python.lang.security.audit.dangerous-subprocess-use-audit
             args, stdout=sp.PIPE, stderr=sp.PIPE, start_new_session=True, shell=False
         )
         try:
@@ -60,9 +76,11 @@ class Lab:
         return out
 
     def start(self, name, args, env=None):
+        self.check_command(args)
         log = (self.work / f"{name}.log").open("w")
         self.files.append(log)
-        p = sp.Popen(
+        # Audited: same allowlisted executable/synthetic argv boundary as run().
+        p = sp.Popen(  # nosemgrep: python.lang.security.audit.dangerous-subprocess-use-audit
             args,
             stdout=log,
             stderr=sp.STDOUT,
@@ -83,6 +101,26 @@ class Lab:
             except OSError:
                 time.sleep(0.1)
         raise RuntimeError(f"port {port} did not open")
+
+    def display_ready(self, process):
+        deadline = time.monotonic() + 15
+        while time.monotonic() < deadline:
+            require(process.poll() is None, "isolated X server exited")
+            try:
+                result = sp.run(
+                    ["xdpyinfo", "-display", ":199"],
+                    env=dict(os.environ, XAUTHORITY="/dev/null"),
+                    stdout=sp.DEVNULL,
+                    stderr=sp.DEVNULL,
+                    timeout=1,
+                    shell=False,
+                )
+                if result.returncode == 0:
+                    return
+            except sp.TimeoutExpired:
+                pass
+            time.sleep(0.1)
+        raise RuntimeError("isolated X display did not become ready")
 
     def close(self):
         for p in reversed(self.processes):
@@ -475,12 +513,16 @@ MultitrackVideoConfigOverride="""
                 }
             )
         )
+        require(
+            not Path("/tmp/.X199-lock").exists()
+            and not Path("/tmp/.X11-unix/X199").exists(),
+            "isolated X display :199 is already occupied",
+        )
         display = lab.start(
             "xvfb",
             ["Xvfb", ":199", "-screen", "0", "1280x720x24", "-nolisten", "tcp", "-ac"],
         )
-        time.sleep(0.5)
-        require(display.poll() is None, "isolated X display :199 unavailable")
+        lab.display_ready(display)
         (work / "xdg").mkdir(mode=0o700)
         env = dict(
             os.environ,
@@ -535,7 +577,12 @@ MultitrackVideoConfigOverride="""
         lab.port(19447, obs)
         report["obs"] = json.loads(
             lab.run(
-                ["node", str(ROOT / "tests/m0/dual-canvas.mjs"), str(controller)], 55
+                [
+                    "node",
+                    str(ROOT / "tests/m0/dual-canvas.mjs"),
+                    work.name.removeprefix("m0-dual-"),
+                ],
+                55,
             )
         )
         require(

@@ -4,16 +4,18 @@ from m0_protocols import require
 
 
 def check_streams(streams):
-    videos = [s for s in streams if s.get("codec_type") == "video"]
-    audios = [s for s in streams if s.get("codec_type") == "audio"]
-    require(len(streams) == 4, "expected exactly two video and two audio tracks")
     require(
-        [(s.get("codec_name"), s.get("width"), s.get("height")) for s in videos]
-        == [("h264", 640, 360), ("h264", 360, 640)],
-        "horizontal/vertical video order, codec or geometry changed",
-    )
-    require(
-        [s.get("codec_name") for s in audios] == ["aac", "aac"], "audio tracks changed"
+        [
+            (s.get("codec_type"), s.get("codec_name"), s.get("width"), s.get("height"))
+            for s in streams
+        ]
+        == [
+            ("video", "h264", 640, 360),
+            ("video", "h264", 360, 640),
+            ("audio", "aac", None, None),
+            ("audio", "aac", None, None),
+        ],
+        "complete stream order, count, codec or geometry changed",
     )
 
 
