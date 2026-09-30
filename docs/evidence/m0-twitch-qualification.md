@@ -31,10 +31,33 @@ OBS source at commit `ba2f32bdf791005443988a4955e963663e16b1ed` (32.2.2) establi
   account response or viewer behavior.
 
 [Aitum Vertical 1.6.4](https://github.com/Aitum/obs-vertical-canvas/releases/tag/1.6.4)
-publishes a Linux package. No plugin installation or second-canvas runtime test
-was performed in this inspection. The existing harness explicitly disables
-multitrack video and proves one video plus two audio tracks; it is not a
-dual-canvas or Enhanced Broadcasting negotiation result.
+publishes a Linux package. A subsequent package inventory found that
+`obs-vertical-canvas 1.6.4-1` was already installed on this host. The existing
+qualification harness explicitly disables multitrack video and proves one video
+plus two audio tracks; it is not a dual-canvas or negotiation result.
+
+### Local canvas preflight
+
+A separate temporary OBS profile was launched under Xvfb `:198`, software GL and
+a new user/network namespace. The probe checked that only loopback existed and
+both IPv4/IPv6 route tables were empty, then enabled loopback. No output was
+started. OBS WebSocket 5.7.4 `GetCanvasList` returned status 100 / result true:
+
+| Canvas | Base and output size | Frame rate |
+|---|---|---|
+| Main | 640 × 360 | 30/1 |
+| Aitum Vertical | 1080 × 1920 | 30/1 |
+
+This is a manually summarized exploratory observation, not a reproducible
+qualification report. The first attempt timed out: a downloaded plugin duplicated
+the installed one, and the temporary WebSocket configuration omitted
+`first_load=false`. The successful retry used the installed plugin only and
+corrected that configuration. Temporary OBS/Xvfb processes were terminated;
+the user's OBS profile and system plugin installation were not changed.
+
+Canvas enumeration proves local creation, not encoded frames, track mapping,
+negotiation, GPU capacity, or delivery. A checked-in, repeatable dual-canvas media
+fixture is still required for execution step 1 below.
 
 ## Separate API eligibility step
 
@@ -67,8 +90,9 @@ ingest rights or H/V negotiation. Keep credentials out of evidence and Git.
    duration/attempt count, bandwidth cap, viewer visibility and VOD retention.
    Current authorization does not cover starting that broadcast or negotiation
    that could transition platform state.
-4. With approval, capture the actual negotiated H/V ladder and audio track roles
-   without credentials. Verify labeled horizontal and vertical viewer playback
+4. With approval, use credentials during execution to obtain the actual negotiated
+   H/V ladder and audio track roles. Redact credentials from retained evidence,
+   logs and artifacts. Verify labeled horizontal and vertical viewer playback
    within the same Twitch broadcast, then verify intended live/VOD audio identity.
    Desktop-only playback or an Inspector bandwidth test cannot prove all of this.
 5. Stop outputs on completion/failure, verify the channel is offline, and retain
