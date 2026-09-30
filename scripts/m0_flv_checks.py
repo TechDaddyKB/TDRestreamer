@@ -1,6 +1,6 @@
 """Inspect bounded enhanced-FLV track headers from the local publisher muxer.
 
-Track 0 uses legacy H.264/AAC headers; track 1 carries explicit enhanced-FLV
+Track 0 uses legacy H.264/AAC headers; later tracks carry explicit enhanced-FLV
 track IDs. This observes local muxer bytes, not Twitch's interpretation of them.
 """
 
@@ -11,11 +11,12 @@ def _observe_video(payload, observed):
     if payload[0] & 0x80 and payload[0] & 0x0F == 6:
         require(len(payload) >= 7, "truncated enhanced video header")
         require(payload[1] >> 4 == 0, "unsupported video multitrack mode")
+        track = payload[6]
         require(
-            payload[2:6] == b"avc1" and payload[6] == 1,
+            payload[2:6] == b"avc1" and ("video", track) in observed,
             "video track ID or codec changed",
         )
-        observed[("video", 1)].add(payload[1] & 0x0F)
+        observed[("video", track)].add(payload[1] & 0x0F)
     elif not payload[0] & 0x80:
         require(payload[0] & 0x0F == 7, "unexpected legacy video codec")
         require(len(payload) >= 2, "truncated legacy video header")
@@ -41,27 +42,34 @@ def _observe_audio(payload, observed):
 
 
 def _require_tracks(observed):
-    for kind in ("video", "audio"):
-        for track in (0, 1):
-            require(
-                {0, 1}.issubset(observed[(kind, track)])
-                or (
-                    kind == "video"
-                    and track == 1
-                    and {0, 3}.issubset(observed[(kind, track)])
-                ),
-                f"missing {kind} sequence or coded frames for track {track}",
-            )
+    for kind, track in observed:
+        require(
+            {0, 1}.issubset(observed[(kind, track)])
+            or (
+                kind == "video"
+                and track > 0
+                and {0, 3}.issubset(observed[(kind, track)])
+            ),
+            f"missing {kind} sequence or coded frames for track {track}",
+        )
 
 
-def check_flv_track_ids(data):
+def check_flv_track_ids(data, video_tracks=2):
+    require(
+        type(video_tracks) is int and 2 <= video_tracks <= 4,
+        "unsupported video track count",
+    )
     require(13 <= len(data) <= 8 * 1024 * 1024, "FLV sample size out of bounds")
     require(data[:3] == b"FLV" and data[3] == 1, "invalid FLV header")
     offset = int.from_bytes(data[5:9], "big")
     require(9 <= offset <= len(data) - 4, "invalid FLV data offset")
     require(data[offset : offset + 4] == b"\0\0\0\0", "invalid first tag size")
     position = offset + 4
-    observed = {(kind, track): set() for kind in ("video", "audio") for track in (0, 1)}
+    observed = {
+        (kind, track): set()
+        for kind, count in (("video", video_tracks), ("audio", 2))
+        for track in range(count)
+    }
     while position < len(data):
         require(len(data) - position >= 15, "truncated FLV tag")
         tag_type = data[position]
@@ -81,6 +89,6 @@ def check_flv_track_ids(data):
     require(position == len(data), "FLV tag boundary mismatch")
     _require_tracks(observed)
     return {
-        kind: {str(track): sorted(observed[(kind, track)]) for track in (0, 1)}
-        for kind in ("video", "audio")
+        kind: {str(track): sorted(observed[(kind, track)]) for track in range(count)}
+        for kind, count in (("video", video_tracks), ("audio", 2))
     }

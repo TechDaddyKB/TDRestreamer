@@ -104,9 +104,9 @@ response differs, record the difference and qualify it before sending media.
 
 1. The [local fixture](m0-dual-canvas.md) passes labeled H/V frames and distinct
    supplied audio through each transport boundary with external networking
-   disabled. It checks order, dimensions and identity at low resolution. Extend
-   the fixture to the actual negotiated rendition ladder once available; a
-   synthetic two-video configuration is not evidence of Twitch's ladder.
+   disabled. A later [four-rendition run](m0-twitch-ladder-local.md) uses
+   sanitized account-negotiated encoder settings, checks order, dimensions,
+   identities and FLV track IDs 0–3. Neither fixture proves Twitch delivery.
 2. Implement the qualification publisher's negotiation and track mapping against
    the observed contract, using the offline guard as an initial check. Do not
    claim that ordinary FFmpeg two-key fanout or a

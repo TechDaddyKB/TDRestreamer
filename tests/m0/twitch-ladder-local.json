@@ -1,0 +1,154 @@
+{
+  "meta": {
+    "service": "local-fixture",
+    "schema_version": "2025-01-25",
+    "config_id": "local-only"
+  },
+  "ingest_endpoints": [
+    {
+      "protocol": "RTMP",
+      "url_template": "rtmp://127.0.0.1:19351/dual/{stream_key}"
+    }
+  ],
+  "encoder_configurations": [
+    {
+      "type": "obs_nvenc_h264_tex",
+      "bitrate_interpolation_points": [
+        0,
+        600,
+        800,
+        1200
+      ],
+      "framerate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "gpu_scale_type": "OBS_SCALE_BICUBIC",
+      "width": 640,
+      "height": 360,
+      "canvas_index": 0,
+      "settings": {
+        "bitrate": 1200,
+        "bf": 2,
+        "keyint_sec": 2,
+        "lookahead": false,
+        "preset": "p5",
+        "profile": "main",
+        "adaptive_quantization": true,
+        "rate_control": "CBR",
+        "tune": "hq",
+        "multipass": "qres"
+      }
+    },
+    {
+      "type": "obs_nvenc_h264_tex",
+      "bitrate_interpolation_points": [
+        0,
+        200,
+        200,
+        200
+      ],
+      "framerate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "gpu_scale_type": "OBS_SCALE_BILINEAR",
+      "width": 284,
+      "height": 160,
+      "canvas_index": 0,
+      "settings": {
+        "bitrate": 200,
+        "bf": 2,
+        "keyint_sec": 2,
+        "lookahead": false,
+        "preset": "p5",
+        "profile": "main",
+        "adaptive_quantization": false,
+        "rate_control": "CBR",
+        "tune": "hq",
+        "multipass": "qres"
+      }
+    },
+    {
+      "type": "obs_nvenc_h264_tex",
+      "bitrate_interpolation_points": [
+        0,
+        1250,
+        1666,
+        2500
+      ],
+      "framerate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "gpu_scale_type": "OBS_SCALE_BICUBIC",
+      "width": 720,
+      "height": 1280,
+      "canvas_index": 1,
+      "settings": {
+        "bitrate": 2500,
+        "bf": 2,
+        "keyint_sec": 2,
+        "lookahead": true,
+        "preset": "p6",
+        "profile": "high",
+        "adaptive_quantization": false,
+        "rate_control": "CBR",
+        "tune": "hq",
+        "multipass": "qres",
+        "opts": "lookaheadDepth=2"
+      }
+    },
+    {
+      "type": "obs_nvenc_h264_tex",
+      "bitrate_interpolation_points": [
+        0,
+        500,
+        500,
+        500
+      ],
+      "framerate": {
+        "numerator": 30,
+        "denominator": 1
+      },
+      "gpu_scale_type": "OBS_SCALE_BICUBIC",
+      "width": 360,
+      "height": 640,
+      "canvas_index": 1,
+      "settings": {
+        "bitrate": 500,
+        "bf": 2,
+        "keyint_sec": 2,
+        "lookahead": false,
+        "preset": "p5",
+        "profile": "main",
+        "adaptive_quantization": false,
+        "rate_control": "CBR",
+        "tune": "hq",
+        "multipass": "qres"
+      }
+    }
+  ],
+  "audio_configurations": {
+    "live": [
+      {
+        "codec": "aac",
+        "track_id": 0,
+        "channels": 2,
+        "settings": {
+          "bitrate": 160
+        }
+      }
+    ],
+    "vod": [
+      {
+        "codec": "aac",
+        "track_id": 1,
+        "channels": 2,
+        "settings": {
+          "bitrate": 160
+        }
+      }
+    ]
+  }
+}

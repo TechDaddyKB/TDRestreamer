@@ -20,6 +20,7 @@ from pathlib import Path
 from m0_dual_checks import check_pixels, check_streams
 from m0_flv_checks import check_flv_track_ids
 from m0_protocols import require
+from m0_twitch_config import local_obs_config
 
 ROOT = Path(__file__).resolve().parents[1]
 AITUM_SHA256 = "484c9663d00f3a2c2322600e6178833b7edde71019c2537b6eb35cf81e71e346"
@@ -51,6 +52,7 @@ class Lab:
                 "node",
                 "Xvfb",
                 "bwrap",
+                "obs",
                 str(ROOT / ".tools/mediamtx/mediamtx"),
             },
             "unexpected fixture executable",
@@ -141,13 +143,23 @@ def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def observe(lab, path):
+def observe(lab, path, ladder=False):
     source = ["-rtsp_transport", "tcp", "-i", f"rtsp://127.0.0.1:18555/dual/{path}"]
     streams = json.loads(
         lab.run(["ffprobe", "-v", "error", *source, "-show_streams", "-of", "json"])
     )["streams"]
     (lab.work / f"{path}-streams.json").write_text(json.dumps(streams, indent=2) + "\n")
-    check_streams(streams)
+    expected = None
+    if ladder:
+        expected = [
+            ("video", "h264", 640, 360),
+            ("video", "h264", 284, 160),
+            ("video", "h264", 720, 1280),
+            ("video", "h264", 360, 640),
+            ("audio", "aac", None, None),
+            ("audio", "aac", None, None),
+        ]
+    check_streams(streams, expected)
     result = {
         "streams": [
             {k: s[k] for k in ("codec_type", "codec_name", "width", "height") if k in s}
@@ -156,7 +168,8 @@ def observe(lab, path):
         "video_identity": [],
         "audio_identity": [],
     }
-    for index, channel in [(0, 0), (1, 2)]:
+    video_colors = [(0, 0), (1, 0), (2, 2), (3, 2)] if ladder else [(0, 0), (1, 2)]
+    for index, channel in video_colors:
         pixels = lab.run(
             [
                 "ffmpeg",
@@ -227,6 +240,11 @@ def observe(lab, path):
 
 def main():
     os.umask(0o077)
+    ladder = "--twitch-ladder" in sys.argv
+    require(
+        set(sys.argv[1:]) <= {"--isolated", "--twitch-ladder"},
+        "unknown fixture option",
+    )
     if "--isolated" not in sys.argv:
         return sp.call(
             [
@@ -237,6 +255,7 @@ def main():
                 sys.executable,
                 str(Path(__file__).resolve()),
                 "--isolated",
+                *(["--twitch-ladder"] if ladder else []),
             ],
             shell=False,
         )
@@ -262,8 +281,14 @@ def main():
         },
         "tests": {},
         "limitations": [
-            "Local synthetic configuration, not a Twitch negotiation response",
-            "No platform broadcasting, OAuth, cloud calls, preview, GPU or soak qualification",
+            (
+                "Local synthetic configuration with sanitized account-negotiated encoder settings"
+                if ladder else "Local synthetic configuration, not a Twitch negotiation response"
+            ),
+            (
+                "No platform broadcasting, OAuth, cloud calls, preview or soak qualification"
+                if ladder else "No platform broadcasting, OAuth, cloud calls, preview, GPU or soak qualification"
+            ),
             "Standalone feasibility, not application integration; anonymous loopback fixture sinks",
             "Pixel/color, audio identity and local FLV headers only; no timing, motion, latency or A/V sync qualification",
             "FLV sample is not a capture of the later RTMP publisher connection",
@@ -290,17 +315,25 @@ def main():
         require(
             report["gateway"] == pins["mediamtx_version"], "MediaMTX version mismatch"
         )
+        source_files = [
+            Path(__file__).resolve(),
+            ROOT / "scripts/m0_dual_checks.py",
+            ROOT / "scripts/m0_flv_checks.py",
+            ROOT / "scripts/m0_protocols.py",
+            ROOT / "tests/m0/dual-canvas.mjs",
+            ROOT / "tests/m0/obs-rpc.mjs",
+            ROOT / "tests/m0/toolchain.json",
+        ]
+        if ladder:
+            source_files.extend(
+                [
+                    ROOT / "scripts/m0_twitch_config.py",
+                    ROOT / "tests/m0/twitch-ladder-local.json",
+                ]
+            )
         report["harness_sha256"] = {
             str(p.relative_to(ROOT)): digest(p)
-            for p in [
-                Path(__file__).resolve(),
-                ROOT / "scripts/m0_dual_checks.py",
-                ROOT / "scripts/m0_flv_checks.py",
-                ROOT / "scripts/m0_protocols.py",
-                ROOT / "tests/m0/dual-canvas.mjs",
-                ROOT / "tests/m0/obs-rpc.mjs",
-                ROOT / "tests/m0/toolchain.json",
-            ]
+            for p in source_files
         }
         report["python_optimized"] = bool(sys.flags.optimize)
         modules = work / "modules"
@@ -308,7 +341,7 @@ def main():
         module_data = work / "module-data"
         module_data.mkdir()
         report["module_sha256"] = {}
-        for name in MODULES:
+        for name in (*MODULES, *(("obs-nvenc",) if ladder else ())):
             source = Path("/usr/lib/obs-plugins") / f"{name}.so"
             shutil.copyfile(source, modules / source.name)
             report["module_sha256"][source.name] = digest(source)
@@ -456,6 +489,13 @@ paths:
                 for i, name in enumerate(["live", "vod"])
             },
         }
+        source_key = "obs"
+        if ladder:
+            fixture = json.loads((ROOT / "tests/m0/twitch-ladder-local.json").read_text())
+            source_key = "m0-local-synthetic-source-key"
+            configuration, report["ladder_mapping"] = local_obs_config(
+                fixture, 19351, source_key
+            )
         (profile / "basic.ini").write_text(
             """[General]
 Name=M0
@@ -551,9 +591,13 @@ MultitrackVideoConfigOverride="""
             "QT_IM_MODULE",
         ]:
             env.pop(key, None)
-        obs = lab.start(
-            "obs",
-            [
+        if ladder:
+            obs_args = [
+                "obs", "--multi", "--disable-missing-files-check",
+                "--profile", "M0", "--collection", "M0",
+            ]
+        else:
+            obs_args = [
                 "bwrap",
                 "--die-with-parent",
                 "--ro-bind",
@@ -576,9 +620,8 @@ MultitrackVideoConfigOverride="""
                 "M0",
                 "--collection",
                 "M0",
-            ],
-            env,
-        )
+            ]
+        obs = lab.start("obs", obs_args, env)
         lab.port(19447, obs)
         report["obs"] = json.loads(
             lab.run(
@@ -597,7 +640,7 @@ MultitrackVideoConfigOverride="""
             report["obs"]["websocketVersion"] == pins["obs_websocket_version"],
             "WebSocket version mismatch",
         )
-        report["tests"]["obs_ingest_rtsp"] = observe(lab, "obs")
+        report["tests"]["obs_ingest_rtsp"] = observe(lab, source_key, ladder)
         flv = lab.run(
             [
                 "ffmpeg",
@@ -607,7 +650,7 @@ MultitrackVideoConfigOverride="""
                 "-rtsp_transport",
                 "tcp",
                 "-i",
-                "rtsp://127.0.0.1:18555/dual/obs",
+                f"rtsp://127.0.0.1:18555/dual/{source_key}",
                 "-t",
                 "2",
                 "-map",
@@ -619,7 +662,9 @@ MultitrackVideoConfigOverride="""
                 OUTPUT_PIPE,
             ],
         )
-        report["tests"]["flv_track_ids"] = check_flv_track_ids(flv)
+        report["tests"]["flv_track_ids"] = check_flv_track_ids(
+            flv, video_tracks=4 if ladder else 2
+        )
         relay = lab.start(
             "relay",
             [
@@ -630,13 +675,12 @@ MultitrackVideoConfigOverride="""
                 "-rtsp_transport",
                 "tcp",
                 "-i",
-                "rtsp://127.0.0.1:18555/dual/obs",
+                f"rtsp://127.0.0.1:18555/dual/{source_key}",
                 "-map",
                 "0",
                 "-c",
                 "copy",
-                "-rtmp_enhanced_codecs",
-                "avc1,mp4a",
+                *([] if ladder else ["-rtmp_enhanced_codecs", "avc1,mp4a"]),
                 "-f",
                 "flv",
                 "rtmp://127.0.0.1:19351/dual/relay",
@@ -644,8 +688,10 @@ MultitrackVideoConfigOverride="""
         )
         time.sleep(3)
         require(relay.poll() is None, "copy publisher exited")
-        report["tests"]["enhanced_copy_publisher"] = observe(lab, "relay")
-        report["status"] = "passed_local_dual_canvas"
+        report["tests"]["enhanced_copy_publisher"] = observe(lab, "relay", ladder)
+        report["status"] = (
+            "passed_local_twitch_ladder" if ladder else "passed_local_dual_canvas"
+        )
     except Exception as error:
         report["status"] = "failed"
         report["error_type"] = type(error).__name__
