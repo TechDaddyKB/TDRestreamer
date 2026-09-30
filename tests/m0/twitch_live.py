@@ -222,7 +222,7 @@ def channel_live(client_id, token):
     return any(str(item.get("user_login", "")).lower() == "techdaddy" for item in data)
 
 
-def negotiate(key):
+def negotiate(key, include_config=False):
     mem = {}
     for line in Path("/proc/meminfo").read_text().splitlines():
         fields = line.split()
@@ -293,7 +293,9 @@ def negotiate(key):
                  for a in config["audio_configurations"][role]]
     require(all(type(value) is int and value > 0 for value in bitrates)
             and sum(bitrates) <= 6000, "Twitch negotiated bitrate cap exceeded")
-    return authentication + "?clientConfigId=" + quote(config_id, safe=""), sum(bitrates)
+    result = (authentication + "?clientConfigId=" + quote(config_id, safe=""),
+              sum(bitrates))
+    return (*result, config) if include_config else result
 
 
 def main():

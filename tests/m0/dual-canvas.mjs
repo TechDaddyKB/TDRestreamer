@@ -2,20 +2,25 @@ import { obsConnection } from "./obs-rpc.mjs";
 import fs from "node:fs";
 import path from "node:path";
 
-const runId = process.argv[2];
+const obsControl = process.argv[2] === "--obs-control";
+const runId = process.argv[obsControl ? 3 : 2];
 if (!/^[a-f0-9]{12}$/.test(runId ?? ""))
   throw new Error("Invalid fixture run ID");
-const runtimeRoot = fs.realpathSync(new URL("../../runtime/", import.meta.url));
+const runtimeRoot = obsControl
+  ? "/dev/shm"
+  : fs.realpathSync(new URL("../../runtime/", import.meta.url));
 const expectedConfig = path.join(
   runtimeRoot,
-  "m0-dual-" + runId,
+  (obsControl ? "tdrestreamer-obs-control-" : "m0-dual-") + runId,
   "controller.json",
 );
 const configPath = fs.realpathSync(expectedConfig);
 if (configPath !== expectedConfig)
   throw new Error("Symlinked fixture configuration refused");
 const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
-if (!["rtmp://127.0.0.1:19350/dual", "rtmp://127.0.0.1:19351/dual"].includes(cfg.server))
+if (!["rtmp://127.0.0.1:19350/dual", "rtmp://127.0.0.1:19351/dual",
+      "rtmps://ingest.global-contribute.live-video.net/app"].includes(cfg.server) ||
+    (obsControl !== (cfg.server === "rtmps://ingest.global-contribute.live-video.net/app")))
   throw new Error("Unexpected local OBS destination");
 const { ready, request, close } = obsConnection(
   "ws://127.0.0.1:19447",

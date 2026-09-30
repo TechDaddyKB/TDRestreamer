@@ -39,9 +39,11 @@ startup and enhanced primary tags, still ended at Twitch ingest after roughly
 four seconds. Helix never reported the channel live, and the channel was
 offline after cleanup. The local controls passed in those runs.
 
-Actual horizontal and vertical viewer playback in one broadcast
-and live/VOD audio identity must be checked. A local sink result, Helix live
-state, or a successful publisher exit alone cannot close those M0 gates.
+A later [direct OBS control](m0-twitch-obs-control.md) delivered distinct
+horizontal and vertical viewer scenes and an 880 Hz VOD audio sample on this
+channel and ladder. Live 440 Hz audio identity remains unverified, and none of
+those direct OBS results qualify the appliance copy-publisher. A local sink
+result or a successful publisher exit alone cannot close its M0 gate.
 
 The [Amazon IVS multitrack integration guide](https://docs.aws.amazon.com/ivs/latest/LowLatencyUserGuide/multitrack-video-sw-integration.html)
 lists mismatched per-track frame rate/bitrate, unaligned IDRs, and missing BPM

@@ -1,0 +1,52 @@
+{
+  "status": "direct_obs_delivered",
+  "recorded_at": "2026-09-30T22:44:00Z",
+  "mode": "direct_obs_control",
+  "seconds_cap": 90,
+  "synthetic_identity": {
+    "horizontal": "red",
+    "vertical": "blue",
+    "live_hz": 440,
+    "vod_hz": 880
+  },
+  "negotiated_nominal_kbps": 4720,
+  "obs_initial_status": {
+    "obsVersion": "32.2.2",
+    "websocketVersion": "5.7.4",
+    "canvases": [
+      {
+        "name": "Main",
+        "video": {
+          "baseHeight": 360,
+          "baseWidth": 640,
+          "fpsDenominator": 1,
+          "fpsNumerator": 30,
+          "outputHeight": 360,
+          "outputWidth": 640
+        }
+      },
+      {
+        "name": "Aitum Vertical",
+        "video": {
+          "baseHeight": 1920,
+          "baseWidth": 1080,
+          "fpsDenominator": 1,
+          "fpsNumerator": 30,
+          "outputHeight": 1920,
+          "outputWidth": 1080
+        }
+      }
+    ],
+    "bytes": 713298
+  },
+  "broadcast_start_utc": "2026-09-30T22:44:07Z",
+  "helix_live_observed": true,
+  "obs_exited_early": false,
+  "obs_stop_status": {
+    "active_before_stop": true,
+    "active_after_stop": true,
+    "bytes": 53607762
+  },
+  "broadcast_end_utc": "2026-09-30T22:45:39Z",
+  "helix_offline_after_stop": false
+}

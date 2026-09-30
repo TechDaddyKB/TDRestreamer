@@ -113,15 +113,18 @@ response differs, record the difference and qualify it before sending media.
    mocked response meets Twitch's contract. A direct OBS test is only a reference
    control; the chosen appliance transport/publisher path must also pass.
 3. The owner authorized any additional broadcast testing necessary for this
-   goal after the first two attempts. The [bounded attempts](m0-twitch-live-attempts.md)
-   still failed at external ingest after locally qualifying BPM-aware startup,
-   aligned first output IDRs, and enhanced primary H.264 tags. Compare the
-   remaining wire format and per-track settings with OBS before another run.
-4. During the authorized tests, obtain the actual negotiated
-   H/V ladder and audio track roles. Redact credentials from retained evidence,
-   logs and artifacts. Verify labeled horizontal and vertical viewer playback
-   within the same Twitch broadcast, then verify intended live/VOD audio identity.
-   Desktop-only playback or an Inspector bandwidth test cannot prove all of this.
+   goal after the first two attempts. The five appliance
+   [bounded attempts](m0-twitch-live-attempts.md) failed at external ingest
+   after locally qualifying BPM-aware startup, aligned first output IDRs, and
+   enhanced primary H.264 tags. A later [direct OBS control](m0-twitch-obs-control.md)
+   reached Twitch and delivered H/V viewer scenes. Compare the remaining wire
+   format and per-track settings with that accepted OBS path before another
+   appliance run.
+4. During the authorized tests, use the actual negotiated H/V ladder and audio
+   track roles. Redact credentials from retained evidence, logs and artifacts.
+   The direct OBS control established distinct H/V viewer playback and an 880 Hz
+   VOD audio sample; live 440 Hz delivery and appliance H/V/audio delivery still
+   require external verification. An Inspector bandwidth test cannot prove them.
 5. Stop outputs on completion/failure, verify the channel is offline, and retain
    sanitized results with exact tool versions and producing-source hashes. A
    failed or unsupported path remains a blocker; no local fixture waives it.

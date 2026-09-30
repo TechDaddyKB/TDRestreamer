@@ -44,12 +44,15 @@ This control used the negotiated ladder, but the sink was local.
 | 3 | 21:21:31 | [Bounded libavformat publisher](m0-twitch-copy-candidate.md), after a passing route-free local six-stream bridge control | RTMPS media write returned EOF after about two seconds; [sanitized report](m0-twitch-third-attempt.json) records Helix never live and channel offline after stop |
 | 4 | 22:00:44 | Same publisher after BPM-aware startup and aligned outgoing first IDRs | RTMPS media write returned broken pipe after about three seconds; [sanitized report](m0-twitch-fourth-attempt.json) records Helix never live and channel offline after stop |
 | 5 | 22:09:18 | Same startup with primary H.264 converted to enhanced single-track `avc1` FLV tags | RTMPS media write returned EOF after about four seconds; [sanitized report](m0-twitch-fifth-attempt.json) records Helix never live and channel offline after stop |
+| 6 | 22:44:07 | [Direct isolated OBS control](m0-twitch-obs-control.md), 90 seconds | Helix live and public red horizontal playback; 1:30 VOD with 880 Hz audio |
+| 7 | 22:48:14 | Same direct OBS control, 150 seconds | Helix live; dashboard showed horizontal and vertical renditions, red H and blue V viewer previews; graceful stop and offline check passed |
 
-None of the attempts produced a Helix live-stream result. After each failure, the
-harness stopped OBS, MediaMTX and FFmpeg. A final check found the channel offline,
-no test listeners, and no video in Video Producer's current All Videos view.
-No horizontal/vertical viewer playback or live/VOD audio behavior was observed.
-The disconnects do not identify which remaining ingest requirement was rejected.
+None of the five **copy-publisher** attempts produced a Helix live-stream result.
+After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
+OBS attempts 6 and 7 then proved that the same channel and negotiated ladder
+can go live and deliver H/V scenes. The [control record](m0-twitch-obs-control.md)
+also establishes one VOD audio sample; live audio identity remains unverified.
+The copy disconnects do not identify which ingest requirement was rejected.
 
 The first two exploratory live runners and their raw reports remain private/ignored. Their
 source was not committed, so those observations are a **diagnostic record**, not
@@ -64,7 +67,7 @@ publisher log is committed.
 
 The appliance copy-publisher has not demonstrated Twitch Enhanced Broadcasting
 delivery. Its remaining FLV/RTMP wire behavior and per-track negotiated settings
-must be compared with OBS's negotiated publisher path before a further live
-qualification. The owner has authorized further necessary broadcast tests.
-Do not infer Twitch H/V support or live/VOD correctness from the
-successful negotiation and local fixture.
+must be compared with the successful direct OBS publisher path before a further
+copy-path live qualification. The owner has authorized further necessary
+broadcast tests. Direct OBS H/V delivery and VOD audio do not establish that
+the appliance relay behaves correctly.
