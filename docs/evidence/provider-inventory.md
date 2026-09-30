@@ -1,11 +1,12 @@
 # Provider feasibility inventory
 
 Reviewed 2026-09-30 against official documentation. AWS EC2 and RunPod **Pods**
-remain the selected v1 providers. Account/API access, billing access, regional
-quota, GPU availability and media throughput have not been tested. The owner's
-local-only policy prohibits lifecycle tests and spending; no provider resources
-were created. Adapter version tested: none. These records define prerequisites,
-not a provider certification or an approved budget.
+remain the selected v1 providers. Subsequent [account preflight](m0-account-eligibility.md)
+verified AWS STS/Free Tier/EC2 read APIs and RunPod console access. Regional quota,
+GPU availability, lifecycle, media throughput and cost attribution remain
+unverified. The owner authorizes eligibility checks only; lifecycle tests and
+spending have no approval. No provider resources were created. Adapter version
+tested: none. These records are not provider certification or an approved budget.
 
 ## AWS EC2
 
@@ -82,5 +83,7 @@ AWS: IAM/region/quota and launch/restart/terminate reconciliation, owned-resourc
 cleanup, network/device execution, Cost Explorer authorization and actual cost
 attribution. RunPod: Pod lifecycle and port discovery, TCP media/preview topology,
 GPU execution, interruption recovery, storage cleanup and billing reconciliation.
-Account identifiers and spending authorization remain absent. These are blockers
-for their acceptance gates, not reasons to remove either provider from v1.
+AWS project identity is verified privately; RunPod API authorization and spending
+authorization remain absent. The AWS Free Plan has credits, but they are not an
+approved test budget. These remain acceptance gates, not reasons to remove either
+provider from v1.

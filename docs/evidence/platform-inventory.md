@@ -1,10 +1,12 @@
 # Platform capability inventory
 
-Review date: 2026-09-30. Sources below are official documentation, not tested account
-capabilities. No platform API calls, logins, media delivery or account mutations
-were performed. The owner authorized local tests only. Account IDs, app approvals,
-refresh-token behavior and feature entitlements are therefore **unverified for
-all five platforms**. Public documentation cannot turn those gates into passes.
+Review date: 2026-09-30. The capability table below records official documentation.
+Subsequent [authenticated account observations](m0-account-eligibility.md) establish
+Twitch Dual Format eligibility and access to the five platform dashboards/setup
+pages. The owner now authorizes eligibility checks, with broadcasts approved
+separately. No media delivery or application OAuth/API permission tests were
+performed. Browser access does not establish application scopes, refresh-token
+behavior or actual delivery.
 Tested adapter version: none; no production platform adapter exists yet.
 
 | Platform | Transport and credentials | Lifecycle / available API | Orientation and audio | Eligibility and outstanding evidence |
@@ -12,7 +14,7 @@ Tested adapter version: none; no production platform adapter exists yet.
 | YouTube | RTMP(S), stream keys; separate Google publishing authorization required | `liveStreams` and `liveBroadcasts`, bind and transition operations | Live Control Room documents a second encoder key for vertical; API reference still describes one stream bound to a broadcast. Do not infer API support for pairing from UI support. Independent supplied audio/VOD semantics unverified | Verified channel and no recent streaming restrictions; check actual channel/app access, publishing scopes, quota, paired-event association and dual-format delivery |
 | Twitch | RTMP ingress plus account stream key; Enhanced Broadcasting required for dual format | Video ingestion is separate from account/API authorization; exact Enhanced Broadcasting negotiation and lifecycle remain a spike requirement | H/V is a negotiated dual-format broadcast, not two ordinary keys. Local OBS VOD-track preservation does not prove Twitch live/VOD semantics | Help now states dual format is available to all streamers, while server-side transcode entitlement varies. Actual account/encoder negotiation, viewer orientation and VOD playback remain blocked |
 | Kick | User's stream URL/key; OAuth 2.1 authorization-code grants and `streamkey:read` are documented | Channel read and metadata patch; `channel:write` for metadata, `channel:read` for information | No supported simultaneous paired H/V or distinct live/VOD audio contract established from reviewed docs | App registration, consent, refresh/revoke and account ingest rights unverified. Metadata PATCH is not evidence for an explicit broadcast-start API |
-| X | Producer sources use RTMP/RTMPS or HLS and stream key | Producer UI creates sources/broadcasts, supports immediate/scheduled broadcasts; public lifecycle API availability unverified | Reviewed Producer guide does not establish a paired H/V or separate VOD-audio mechanism | Actual Media Studio/Live Studio access and API eligibility unverified; do not equate ordinary X API credentials with Producer access |
+| X | Producer sources use RTMP/RTMPS or HLS and stream key | Producer UI creates sources/broadcasts, supports immediate/scheduled broadcasts; public lifecycle API availability unverified | Reviewed Producer guide does not establish a paired H/V or separate VOD-audio mechanism | Media Studio/Live Studio UI access observed; application API eligibility unverified; do not equate ordinary X API credentials with Producer access |
 | Rumble | Streamer configuration provides RTMP URL and stream key | UI creates a stream; the published v1.1 Live Stream API supplies live metadata/notifications. It does not establish create/start/stop APIs | Paired H/V and multi-track destination semantics unverified | Account rights and per-stream workflow unverified; API URL itself is a credential and must be encrypted/redacted. RTMPS support must be checked against supplied endpoint |
 | Generic RTMP/RTMPS | User endpoint/key, optionally supported endpoint-specific authentication | No platform event lifecycle promised | Select supplied audio or enhanced-RTMP packaging only when the receiver declares and passes that capability | [Local report](m0-obs-preview.json) proves the pinned controlled sink, not arbitrary receivers |
 
@@ -58,6 +60,6 @@ For each platform retain a sanitized account eligibility result, app/API version
 minimum scope list, refresh/revocation result, actual input/output codec probes,
 viewer delivery checks and account-specific limitations. For H/V, verify event
 association and orientation behavior; for live/VOD tracks, verify both viewer
-playback and the resulting VOD. Use explicit authorized test destinations and a
-broadcast policy before any account test. None is authorized now. Numeric rules
+playback and the resulting VOD. Account eligibility checks are authorized. Use explicit test destinations and a
+separately approved broadcast policy before media delivery tests. Numeric rules
 need dated regression fixtures and actual rejection/acceptance evidence in M3/M4.
