@@ -5,17 +5,20 @@ observations and read-only CLI results. It is not a media-delivery test report.
 
 ## Authorization
 
-The owner replaced the original local-only restriction with: **Check account
-eligibility first; approve broadcasts separately.** The owner signed into the
-platforms and completed AWS project creation and CLI login. No broadcast,
-provisioning, paid-plan upgrade, RunPod funding, or spending limit was authorized.
+For this preflight, the owner replaced the original local-only restriction with:
+**Check account eligibility first; approve broadcasts separately.** The owner
+signed into the platforms and completed AWS project creation and CLI login. At
+the time of these observations, no broadcast, provisioning, paid-plan upgrade,
+RunPod funding, or spending limit was authorized. A later bounded Twitch
+broadcast approval and its two failed attempts are recorded
+[separately](m0-twitch-live-attempts.md).
 AWS credits are available; their existence is not permission to consume them.
 
 ## Platform browser observations
 
 | Platform | Observed authenticated capability | Not established |
 |---|---|---|
-| Twitch | Creator Dashboard for TechDaddy reports Dual Format and 2K Streaming **Eligible**, Server Side Transcode Support **Ineligible**; Store past broadcasts and Always Publish VODs are enabled | Enhanced Broadcasting negotiation, relayed H/V metadata, both viewer orientations, live/VOD audio identity, application OAuth/API scopes and refresh/revocation |
+| Twitch | Creator Dashboard for TechDaddy reports Dual Format and 2K Streaming **Eligible**, Server Side Transcode Support **Ineligible**; Store past broadcasts and Always Publish VODs are enabled | At preflight time: Enhanced Broadcasting negotiation, relayed H/V metadata, both viewer orientations, live/VOD audio identity, application OAuth/API scopes and refresh/revocation. Negotiation was subsequently obtained in the [bounded diagnostic](m0-twitch-live-attempts.md) |
 | YouTube | Live Control Room accessible; Dual stream control is present and off; the current encoder page shows no incoming data | Dual-format API association, application publishing scopes, API quota, actual ingest/viewer delivery |
 | Kick | TDDigital streaming dashboard accessible and offline; Stream URL & Key navigation available | App registration/consent, API scopes, refresh/revoke, successful authenticated ingest |
 | X | Media Studio and Live Studio accessible for TechDaddyKB; Manage Sources and New Livestream controls present | Public lifecycle API eligibility, app scopes, source ingest and viewer delivery |
@@ -87,8 +90,9 @@ an app token and read the public TechDaddy Helix user record. The
 and one matching user. No token or credential was retained in the report.
 
 This proves only client-credentials authentication and a public API read.
-No broadcaster OAuth consent, scope grant, refresh/revocation, stream-key access,
-Twitch H/V negotiation, or broadcast was performed. Other platform API gates
+During this preflight, no broadcaster OAuth consent, scope grant,
+refresh/revocation, stream-key access, Twitch H/V negotiation, or broadcast was
+performed. Other platform API gates
 remain open. See the [Twitch procedure](m0-twitch-qualification.md).
 
 ## AWS read-only results

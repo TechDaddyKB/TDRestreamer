@@ -5,8 +5,10 @@ Subsequent [authenticated account observations](m0-account-eligibility.md) estab
 Twitch Dual Format eligibility and access to the five platform dashboards/setup
 pages. The owner approved a separate [bounded Twitch diagnostic](m0-twitch-live-attempts.md):
 account-specific negotiation succeeded, but two publisher attempts failed before
-delivery. No application OAuth/API permission tests were performed. Browser
-access does not establish application scopes or refresh-token behavior.
+delivery. No user OAuth, user-scoped, or non-public application API permission
+tests were performed; the public Twitch app-token read is documented in the
+[account preflight](m0-account-eligibility.md). Browser access does not establish
+application scopes or refresh-token behavior.
 Tested adapter version: none; no production platform adapter exists yet.
 
 | Platform | Transport and credentials | Lifecycle / available API | Orientation and audio | Eligibility and outstanding evidence |
