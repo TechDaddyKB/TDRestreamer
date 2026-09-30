@@ -47,12 +47,31 @@ creation, or billable API request:
   submitted. Existing Live Studio access does not establish enrollment or a
   supported public broadcast-lifecycle API.
 
+### Signed-in Chrome recheck
+
+On 2026-09-30, the owner approved a local read-only connection to their running
+Google Chrome 154 session. The Chrome DevTools MCP client was pinned to 1.10.1
+for this check with input actions and JavaScript evaluation disabled. No browser
+profile or cookie files were read. The observed account state was:
+
+| Platform | Current developer/API access observation | Limit |
+|---|---|---|
+| Twitch | The registered-app list contains one unrelated app and no Restreamer app. The prepared Restreamer form remains unsubmitted. | No Restreamer client, grant, or Enhanced Broadcasting negotiation was established. |
+| Kick | The signed-in Developer settings page says **No KICK App**. | No app registration, scopes, or token flow was tested. |
+| X | The developer console still presents **Create a developer account**. | Producer/Live Studio UI access does not establish X API enrollment or public lifecycle controls. |
+| Google Cloud / YouTube | The selected existing project is unrelated to Restreamer and shows no OAuth clients. | Other projects and YouTube publishing grants were not qualified; the selected project was not changed. |
+| Rumble | The Livestream API settings page loads and offers user/channel sections. | No credential-bearing API URL was opened or copied, and no API request or control operation was tested. |
+
+These are current UI observations, not application API acceptance tests. No app,
+developer account, OAuth grant, stream, or billable resource was created. The
+browser connection did not expose stream keys or API URLs in the retained record.
+
 Next prerequisites are a dedicated app/callback configuration and consent plan
 for the supported platform APIs, plus explicit approval wherever registration
 creates credentials or accepts terms. No existing unrelated app will be reused
 or modified implicitly. X developer enrollment, API product suitability and any
 associated charges need separate resolution; a normal X account is insufficient
-evidence. Rumble Live Stream API access remains untested.
+evidence. Rumble Live Stream API invocation remains untested.
 
 ## AWS read-only results
 
