@@ -83,7 +83,7 @@ def verify_srt_denials(work, passwords, auth_events):
     for name, phrase, user in [
         ("missing_encryption", None, "publisher"),
         ("wrong_encryption", "deliberately-wrong-test-passphrase", "publisher"),
-        ("wrong_tenant", passwords["srt-encryption"], "reader-b"),
+        ("wrong_tenant", passwords["srt-encryption"], "publisher-b"),
     ]:
         path = "a/denied-" + name
         args = [
@@ -122,6 +122,30 @@ def verify_srt_denials(work, passwords, auth_events):
             )
         result[name] = {"exit_code": outcome.returncode, "rejected": True}
     return result
+
+
+def verify_srt_own_scope(source, passwords, start, probe):
+    path = "b/owned-srt"
+    process = start(
+        "srt-tenant-b",
+        source
+        + [
+            "-f",
+            "mpegts",
+            srt_url(path, passwords["srt-encryption"], passwords, "publisher-b"),
+        ],
+    )
+    tracks = wait_stream(path, process, lambda name: probe(name, "reader-b"))
+    require(
+        sum(track["codec_type"] == "audio" for track in tracks) == 2,
+        "tenant B publisher must work in its own scope before cross-tenant denial",
+    )
+    return {
+        "publisher": "publisher-b",
+        "path": path,
+        "audio_tracks": 2,
+        "published_and_read": True,
+    }
 
 
 def qualify(work, passwords, start, rtsp, probe, tone, auth_events):
@@ -165,6 +189,9 @@ def qualify(work, passwords, start, rtsp, probe, tone, auth_events):
         + ["-f", "mpegts", srt_url(SRT_PATH, passwords["srt-encryption"], passwords)],
     )
     result["encrypted_srt"] = verify_tracks(SRT_PATH, encrypted_publisher, probe, tone)
+    result["encrypted_srt"]["own_tenant_positive_control"] = verify_srt_own_scope(
+        source, passwords, start, probe
+    )
     result["encrypted_srt"]["denials"] = verify_srt_denials(
         work, passwords, auth_events
     )

@@ -13,18 +13,18 @@
     "obs_audio_identity": [
       {
         "expected_hz": 440,
-        "opposite_tone_power_ratio": 5745524.86
+        "opposite_tone_power_ratio": 13822962.44
       },
       {
         "expected_hz": 880,
-        "opposite_tone_power_ratio": 13866799.66
+        "opposite_tone_power_ratio": 7441661.58
       }
     ],
     "preview": {
       "browserVersion": "153.0.8010.12",
       "webrtc": {
         "frames": 31,
-        "time": 1.021,
+        "time": 1.019,
         "tracks": [
           "audio",
           "video"
@@ -34,7 +34,7 @@
       "hls": {
         "fallbackTriggered": true,
         "frames": 31,
-        "time": 0.831118
+        "time": 0.83
       },
       "access_denials": [
         {
@@ -54,32 +54,32 @@
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/70b1bff5dc08_video1_init.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/70b1bff5dc08_video1_seg0.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/70b1bff5dc08_audio2_init.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/70b1bff5dc08_audio2_seg0.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/70b1bff5dc08_video1_seg1.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/70b1bff5dc08_audio2_seg1.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -104,32 +104,32 @@
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/70b1bff5dc08_video1_init.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/70b1bff5dc08_video1_seg0.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/70b1bff5dc08_audio2_init.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/70b1bff5dc08_audio2_seg0.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/70b1bff5dc08_video1_seg1.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/70b1bff5dc08_audio2_seg1.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -154,32 +154,32 @@
         },
         {
           "identity": "expired",
-          "path": "/a/hls/70b1bff5dc08_video1_init.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/70b1bff5dc08_video1_seg0.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/70b1bff5dc08_audio2_init.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/70b1bff5dc08_audio2_seg0.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/70b1bff5dc08_video1_seg1.mp4",
+          "path": "/a/hls/54c6cb99b35d_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/70b1bff5dc08_audio2_seg1.mp4",
+          "path": "/a/hls/54c6cb99b35d_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -198,11 +198,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_tone_power_ratio": 8412595.58
+          "opposite_tone_power_ratio": 4393350.92
         },
         {
           "expected_hz": 880,
-          "opposite_tone_power_ratio": 4207146.73
+          "opposite_tone_power_ratio": 4117012.37
         }
       ]
     },
@@ -222,11 +222,11 @@
         "audio_identity": [
           {
             "expected_hz": 440,
-            "opposite_tone_power_ratio": 9560666.91
+            "opposite_tone_power_ratio": 5094757.45
           },
           {
             "expected_hz": 880,
-            "opposite_tone_power_ratio": 5948988.31
+            "opposite_tone_power_ratio": 7859456.95
           }
         ]
       },
@@ -239,13 +239,19 @@
         "audio_identity": [
           {
             "expected_hz": 440,
-            "opposite_tone_power_ratio": 4337608.29
+            "opposite_tone_power_ratio": 16339220.11
           },
           {
             "expected_hz": 880,
-            "opposite_tone_power_ratio": 4887991.03
+            "opposite_tone_power_ratio": 11008402.54
           }
         ],
+        "own_tenant_positive_control": {
+          "publisher": "publisher-b",
+          "path": "b/owned-srt",
+          "audio_tracks": 2,
+          "published_and_read": true
+        },
         "denials": {
           "missing_encryption": {
             "exit_code": 251,
@@ -272,15 +278,15 @@
     "Browser audio is negotiated but not sample-analyzed; no latency, synchronization or soak qualification"
   ],
   "harness_sha256": {
-    "scripts/m0-local.py": "cd9f83dfece5d6a86d61c26e66356faa2399f4615e7c87e8f322c392611a7a90",
-    "scripts/m0_protocols.py": "8a609a025d9d183f65b67a391d0d6842d08be899b3d47ce61cd246300994a43c",
+    "scripts/m0-local.py": "dddf4ea07bfe72400abf770e10240adf1fc8e59fbd9cd5449a6ee8e5c8ac038a",
+    "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
     "tests/m0/obs-control.mjs": "eb8a0dfd97db5baec16d89366384ea0f9dc23a6f4bb719a0d6e503af289b0118",
     "tests/m0/preview.mjs": "ccecda73ea0111f0df84e614f2e7d0e5ff35311ba9da605b4f418f71cfe718ca",
     "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180",
     "web/package-lock.json": "890995d5d6a64de1348e1f0a9d900009e267aa131f91ae14a77106762797c9ab"
   },
   "python_optimized": true,
-  "recorded_at": "2026-09-30T14:27:53Z",
+  "recorded_at": "2026-09-30T14:31:39Z",
   "gateway": "v1.21.1",
   "gateway_sha256": "2b45b2999f22c8a1ecd376ce407b6337b68466fdeac54a8fdc448a79f818474f",
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
@@ -320,7 +326,7 @@
         "group": "default",
         "txqlen": 1000,
         "link_type": "ether",
-        "address": "9e:24:77:9f:fd:c0",
+        "address": "3a:cb:b6:29:f5:4f",
         "broadcast": "ff:ff:ff:ff:ff:ff"
       }
     ],
@@ -349,7 +355,7 @@
     "obsVersion": "32.2.2",
     "websocketVersion": "5.7.4",
     "active": true,
-    "bytes": 366913
+    "bytes": 367884
   },
   "auth_events": [
     {
@@ -521,14 +527,14 @@
       "allowed": false
     },
     {
-      "user": "expired",
+      "user": "reader-b",
       "path": "a/hls",
       "action": "read",
       "protocol": "hls",
       "allowed": false
     },
     {
-      "user": "reader-b",
+      "user": "expired",
       "path": "a/hls",
       "action": "read",
       "protocol": "hls",
@@ -553,13 +559,6 @@
       "path": "a/webrtc",
       "action": "read",
       "protocol": "webrtc",
-      "allowed": false
-    },
-    {
-      "user": "",
-      "path": "a/relay",
-      "action": "read",
-      "protocol": "rtsp",
       "allowed": false
     },
     {
@@ -570,15 +569,22 @@
       "allowed": false
     },
     {
-      "user": "publisher",
+      "user": "",
       "path": "a/relay",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
     },
     {
       "user": "publisher",
-      "path": "a/obs",
+      "path": "a/relay",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -851,28 +857,28 @@
     },
     {
       "user": "",
-      "path": "a/obs",
+      "path": "a/srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": false
     },
     {
       "user": "",
-      "path": "a/srt",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": false
     },
     {
       "user": "publisher",
-      "path": "a/obs",
+      "path": "a/srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
     },
     {
       "user": "publisher",
-      "path": "a/srt",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -992,6 +998,111 @@
     {
       "user": "publisher",
       "path": "a/srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "reader-b",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher",
+      "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "reader-b",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "reader-b",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "reader-b",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "publisher-b",
+      "path": "b/owned-srt",
+      "action": "publish",
+      "protocol": "srt",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "reader-b",
+      "path": "b/owned-srt",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "reader-b",
+      "path": "b/owned-srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -1011,7 +1122,7 @@
       "allowed": true
     },
     {
-      "user": "reader-b",
+      "user": "publisher-b",
       "path": "a/denied-wrong_tenant",
       "action": "publish",
       "protocol": "srt",

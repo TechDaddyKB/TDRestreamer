@@ -34,3 +34,9 @@ The last launcher audit finding was addressed by making the fixed `unshare`
 argument vector explicit at the call site, with `shell=False`; no suppression is
 needed for that call. The full optimized-Python media run passed again and the
 report was regenerated from that exact source revision.
+
+Gitar identified that the original SRT wrong-tenant case used a read-only user.
+The revised test uses a tenant-B publisher, first proves publication and media
+readback within tenant B, then rejects that same publisher at tenant A with the
+same encryption credentials. This isolates tenant scope from publish permission.
+The full optimized-Python run passed with this positive control and denial.

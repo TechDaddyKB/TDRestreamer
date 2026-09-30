@@ -61,7 +61,21 @@ files = []
 auth_events = []
 passwords = {
     name: secrets.token_urlsafe(24)
-    for name in ["publisher", "reader-a", "reader-b", "expired", "srt-encryption"]
+    for name in [
+        "publisher",
+        "publisher-b",
+        "reader-a",
+        "reader-b",
+        "expired",
+        "srt-encryption",
+    ]
+}
+PUBLISH_ACTIONS = frozenset(["publish", "read"])
+AUTH_SCOPES = {
+    "publisher": ("a/", PUBLISH_ACTIONS),
+    "publisher-b": ("b/", PUBLISH_ACTIONS),
+    "reader-a": ("a/", frozenset(["read"])),
+    "reader-b": ("b/", frozenset(["read"])),
 }
 report = {
     "status": "running",
@@ -94,14 +108,12 @@ class Auth(http.server.BaseHTTPRequestHandler):
             and secrets.compare_digest(password or "", passwords.get(user, ""))
             and user != "expired"
         )
-        allow = allow and (
-            (
-                user == "publisher"
-                and action in ["publish", "read"]
-                and path.startswith("a/")
-            )
-            or (user == "reader-a" and action == "read" and path.startswith("a/"))
-            or (user == "reader-b" and action == "read" and path.startswith("b/"))
+        scope = AUTH_SCOPES.get(user)
+        allow = (
+            allow
+            and scope is not None
+            and action in scope[1]
+            and path.startswith(scope[0])
         )
         auth_events.append(
             {
@@ -170,11 +182,11 @@ def wait_port(port, process):
     raise RuntimeError(f"port {port} did not open")
 
 
-def rtsp(path):
-    return f"rtsp://publisher:{passwords['publisher']}@127.0.0.1:18554/{path}"
+def rtsp(path, user="publisher"):
+    return f"rtsp://{user}:{passwords[user]}@127.0.0.1:18554/{path}"
 
 
-def probe(path):
+def probe(path, user="publisher"):
     return json.loads(
         run(
             [
@@ -184,7 +196,7 @@ def probe(path):
                 "-rtsp_transport",
                 "tcp",
                 "-i",
-                rtsp(path),
+                rtsp(path, user),
                 "-show_streams",
                 "-of",
                 "json",
