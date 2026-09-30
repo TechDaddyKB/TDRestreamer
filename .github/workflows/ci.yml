@@ -1,0 +1,51 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  checks:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26.7.0
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: make setup check
+      - run: make generate && git diff --exit-code
+      - run: python3 scripts/scan-secrets.py
+      - run: go run github.com/zricethezav/gitleaks/v8@v8.30.1 git --redact --no-banner
+      - run: cd web && npm audit --audit-level=high
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+      - run: docker build -t tdrestreamer:ci .
+  integration:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 26.7.0
+      - run: python3 scripts/configure.py
+      - run: docker compose --env-file .env -f deploy/compose/test.yaml up -d --wait
+      - run: bash scripts/integration.sh
+      - run: make setup build
+      - run: cd web && npx playwright install --with-deps chromium
+      - run: bash scripts/browser-integration.sh
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: ffmpeg -version && go test -tags=media ./tests/media/...
+      - run: docker compose --env-file .env -f deploy/compose/test.yaml down -v
+        if: always()

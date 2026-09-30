@@ -1,0 +1,56 @@
+name: tdrestreamer
+services:
+  postgres:
+    image: postgres:18@sha256:5a5a84b19854a9ffaa54082c166ff4ec27473a361e496e5ea167f298f2da9722
+    environment:
+      POSTGRES_USER: tdr_owner
+      POSTGRES_DB: tdrestreamer
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run scripts/configure.py}
+      TDR_DB_PASSWORD: ${TDR_DB_PASSWORD:?Run scripts/configure.py}
+    volumes:
+      - postgres:/var/lib/postgresql
+      - ./init-db.sh:/docker-entrypoint-initdb.d/01-app.sh:ro
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U tdr_owner -d tdrestreamer"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    restart: unless-stopped
+  migrate:
+    build:
+      context: ../..
+    image: tdrestreamer:development
+    command: [/app/admin, migrate]
+    environment:
+      TDR_MIGRATION_DATABASE_URL: postgres://tdr_owner:${POSTGRES_PASSWORD}@postgres:5432/tdrestreamer?sslmode=disable
+    depends_on:
+      postgres:
+        condition: service_healthy
+  control:
+    build:
+      context: ../..
+    image: tdrestreamer:development
+    environment:
+      DATABASE_URL: postgres://tdr_app:${TDR_DB_PASSWORD}@postgres:5432/tdrestreamer?sslmode=disable
+      TDR_ROOT_KEY: ${TDR_ROOT_KEY:?Run scripts/configure.py}
+      TDR_BOOTSTRAP_TOKEN: ${TDR_BOOTSTRAP_TOKEN:?Run scripts/configure.py}
+      TDR_METRICS_TOKEN: ${TDR_METRICS_TOKEN:?Run scripts/configure.py}
+      TDR_LISTEN: 0.0.0.0:8080
+      TDR_WEB_DIR: /app/web
+    ports:
+      - "${TDR_BIND:-127.0.0.1}:${TDR_PORT:-8080}:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test: [CMD, /app/admin, health]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    restart: unless-stopped
+volumes:
+  postgres:

@@ -4,10 +4,11 @@
 !.env.example
 !**/.env.example
 *.pem
+*.crt
 *.key
 *.p12
 *.pfx
-secrets/
+/secrets/
 # Runtime data (fixtures remain tracked)
 /runtime/
 /data/
@@ -29,3 +30,6 @@ test-results/
 .idea/
 .vscode/
 .DS_Store
+# Python tooling
+__pycache__/
+*.py[cod]
