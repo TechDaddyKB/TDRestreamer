@@ -35,7 +35,8 @@ def check_flv_track_ids(data):
                     "video track ID or codec changed",
                 )
                 observed[("video", 1)].add(payload[1] & 0x0F)
-            elif payload[0] & 0x0F == 7 and not payload[0] & 0x80:
+            elif not payload[0] & 0x80:
+                require(payload[0] & 0x0F == 7, "unexpected legacy video codec")
                 require(len(payload) >= 2, "truncated legacy video header")
                 observed[("video", 0)].add(payload[1])
         elif tag_type == 8:
@@ -50,6 +51,8 @@ def check_flv_track_ids(data):
             elif payload[0] >> 4 == 10:
                 require(len(payload) >= 2, "truncated legacy audio header")
                 observed[("audio", 0)].add(payload[1])
+            else:
+                require(False, "unexpected audio codec or header")
         position = end + 4
     require(position == len(data), "FLV tag boundary mismatch")
     for kind in ("video", "audio"):

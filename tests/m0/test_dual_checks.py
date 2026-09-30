@@ -35,12 +35,23 @@ class DualChecks(unittest.TestCase):
     def test_flv_track_ids_require_both_codecs_and_packets(self):
         sample = four_track_flv()
         self.assertEqual(check_flv_track_ids(sample)["video"]["1"], [0, 1])
+        self.assertEqual(
+            check_flv_track_ids(
+                sample.replace(b"\xa6\x01avc1\x01", b"\xa6\x03avc1\x01")
+            )["video"]["1"],
+            [0, 3],
+        )
         for invalid in (
             sample[:-1],
             sample.replace(b"avc1\x01", b"avc1\x02"),
             sample.replace(b"mp4a\x01", b"mp4a\x02"),
+            sample.replace(b"\x96\x00avc1\x01", b"\x96\x00avc1\x00"),
+            sample.replace(b"\x95\x00mp4a\x01", b"\x95\x00mp4a\x00"),
+            sample.replace(b"\x96\x00avc1\x01", b"\x96\x01avc1\x01"),
             sample.replace(b"\x95\x01mp4a\x01", b"\x95\x02mp4a\x01"),
             sample.replace(b"\x96\x00avc1\x01", b"\x96\x00hvc1\x01"),
+            sample + flv_tag(9, b"\x12\x00\0"),
+            sample + flv_tag(8, b"\x2f\x00\0"),
         ):
             with self.assertRaises(RuntimeError):
                 check_flv_track_ids(invalid)
