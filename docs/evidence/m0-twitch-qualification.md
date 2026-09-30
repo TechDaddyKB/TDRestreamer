@@ -96,9 +96,9 @@ VOD track with output-order track IDs, and an RTMP(S) endpoint. Its summary
 contains no authentication or endpoint URL. It also constructs an OBS override
 with only a loopback ingest endpoint, removing the remote authentication from
 that override. Unit controls reject missing or swapped roles. These are
-synthetic contract checks: no actual Twitch response has been obtained, and the
-guard is not a working Twitch publisher. If a live response differs, record the
-difference and qualify it before changing the guard or sending media.
+synthetic contract checks. A later [account-specific response](m0-twitch-live-attempts.md)
+passed the guard, but the guard is not a working Twitch publisher. If a later
+response differs, record the difference and qualify it before sending media.
 
 ## Remaining execution sequence
 
@@ -112,11 +112,11 @@ difference and qualify it before changing the guard or sending media.
    claim that ordinary FFmpeg two-key fanout or a
    mocked response meets Twitch's contract. A direct OBS test is only a reference
    control; the chosen appliance transport/publisher path must also pass.
-3. Prepare a separate broadcast approval request once the executable path is
+3. Prepare a new broadcast approval request once the corrected executable path is
    ready. Specify TechDaddy as the destination, synthetic content only, maximum
    duration/attempt count, bandwidth cap, viewer visibility and VOD retention.
-   Current authorization does not cover starting that broadcast or negotiation
-   that could transition platform state.
+   The two approved attempts in the [diagnostic record](m0-twitch-live-attempts.md)
+   were used; no further broadcast is authorized.
 4. With approval, use credentials during execution to obtain the actual negotiated
    H/V ladder and audio track roles. Redact credentials from retained evidence,
    logs and artifacts. Verify labeled horizontal and vertical viewer playback
@@ -126,6 +126,7 @@ difference and qualify it before changing the guard or sending media.
    sanitized results with exact tool versions and producing-source hashes. A
    failed or unsupported path remains a blocker; no local fixture waives it.
 
-No broadcasts, stream-key reads, OAuth grants or changes to the user's OBS
-configuration occurred during this app preflight. The other platforms'
-application/API prerequisites remain in the [account record](m0-account-eligibility.md).
+The original app-token preflight performed no broadcast or stream-key read. The
+later bounded attempts are recorded separately. No OAuth grant or change to the
+user's OBS configuration occurred. The other platforms' application/API
+prerequisites remain in the [account record](m0-account-eligibility.md).

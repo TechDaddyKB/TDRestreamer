@@ -11,7 +11,7 @@ or design change waiving a gate has been approved.
 | Internal transport | Same report: `obs_audio_identity` and `obs_enhanced_publisher` | Passed for RTSP transport and FFmpeg copy publisher preserving both supplied mixes |
 | Publisher track mapping | Same report, [dual-canvas FLV track-ID sample](m0-dual-canvas.md), and [earlier selected-track spike](media-spike.json) | Controlled-sink preservation, selected-track identity and local FLV muxer IDs 0/1 per media kind passed; platform purpose metadata and Twitch acceptance remain unverified |
 | Local dual-canvas transport | [Repeatable fixture](m0-dual-canvas.md), [unaltered run report](m0-dual-canvas.json) | Two actual OBS H.264 canvases plus two AAC tracks preserved through RTSP and enhanced-RTMP copy publishing; decoded color/tone identity, order, and local FLV muxer track IDs passed. Synthetic configuration does not prove Twitch negotiation or delivery |
-| Twitch H/V delivery | [Platform inventory](platform-inventory.md) | **Blocked pending broadcast approval**: the authenticated dashboard reports Dual Format eligible, but actual Enhanced Broadcasting H/V negotiation/delivery remains unverified. Ordinary two-key publishing is not a substitute |
+| Twitch H/V delivery | [Platform inventory](platform-inventory.md), [bounded attempt record](m0-twitch-live-attempts.md) | **Blocked after two approved failed publish attempts**: account-specific Enhanced Broadcasting negotiation returned a four-video/two-audio ladder, but the copy publisher exited at Twitch ingest. No H/V viewer or live/VOD result. Further broadcast approval is required. Ordinary two-key publishing is not a substitute |
 | WebRTC/HLS preview | Same run: decoded video frames, negotiated audio/video, HLS fallback after injected WHEP failure, fresh-client denials | Passed local feasibility in Chromium. ICE blackhole behavior, browser audio samples, session revocation/expiry, buffer lifetime and p95 latency remain later qualification work |
 | Required ingest transport feasibility | Same run: TLS certificate validation, RTMPS and encrypted-SRT transport and denials | Passed with FFmpeg carrying actual OBS-origin media. Native OBS secure-protocol configuration is not established by this test |
 | Named-platform/API eligibility inventory | [Dated platform records](platform-inventory.md), [account preflight](m0-account-eligibility.md), [Twitch app-token report](m0-twitch-app-token.json) | Authenticated UI observations recorded for all five platforms. Twitch dedicated app-token/public-read access passed; Twitch user scopes and other platform application API eligibility remain unverified |
@@ -24,12 +24,14 @@ or design change waiving a gate has been approved.
 ## What remains before M0 can close
 
 Authenticated account UI checks and Twitch public app-token access are established
-in the [account preflight](m0-account-eligibility.md). Establish remaining application
-API eligibility and obtain separate broadcast approval before demonstrating actual
-Twitch dual-format negotiation, H/V viewer delivery and correct live/VOD semantics.
-Account-specific failures require concrete blockers/design proposals, not invented
-success. The current instruction is eligibility checks first, with broadcasts
-approved separately. Cloud provisioning and spending remain unauthorized.
+in the [account preflight](m0-account-eligibility.md). A later, separately approved
+[Twitch attempt](m0-twitch-live-attempts.md) established account-specific
+negotiation but not H/V viewer delivery or live/VOD semantics. Both approved
+broadcast attempts were used and failed at external ingest. Establish remaining
+application API eligibility and qualify a corrected publisher before requesting
+approval for another broadcast. Account-specific failures remain concrete
+blockers, not invented success. Cloud provisioning and spending remain
+unauthorized.
 The [Twitch qualification procedure](m0-twitch-qualification.md) records the
 pinned negotiation contract, Linux support uncertainty and remaining execution
 steps; it is preparation, not passing delivery evidence.

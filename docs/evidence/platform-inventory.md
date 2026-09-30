@@ -3,16 +3,16 @@
 Review date: 2026-09-30. The capability table below records official documentation.
 Subsequent [authenticated account observations](m0-account-eligibility.md) establish
 Twitch Dual Format eligibility and access to the five platform dashboards/setup
-pages. The owner now authorizes eligibility checks, with broadcasts approved
-separately. No media delivery or application OAuth/API permission tests were
-performed. Browser access does not establish application scopes, refresh-token
-behavior or actual delivery.
+pages. The owner approved a separate [bounded Twitch diagnostic](m0-twitch-live-attempts.md):
+account-specific negotiation succeeded, but two publisher attempts failed before
+delivery. No application OAuth/API permission tests were performed. Browser
+access does not establish application scopes or refresh-token behavior.
 Tested adapter version: none; no production platform adapter exists yet.
 
 | Platform | Transport and credentials | Lifecycle / available API | Orientation and audio | Eligibility and outstanding evidence |
 |---|---|---|---|---|
 | YouTube | RTMP(S), stream keys; separate Google publishing authorization required | `liveStreams` and `liveBroadcasts`, bind and transition operations | Live Control Room documents a second encoder key for vertical; API reference still describes one stream bound to a broadcast. Do not infer API support for pairing from UI support. Independent supplied audio/VOD semantics unverified | Verified channel and no recent streaming restrictions; check actual channel/app access, publishing scopes, quota, paired-event association and dual-format delivery |
-| Twitch | RTMP ingress plus account stream key; Enhanced Broadcasting required for dual format | Video ingestion is separate from account/API authorization; exact Enhanced Broadcasting negotiation and lifecycle remain a spike requirement | H/V is a negotiated dual-format broadcast, not two ordinary keys. Local OBS VOD-track preservation does not prove Twitch live/VOD semantics | Help now states dual format is available to all streamers, while server-side transcode entitlement varies. Actual account/encoder negotiation, viewer orientation and VOD playback remain blocked |
+| Twitch | RTMP ingress plus account stream key; Enhanced Broadcasting required for dual format | Video ingestion is separate from account/API authorization; account-specific negotiation returned four H.264 video and two AAC audio tracks | H/V is a negotiated dual-format broadcast, not two ordinary keys. Local OBS VOD-track preservation does not prove Twitch live/VOD semantics | Two approved publish attempts failed at ingest. Viewer orientation, live/VOD audio and application user scopes remain unverified |
 | Kick | User's stream URL/key; OAuth 2.1 authorization-code grants and `streamkey:read` are documented | Channel read and metadata patch; `channel:write` for metadata, `channel:read` for information | No supported simultaneous paired H/V or distinct live/VOD audio contract established from reviewed docs | App registration, consent, refresh/revoke and account ingest rights unverified. Metadata PATCH is not evidence for an explicit broadcast-start API |
 | X | Producer sources use RTMP/RTMPS or HLS and stream key | Producer UI creates sources/broadcasts, supports immediate/scheduled broadcasts; public lifecycle API availability unverified | Reviewed Producer guide does not establish a paired H/V or separate VOD-audio mechanism | Media Studio/Live Studio UI access observed; application API eligibility unverified; do not equate ordinary X API credentials with Producer access |
 | Rumble | Streamer configuration provides RTMP URL and stream key | UI creates a stream; the published v1.1 Live Stream API supplies live metadata/notifications. It does not establish create/start/stop APIs | Paired H/V and multi-track destination semantics unverified | Account rights and per-stream workflow unverified; API URL itself is a credential and must be encrypted/redacted. RTMPS support must be checked against supplied endpoint |
@@ -33,8 +33,9 @@ Twitch's [broadcast guide](https://dev.twitch.tv/docs/video-broadcast/),
 and [dual-format guide](https://help.twitch.tv/s/article/dual-format-vertical-video)
 identify the delivery mechanism and distinction between dual-format availability
 and server-side transcoding eligibility. Dynamic encoder configuration and actual
-wire metadata are not proven by static profile recommendations. Keep both as
-explicit gates before declaring the Twitch adapter supported.
+wire metadata are not proven by static profile recommendations. The later
+[account-specific response](m0-twitch-live-attempts.md) established an encoder
+ladder; the failed publish attempts left wire acceptance and delivery open.
 
 Kick's [OAuth scopes](https://github.com/KickEngineering/KickDevDocs/blob/main/scopes/scopes.md)
 and [channel API](https://docs.kick.com/apis/channels) document stream credential

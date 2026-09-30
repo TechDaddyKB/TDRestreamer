@@ -201,6 +201,11 @@ edge design.
 ## Remaining M0 decision
 
 Account UI eligibility is partially established; application API eligibility is
-still pending. Twitch's actual H/V negotiation/delivery and live/VOD semantics
-require a separately approved broadcast test. Neither this record nor successful
-AWS authentication closes that gate. See the [gate audit](m0-gates.md).
+still pending. Twitch H/V delivery and live/VOD semantics require a successful
+separately approved broadcast test. Neither this record nor successful AWS
+authentication closes that gate. See the [gate audit](m0-gates.md).
+
+A later separately approved [Twitch diagnostic attempt](m0-twitch-live-attempts.md)
+established an account-specific negotiated ladder, but both bounded publisher
+attempts failed before viewer/VOD verification. Its approval is exhausted. The
+observations above remain the eligibility preflight at their recorded time.
