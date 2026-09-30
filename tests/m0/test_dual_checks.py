@@ -1,15 +1,62 @@
 """Negative controls for dual-canvas evidence; real media runs separately."""
 
-import sys
 import subprocess
+import sys
 import unittest
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
 from m0_dual_checks import check_pixels, check_streams
+from m0_flv_checks import check_flv_track_ids
+
+
+def flv_tag(kind, payload):
+    header = bytes([kind]) + len(payload).to_bytes(3, "big") + bytes(7)
+    return header + payload + (len(payload) + 11).to_bytes(4, "big")
+
+
+def four_track_flv():
+    return b"FLV\x01\x05\0\0\0\x09\0\0\0\0" + b"".join(
+        flv_tag(kind, payload)
+        for kind, payload in [
+            (9, b"\x17\x00\0"),
+            (9, b"\x27\x01\0"),
+            (9, b"\x96\x00avc1\x01\0"),
+            (9, b"\xa6\x01avc1\x01\0"),
+            (8, b"\xaf\x00\0"),
+            (8, b"\xaf\x01\0"),
+            (8, b"\x95\x00mp4a\x01\0"),
+            (8, b"\x95\x01mp4a\x01\0"),
+        ]
+    )
 
 
 class DualChecks(unittest.TestCase):
+    def test_flv_track_ids_require_both_codecs_and_packets(self):
+        sample = four_track_flv()
+        self.assertEqual(check_flv_track_ids(sample)["video"]["1"], [0, 1])
+        self.assertEqual(
+            check_flv_track_ids(
+                sample.replace(b"\xa6\x01avc1\x01", b"\xa6\x03avc1\x01")
+            )["video"]["1"],
+            [0, 3],
+        )
+        for invalid in (
+            sample[:-1],
+            sample.replace(b"avc1\x01", b"avc1\x02"),
+            sample.replace(b"mp4a\x01", b"mp4a\x02"),
+            sample.replace(b"\x96\x00avc1\x01", b"\x96\x00avc1\x00"),
+            sample.replace(b"\x95\x00mp4a\x01", b"\x95\x00mp4a\x00"),
+            sample.replace(b"\x96\x00avc1\x01", b"\x96\x01avc1\x01"),
+            sample.replace(b"\x95\x01mp4a\x01", b"\x95\x02mp4a\x01"),
+            sample.replace(b"\x96\x00avc1\x01", b"\x96\x00hvc1\x01"),
+            sample + flv_tag(9, b"\x12\x00\0"),
+            sample + flv_tag(9, b"\x90hvc1\0"),
+            sample + flv_tag(8, b"\x2f\x00\0"),
+        ):
+            with self.assertRaises(RuntimeError):
+                check_flv_track_ids(invalid)
+
     def test_controller_rejects_path_arguments_before_reading(self):
         controller = Path(__file__).with_name("dual-canvas.mjs")
         for value in ("../outside", "/etc/passwd", "a" * 11, "a" * 13, "g" * 12):
@@ -19,6 +66,7 @@ class DualChecks(unittest.TestCase):
                 text=True,
                 timeout=5,
                 shell=False,
+                check=False,
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("Invalid fixture run ID", result.stderr)

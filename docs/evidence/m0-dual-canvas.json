@@ -1,6 +1,6 @@
 {
   "status": "passed_local_dual_canvas",
-  "recorded_at": "2026-09-30T16:12:02Z",
+  "recorded_at": "2026-09-30T17:38:57Z",
   "isolation": {
     "initial_interfaces": [
       "lo"
@@ -143,13 +143,37 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 15473631.14
+          "opposite_power_ratio": 7348285.05
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 4553461.29
+          "opposite_power_ratio": 11094301.43
         }
       ]
+    },
+    "flv_track_ids": {
+      "video": {
+        "0": [
+          0,
+          1,
+          2
+        ],
+        "1": [
+          0,
+          3
+        ]
+      },
+      "audio": {
+        "0": [
+          0,
+          1
+        ],
+        "1": [
+          0,
+          1,
+          4
+        ]
+      }
     },
     "enhanced_copy_publisher": {
       "streams": [
@@ -283,11 +307,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 5937328.64
+          "opposite_power_ratio": 7549643.06
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 4254568.49
+          "opposite_power_ratio": 15879022.73
         }
       ]
     }
@@ -296,13 +320,15 @@
     "Local synthetic configuration, not a Twitch negotiation response",
     "No platform broadcasting, OAuth, cloud calls, preview, GPU or soak qualification",
     "Standalone feasibility, not application integration; anonymous loopback fixture sinks",
-    "Pixel/color and audio identity only; no timing, motion, latency or A/V sync qualification"
+    "Pixel/color, audio identity and local FLV headers only; no timing, motion, latency or A/V sync qualification",
+    "FLV sample is not a capture of the later RTMP publisher connection"
   ],
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
   "gateway": "v1.21.1",
   "harness_sha256": {
-    "scripts/m0-dual-canvas.py": "5801d710ab2ebfe16af60ca1cd6ac1ede2058b0ffec7c7aea65befc1f100d925",
+    "scripts/m0-dual-canvas.py": "8ead909c17110b7b7befa72bdb150003f266b95848619c3364d72e72f541794b",
     "scripts/m0_dual_checks.py": "855a3a0a9fff380f579d4ee6436bebdb5b4f88863a8ac16d4f858daaad2f73e4",
+    "scripts/m0_flv_checks.py": "ca37a48677a2c7407b4f8c1e78708a33f375bec1e0a66b8d3d89d5a2d769400c",
     "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
     "tests/m0/dual-canvas.mjs": "02cdb6fc6d99ac261757e4408990b9d1f22662dd58e280e289792b9a4ecafcca",
     "tests/m0/obs-rpc.mjs": "1e91784568bbe1c3a8f614387857f2fc35703ce29e76bf57188a065f2f07e0eb",
@@ -348,6 +374,6 @@
         }
       }
     ],
-    "bytes": 712462
+    "bytes": 694261
   }
 }

@@ -57,6 +57,12 @@ separate authenticated transport and tenant-denial qualification.
   video, and expected audio frequency power over 100 times the opposite tone.
 - Copy all four tracks through FFmpeg into enhanced RTMP, then repeat the same
   decoded identity and ordering checks at the receiving gateway.
+- In a separate two-second copy-mux sample from the same RTSP source, parse
+  FFmpeg's bounded FLV bytes. Require H.264/AAC sequence and media packets on
+  implicit track 0 and explicit enhanced-FLV track 1, with `avc1`/`mp4a` FourCCs.
+  The FLV tag parser rejects truncated tags, wrong previous-tag lengths, altered
+  track IDs, changed codecs, and missing packets. The sample contains no stream
+  key; it is not a capture of the later RTMP connection or Twitch ingest.
 - Negative unit controls reject swapped video identities/orientations, black or
   truncated samples, missing audio and cross-type reordering. The controller also
   rejects path-shaped arguments before reading a file; only a 12-digit hexadecimal
@@ -72,6 +78,15 @@ timeout. Preserve the emitted report unchanged after scanning it before publicat
 
 The [recorded run](m0-dual-canvas.json) is the successful emitted result. Its scope
 is two low-resolution video tracks and two audio tracks in this local chain.
+The FLV check observed video track 0 packet types 0/1/2, video track 1 packet
+types 0/3, audio track 0 packet types 0/1, and audio track 1 packet types 0/1/4.
+Types 0 and 1 are sequence start and coded frames for audio; video type 3 is
+coded frames without an explicit composition offset. FFmpeg's pinned
+[FLV muxer](https://github.com/FFmpeg/FFmpeg/blob/n9.0.1/libavformat/flvenc.c)
+assigns consecutive per-kind IDs and writes enhanced headers for nonzero tracks;
+OBS's pinned [FLV muxer](https://github.com/obsproject/obs-studio/blob/ba2f32bdf791005443988a4955e963663e16b1ed/plugins/obs-outputs/flv-mux.c)
+also treats 0 as implicit and emits explicit nonzero IDs. This source comparison
+supports the local ID interpretation; it does not prove platform role metadata.
 The color samples establish stream identity, not OCR, motion, frame timing,
 A/V synchronization, latency, higher rendition ladders, GPU capacity, or soaks.
 The configuration exercises OBS's real multitrack path but cannot establish
