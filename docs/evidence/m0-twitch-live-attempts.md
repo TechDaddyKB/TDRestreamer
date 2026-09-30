@@ -48,9 +48,11 @@ No horizontal/vertical viewer playback or live/VOD audio behavior was observed.
 The broken pipe does not identify whether Twitch rejected authentication,
 metadata, track packaging or some other part of the publish path.
 
-The exploratory runners and their raw reports remain private/ignored. Their
-source was not committed, so these observations are a **diagnostic record**, not
-a reproducible passing qualification artifact. The negotiated response, which
+The exploratory live runners and their raw reports remain private/ignored. Their
+source was not committed, so the live observations are a **diagnostic record**, not
+a reproducible passing qualification artifact. A later
+[reproducible local ladder fixture](m0-twitch-ladder-local.md) uses the sanitized
+encoder settings but cannot establish Twitch ingest acceptance. The negotiated response, which
 contained an ingest credential, was removed from temporary memory storage after
 the attempts. No stream key, response, endpoint authentication or unredacted
 publisher log is committed.
@@ -59,7 +61,7 @@ publisher log is committed.
 
 The appliance copy-publisher has not demonstrated Twitch Enhanced Broadcasting
 delivery. Its FLV/RTMP wire behavior must be compared with OBS's negotiated
-publisher path, and a reproducible bounded harness must be retained before a
+publisher path, and a reproducible bounded live harness must be retained before a
 further live qualification. Any additional broadcast requires separate owner
 approval. Do not infer Twitch H/V support or live/VOD correctness from the
 successful negotiation and local fixture.

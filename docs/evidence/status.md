@@ -4,6 +4,7 @@
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence,
+including a [four-rendition local ladder run](m0-twitch-ladder-local.md),
 account-specific Twitch negotiation and two failed bounded Twitch publisher
 attempts; delivery and remaining application API eligibility gates are unresolved.
 Additional OBS input modes remain

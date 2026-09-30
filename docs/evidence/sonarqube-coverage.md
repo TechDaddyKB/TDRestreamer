@@ -57,3 +57,10 @@ is stored only in GitHub's `SONAR_TOKEN` repository secret and expires
 2026-12-29. No token value is in this evidence or source control. See the
 [developer coverage guide](../development.md#test-coverage-and-sonarqube-cloud)
 for reproduction, rotation, fork restrictions, and report troubleshooting.
+
+PR #16 classifies `scripts/m0-dual-canvas.py` as test code in both matching
+Sonar test/source patterns. It is a standalone hardware qualification harness,
+not product code; its NVENC path cannot execute in hosted CI. The shared FLV
+and stream-checking helpers remain in source coverage, with negative controls
+for the four-rendition ladder. This classification does not change coverage
+thresholds or exclude application code.

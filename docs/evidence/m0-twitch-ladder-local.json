@@ -1,0 +1,687 @@
+{
+  "status": "passed_local_twitch_ladder",
+  "recorded_at": "2026-09-30T20:40:57Z",
+  "isolation": {
+    "initial_interfaces": [
+      "lo"
+    ],
+    "routes": {
+      "-4": [],
+      "-6": []
+    }
+  },
+  "tests": {
+    "obs_ingest_rtsp": {
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 284,
+          "height": 160
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 360,
+          "height": 640
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        }
+      ],
+      "video_identity": [
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ]
+      ],
+      "audio_identity": [
+        {
+          "expected_hz": 440,
+          "opposite_power_ratio": 7500447.74
+        },
+        {
+          "expected_hz": 880,
+          "opposite_power_ratio": 4425970.19
+        }
+      ]
+    },
+    "flv_track_ids": {
+      "video": {
+        "0": [
+          0,
+          1,
+          2
+        ],
+        "1": [
+          0,
+          1,
+          3
+        ],
+        "2": [
+          0,
+          1,
+          3
+        ],
+        "3": [
+          0,
+          1,
+          3
+        ]
+      },
+      "audio": {
+        "0": [
+          0,
+          1
+        ],
+        "1": [
+          0,
+          1,
+          4
+        ]
+      }
+    },
+    "enhanced_copy_publisher": {
+      "streams": [
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 640,
+          "height": 360
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 284,
+          "height": 160
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 720,
+          "height": 1280
+        },
+        {
+          "codec_type": "video",
+          "codec_name": "h264",
+          "width": 360,
+          "height": 640
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        },
+        {
+          "codec_type": "audio",
+          "codec_name": "aac"
+        }
+      ],
+      "video_identity": [
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ],
+          [
+            254,
+            24,
+            0
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ],
+        [
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ],
+          [
+            0,
+            15,
+            255
+          ]
+        ]
+      ],
+      "audio_identity": [
+        {
+          "expected_hz": 440,
+          "opposite_power_ratio": 14824638.81
+        },
+        {
+          "expected_hz": 880,
+          "opposite_power_ratio": 4952759.04
+        }
+      ]
+    }
+  },
+  "limitations": [
+    "Local synthetic configuration with sanitized account-negotiated encoder settings",
+    "No platform broadcasting, OAuth, cloud calls, preview or soak qualification",
+    "Standalone feasibility, not application integration; anonymous loopback fixture sinks",
+    "Pixel/color, audio identity and local FLV headers only; no timing, motion, latency or A/V sync qualification",
+    "FLV sample is not a capture of the later RTMP publisher connection"
+  ],
+  "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
+  "gateway": "v1.21.1",
+  "harness_sha256": {
+    "scripts/m0-dual-canvas.py": "1d3e5c0d6139550c98242caa38938a3d398682ca654a1686f69d02793d4fa100",
+    "scripts/m0_dual_checks.py": "ddbbc8cc8257f2d7d7937775a59ca3559dd2e7c71222f0a67c92c56bd4783a0c",
+    "scripts/m0_flv_checks.py": "0188e4c904a07c05beefc58ff8021d2561124cf1c4279a37893b9314daab85fb",
+    "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
+    "tests/m0/dual-canvas.mjs": "02cdb6fc6d99ac261757e4408990b9d1f22662dd58e280e289792b9a4ecafcca",
+    "tests/m0/obs-rpc.mjs": "1e91784568bbe1c3a8f614387857f2fc35703ce29e76bf57188a065f2f07e0eb",
+    "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180",
+    "scripts/m0_twitch_config.py": "67b11180e29f0fa46dd42d46a0de1a36f8efcb05a590073268cd35d0d1e11e30",
+    "tests/m0/twitch-ladder-local.json": "92d55afe6e93598b02126be61d5470625018ff6aa590df91441e6790f61b5811"
+  },
+  "python_optimized": false,
+  "ladder_mapping": {
+    "video": [
+      {
+        "output_index": 0,
+        "canvas_index": 0,
+        "orientation": "horizontal",
+        "width": 640,
+        "height": 360
+      },
+      {
+        "output_index": 1,
+        "canvas_index": 0,
+        "orientation": "horizontal",
+        "width": 284,
+        "height": 160
+      },
+      {
+        "output_index": 2,
+        "canvas_index": 1,
+        "orientation": "vertical",
+        "width": 720,
+        "height": 1280
+      },
+      {
+        "output_index": 3,
+        "canvas_index": 1,
+        "orientation": "vertical",
+        "width": 360,
+        "height": 640
+      }
+    ],
+    "audio": [
+      {
+        "output_index": 0,
+        "role": "live"
+      },
+      {
+        "output_index": 1,
+        "role": "vod"
+      }
+    ],
+    "schema_version": "2025-01-25"
+  },
+  "loaded_module_sha256": {
+    "advanced-scene-switcher.so": "3577fa8ed0966ccbff711327132625d9de837d260dc407e656591a163b8b88c7",
+    "aitum-multistream.so": "348d8b67651393bd59ac95a0e3e7a51cfd3c88f31fe60f6dac29ae8f97d74970",
+    "audio-monitor.so": "73d0ef6c8aa70c5e2291e3df9a20a1c855da72d019ee2378ecc498c9e998cddf",
+    "decklink-captions.so": "8906293a37e86605ead9c7b97b0c023a31ccf1a4038c0bd3d493dbab1682b72b",
+    "decklink-output-ui.so": "9968b8c95b6da1c2186637a39a8022861744bf821f8d9a6747374b51aece5b2d",
+    "distroav.so": "c709f7e80fb51663efcb62a7c7d1cdbeca1c188d5cb22f25c1f86b597cacf5fa",
+    "frontend-tools.so": "b0b4beee67961f86af270af1e82c17f9587c84855bfa1443d0810352169ea1fb",
+    "image-source.so": "2c95e9a38fef445af8c7af80520f92d5fddc2329928455703bef377f1fb3983a",
+    "linux-alsa.so": "887668a699bd9c77fdfa68fba76fd56805bd52245a410b0d85a2302dc46c374f",
+    "linux-capture.so": "61927cfeae85e595a92455e72f4931f3f466fa2cc32fe5033c7b57bae99b7d2e",
+    "linux-jack.so": "51dc9064a36df7d00963c05fb5d6cf389d75f0abddde11a245f2306506d4d28f",
+    "linux-pipewire.so": "d1135a95e72eea3741ac514bf1e82759af9c4f4b2e29b6ec2ccbd8ff3a650ed6",
+    "linux-pulseaudio.so": "d44d6b80e44f162377dc9bb3478dbe8cbd177ed1977f9b1559655ea62996bd01",
+    "linux-v4l2.so": "23d3d0e7f1ec0bf5665337c76e00a1127ce1e12212b38f693e781890cbed34eb",
+    "obs-backgroundremoval.so": "950b6c6a3ff2d643341e1f558fbdf297f1a3b44494bd31cb9db752663523ec80",
+    "obs-ffmpeg.so": "e7871202aaf6d40fc7cb49108d9b57d4a51c412d9ef40ff6e5fa9982df63b679",
+    "obs-filters.so": "f386df23a9004070e2078a4f1422710c7be7d2273f02f5ac71e0d785bfb90477",
+    "obs-libfdk.so": "67dd4cba7bb8a02bc96eb851fa1f23a853f8adffae790f54939a8166cfa01817",
+    "obs-nvenc.so": "1991c4fd08136aeb97fbdeffb4265f3366278bca3152126f3670784cee97f55f",
+    "obs-outputs.so": "1c1530b06963d4cbfd4840b48060ebea1797a9d66feb2ff4962b465015b38efb",
+    "obs-qsv11.so": "9ccb03351a83add24c8d8984734d5b1629ac017028701a4e82445bd392fb4a1d",
+    "obs-teleport.so": "ae7a9be5f7e6f1e2808ec0af223e56311c01780851c0ca0678ccb01b4027a10a",
+    "obs-transitions.so": "d07d486bef080f01aa15e2749777b0507915bbdfa9660ffad441f3aa529dabfd",
+    "obs-vst.so": "72d3f015986252df4aba5dc999cc1c837b9dadd7712b90fac680d94035bb3166",
+    "obs-webrtc.so": "31b9224a5932fc41d294d7030329addbea49f8b010c37776e7f0fe9cb00db3f0",
+    "obs-websocket.so": "836b301a98d8e1e4e37a02aaa88218c0248b067b20e4bd94a5627baa7813edd9",
+    "obs-x264.so": "cf8e0c7e7b5fe3fa085f178fe9324dbee4029e878d3befcb549df45a8401c665",
+    "rtmp-services.so": "86542820f8f79f62459c3e022e7f1509d8b0affa9b55add7002e8d34a6632c97",
+    "text-freetype2.so": "b7ca285a5f177291c28f5aa2393331b7f2055fd1c52d9bb2eec3d4c32811992a",
+    "vertical-canvas.so": "1e95048920211bff715fd14eace90da5e51e450b75db0dc0bc97c6ffe05676eb"
+  },
+  "obs": {
+    "obsVersion": "32.2.2",
+    "websocketVersion": "5.7.4",
+    "canvases": [
+      {
+        "name": "Main",
+        "video": {
+          "baseHeight": 360,
+          "baseWidth": 640,
+          "fpsDenominator": 1,
+          "fpsNumerator": 30,
+          "outputHeight": 360,
+          "outputWidth": 640
+        }
+      },
+      {
+        "name": "Aitum Vertical",
+        "video": {
+          "baseHeight": 1920,
+          "baseWidth": 1080,
+          "fpsDenominator": 1,
+          "fpsNumerator": 30,
+          "outputHeight": 1920,
+          "outputWidth": 1080
+        }
+      }
+    ],
+    "bytes": 1211875
+  }
+}
