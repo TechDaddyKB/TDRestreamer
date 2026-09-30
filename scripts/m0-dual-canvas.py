@@ -24,6 +24,7 @@ from m0_twitch_config import local_obs_config
 
 ROOT = Path(__file__).resolve().parents[1]
 AITUM_SHA256 = "484c9663d00f3a2c2322600e6178833b7edde71019c2537b6eb35cf81e71e346"
+SYSTEM_AITUM_SHA256 = "1e95048920211bff715fd14eace90da5e51e450b75db0dc0bc97c6ffe05676eb"
 OUTPUT_PIPE = "pipe:1"
 MODULES = (
     "obs-websocket",
@@ -141,6 +142,24 @@ class Lab:
 
 def digest(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def loaded_system_modules(log_path):
+    lines = log_path.read_text().splitlines()
+    marker = "info:   Loaded Modules:"
+    require(marker in lines, "OBS module list absent")
+    start = lines.index(marker) + 1
+    names = []
+    for line in lines[start:]:
+        if not line.startswith("info:     "):
+            break
+        name = line.removeprefix("info:     ")
+        require(name.endswith(".so") and "/" not in name, "unexpected OBS module name")
+        names.append(name)
+    require("obs-nvenc.so" in names and "vertical-canvas.so" in names,
+            "required OBS module absent")
+    root = Path("/usr/lib/obs-plugins")
+    return {name: digest(root / name) for name in sorted(set(names))}
 
 
 def observe(lab, path, ladder=False):
@@ -298,10 +317,12 @@ def main():
         pins = json.loads((ROOT / "tests/m0/toolchain.json").read_text())
         gateway_bin = ROOT / ".tools/mediamtx/mediamtx"
         aitum = ROOT / ".tools/aitum-vertical/vertical-canvas.so"
-        require(
-            digest(aitum) == AITUM_SHA256,
-            "Aitum official Linux binary checksum mismatch",
-        )
+        if ladder:
+            require(digest(Path("/usr/lib/obs-plugins/vertical-canvas.so")) == SYSTEM_AITUM_SHA256,
+                    "installed Aitum binary checksum mismatch")
+        else:
+            require(digest(aitum) == AITUM_SHA256,
+                    "Aitum official Linux binary checksum mismatch")
         require(
             digest(gateway_bin) == pins["linux_amd64_binary_sha256"],
             "MediaMTX checksum mismatch",
@@ -336,23 +357,24 @@ def main():
             for p in source_files
         }
         report["python_optimized"] = bool(sys.flags.optimize)
-        modules = work / "modules"
-        modules.mkdir()
-        module_data = work / "module-data"
-        module_data.mkdir()
-        report["module_sha256"] = {}
-        for name in (*MODULES, *(("obs-nvenc",) if ladder else ())):
-            source = Path("/usr/lib/obs-plugins") / f"{name}.so"
-            shutil.copyfile(source, modules / source.name)
-            report["module_sha256"][source.name] = digest(source)
-            data = Path("/usr/share/obs/obs-plugins") / name
-            if data.is_dir():
-                shutil.copytree(data, module_data / name)
-        shutil.copyfile(aitum, modules / "vertical-canvas.so")
-        shutil.copytree(
-            ROOT / ".tools/aitum-vertical/data", module_data / "vertical-canvas"
-        )
-        report["module_sha256"]["vertical-canvas.so"] = digest(aitum)
+        if not ladder:
+            modules = work / "modules"
+            modules.mkdir()
+            module_data = work / "module-data"
+            module_data.mkdir()
+            report["module_sha256"] = {}
+            for name in MODULES:
+                source = Path("/usr/lib/obs-plugins") / f"{name}.so"
+                shutil.copyfile(source, modules / source.name)
+                report["module_sha256"][source.name] = digest(source)
+                data = Path("/usr/share/obs/obs-plugins") / name
+                if data.is_dir():
+                    shutil.copytree(data, module_data / name)
+            shutil.copyfile(aitum, modules / "vertical-canvas.so")
+            shutil.copytree(
+                ROOT / ".tools/aitum-vertical/data", module_data / "vertical-canvas"
+            )
+            report["module_sha256"]["vertical-canvas.so"] = digest(aitum)
         for name, size, color in [
             ("horizontal", "640x360", "red"),
             ("vertical", "360x640", "blue"),
@@ -623,6 +645,8 @@ MultitrackVideoConfigOverride="""
             ]
         obs = lab.start("obs", obs_args, env)
         lab.port(19447, obs)
+        if ladder:
+            report["loaded_module_sha256"] = loaded_system_modules(work / "obs.log")
         report["obs"] = json.loads(
             lab.run(
                 [

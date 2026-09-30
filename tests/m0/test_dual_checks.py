@@ -32,6 +32,34 @@ def four_track_flv():
 
 
 class DualChecks(unittest.TestCase):
+    def test_four_video_tracks_require_distinct_ids_and_geometry(self):
+        sample = four_track_flv()
+        extra = b"".join(
+            flv_tag(9, bytes([head, packet]) + b"avc1" + bytes([track, 0]))
+            for track in (2, 3)
+            for head, packet in ((0x96, 0), (0xA6, 1))
+        )
+        self.assertEqual(
+            list(check_flv_track_ids(sample + extra, video_tracks=4)["video"]),
+            ["0", "1", "2", "3"],
+        )
+        with self.assertRaises(RuntimeError):
+            check_flv_track_ids(sample, video_tracks=4)
+        with self.assertRaises(RuntimeError):
+            check_flv_track_ids(sample + extra.replace(b"avc1\x03", b"avc1\x04"), video_tracks=4)
+
+        streams = [
+            {"codec_type": "video", "codec_name": "h264", "width": w, "height": h}
+            for w, h in ((640, 360), (284, 160), (720, 1280), (360, 640))
+        ] + [{"codec_type": "audio", "codec_name": "aac"}] * 2
+        expected = [
+            ("video", "h264", w, h)
+            for w, h in ((640, 360), (284, 160), (720, 1280), (360, 640))
+        ] + [("audio", "aac", None, None)] * 2
+        check_streams(streams, expected)
+        with self.assertRaises(RuntimeError):
+            check_streams(streams[1::-1] + streams[2:], expected)
+
     def test_flv_track_ids_require_both_codecs_and_packets(self):
         sample = four_track_flv()
         self.assertEqual(check_flv_track_ids(sample)["video"]["1"], [0, 1])

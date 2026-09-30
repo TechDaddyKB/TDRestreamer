@@ -10,7 +10,11 @@ Twitch key or ingest authorization.
 
 The harness created a user/network namespace, confirmed its only interface was
 loopback and that both route tables were empty, then used OBS 32.2.2 with the
-installed RTX 4090 NVENC encoder and Aitum vertical canvas. It sent synthetic
+installed RTX 4090 NVENC encoder and Aitum vertical canvas. NVENC could not
+initialize under the fixture's `bwrap` filesystem sandbox, so this mode ran OBS
+directly in the network namespace with a private XDG configuration. The report
+hashes the 30 installed OBS modules actually listed as loaded, including the
+installed Aitum binary. It sent synthetic
 red horizontal video, blue vertical video, and separate 440 Hz live / 880 Hz VOD
 audio to a loopback MediaMTX instance. FFmpeg copied the RTSP output to a second
 loopback enhanced-RTMP sink. No Twitch or cloud endpoint was contacted.
@@ -27,6 +31,8 @@ would fix external delivery.
 
 The run used an isolated synthetic OBS profile and stopped OBS, MediaMTX,
 FFmpeg and Xvfb on completion. It did not modify the owner's OBS profile. The
-report contains source and module hashes and exact tool versions. The real
+report contains source and loaded-module hashes and exact tool versions. Its
+hardware and installed-plugin dependencies limit reproduction on another host.
+The real
 Twitch H/V viewer and live/VOD checks remain blocked as recorded in the
 [bounded attempt report](m0-twitch-live-attempts.md).
