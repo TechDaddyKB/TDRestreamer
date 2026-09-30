@@ -45,8 +45,10 @@ class Inspector:
     def _chunk_header(self, fmt, csid, prefix):
         state = self.streams.get(csid)
         length = (11, 7, 3, 0)[fmt]
-        if state is None and fmt != 0:
-            raise ValueError("RTMP chunk without initial header")
+        if state is None:
+            if fmt != 0:
+                raise ValueError("RTMP chunk without initial header")
+            state = {"raw_time": 0}
         if len(self.buffer) < prefix + length:
             return None
         header = self.buffer[prefix:prefix + length]

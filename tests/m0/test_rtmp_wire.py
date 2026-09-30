@@ -60,10 +60,14 @@ class WireInspectorTest(unittest.TestCase):
         self.assertEqual(inspector.messages["9"], 2)
 
     def test_invalid_control_and_missing_header(self):
+        inspector = Inspector()
+        missing_header = bytes(3073) + b"\xc4"
         with self.assertRaisesRegex(ValueError, "initial header"):
-            Inspector().feed(bytes(3073) + b"\xc4")
+            inspector.feed(missing_header)
+        inspector = Inspector()
+        invalid_control = bytes(3073) + message(2, 1, bytes(4))
         with self.assertRaisesRegex(ValueError, "out of bounds"):
-            Inspector().feed(bytes(3073) + message(2, 1, bytes(4)))
+            inspector.feed(invalid_control)
 
     def test_media_sample_is_bounded(self):
         inspector = Inspector()
