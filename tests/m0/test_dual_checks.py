@@ -1,7 +1,7 @@
 """Negative controls for dual-canvas evidence; real media runs separately."""
 
-import sys
 import subprocess
+import sys
 import unittest
 from pathlib import Path
 
@@ -51,6 +51,7 @@ class DualChecks(unittest.TestCase):
             sample.replace(b"\x95\x01mp4a\x01", b"\x95\x02mp4a\x01"),
             sample.replace(b"\x96\x00avc1\x01", b"\x96\x00hvc1\x01"),
             sample + flv_tag(9, b"\x12\x00\0"),
+            sample + flv_tag(9, b"\x90hvc1\0"),
             sample + flv_tag(8, b"\x2f\x00\0"),
         ):
             with self.assertRaises(RuntimeError):
@@ -65,6 +66,7 @@ class DualChecks(unittest.TestCase):
                 text=True,
                 timeout=5,
                 shell=False,
+                check=False,
             )
             self.assertNotEqual(result.returncode, 0)
             self.assertIn("Invalid fixture run ID", result.stderr)

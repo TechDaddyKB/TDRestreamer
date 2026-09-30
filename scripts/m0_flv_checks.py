@@ -39,6 +39,8 @@ def check_flv_track_ids(data):
                 require(payload[0] & 0x0F == 7, "unexpected legacy video codec")
                 require(len(payload) >= 2, "truncated legacy video header")
                 observed[("video", 0)].add(payload[1])
+            else:
+                require(False, "unexpected enhanced video header")
         elif tag_type == 8:
             if payload[0] == 0x95:
                 require(len(payload) >= 7, "truncated enhanced audio header")

@@ -1,6 +1,6 @@
 {
   "status": "passed_local_dual_canvas",
-  "recorded_at": "2026-09-30T17:23:42Z",
+  "recorded_at": "2026-09-30T17:30:41Z",
   "isolation": {
     "initial_interfaces": [
       "lo"
@@ -143,11 +143,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 6159139.2
+          "opposite_power_ratio": 13447495.08
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 17973603.33
+          "opposite_power_ratio": 11830311.52
         }
       ]
     },
@@ -307,11 +307,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 4537685.65
+          "opposite_power_ratio": 7433620.9
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 12541963.31
+          "opposite_power_ratio": 4315762.39
         }
       ]
     }
@@ -328,7 +328,7 @@
   "harness_sha256": {
     "scripts/m0-dual-canvas.py": "b1e5d6fc0681af02083e22e76f9dc8d624c51b0c2b2341f3daee8ba6c97b898c",
     "scripts/m0_dual_checks.py": "855a3a0a9fff380f579d4ee6436bebdb5b4f88863a8ac16d4f858daaad2f73e4",
-    "scripts/m0_flv_checks.py": "7a4c5335e480d9c571159b8b7423ed110237d3b962fd4b9eb8b63bb1ce3714ce",
+    "scripts/m0_flv_checks.py": "0e468916b92ed0aa1ddb072d912c955c737fa3baac167ab18daf270a1e7cd2d4",
     "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
     "tests/m0/dual-canvas.mjs": "02cdb6fc6d99ac261757e4408990b9d1f22662dd58e280e289792b9a4ecafcca",
     "tests/m0/obs-rpc.mjs": "1e91784568bbe1c3a8f614387857f2fc35703ce29e76bf57188a065f2f07e0eb",
@@ -374,6 +374,6 @@
         }
       }
     ],
-    "bytes": 721213
+    "bytes": 698828
   }
 }
