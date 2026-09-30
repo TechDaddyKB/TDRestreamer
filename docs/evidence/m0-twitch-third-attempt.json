@@ -1,0 +1,33 @@
+{
+  "status": "failed",
+  "recorded_at": "2026-09-30T21:21:03Z",
+  "mode": "one_approved_broadcast",
+  "limits": {
+    "duration_seconds": 300,
+    "nominal_kbps": 6000
+  },
+  "copy_binary_sha256": "d5922dd80dd9fe310dec2ea79b8361e9d8083b01be080e4118c61ce46fa63b61",
+  "source_sha256": {
+    "tests/m0/twitch_copy.c": "f77792411e2e2e132f6716e5f23d5d0ee47592ea2e916d542da766a9bbcc3219",
+    "scripts/m0-dual-canvas.py": "0d1f249e2682e7505630b9b9c4d68bf79e0bef0336dd7e081b6c611355afe41f",
+    "scripts/m0_socket_bridge.py": "9a9448e543b2c2791802743e83eacd69e38e055e8ede2b2805d77ec2e0cb49f0",
+    "tests/m0/twitch_live.py": "9a146c1bb82f1d873cae96e689655b6828db860583d98f53d57ceb2578515676"
+  },
+  "local_copy": "six_streams_passed",
+  "local_startup_missing_timestamps": [
+    2,
+    2,
+    2,
+    2,
+    0,
+    0
+  ],
+  "negotiated_nominal_kbps": 4720,
+  "broadcast_start_utc": "2026-09-30T21:21:31Z",
+  "helix_live_observed": false,
+  "broadcast_end_utc": "2026-09-30T21:21:33Z",
+  "publisher_exit_code": 1,
+  "error_type": "RuntimeError",
+  "error_stage": "Twitch copy publisher failed",
+  "helix_offline_after_stop": true
+}

@@ -1,0 +1,82 @@
+{
+  "status": "passed_local_bridge",
+  "recorded_at": "2026-09-30T22:11:15Z",
+  "mode": "local_only",
+  "limits": {
+    "duration_seconds": 60,
+    "nominal_kbps": 6000
+  },
+  "copy_binary_sha256": "4d2ae54da123a8f60d3e7b73e249d9d7203474f5bf9bcf8ce6d4b71fcbd88c61",
+  "source_sha256": {
+    "tests/m0/twitch_copy.c": "ad2af7b6964c053b09378f15c3b55694dd88d593e71af4b9fe4792cd5186be47",
+    "scripts/m0-dual-canvas.py": "fc02959793b3552b9f1d4be131c23df3063ed737b9ee3c02a056e06d945eaccb",
+    "scripts/m0_socket_bridge.py": "9a9448e543b2c2791802743e83eacd69e38e055e8ede2b2805d77ec2e0cb49f0",
+    "tests/m0/twitch_live.py": "b0a1b7d6fc26f433d0e68b0cf87d1951ba93536c0065c7746010f308cb869984"
+  },
+  "local_copy": "six_streams_passed",
+  "local_copy_diagnostics": {
+    "startup_missing_timestamps": [
+      2,
+      2,
+      2,
+      2,
+      0,
+      0
+    ],
+    "keyframes": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "first_key_pts_ms": [
+      1015,
+      1017,
+      1054,
+      1039
+    ],
+    "bpm_ts": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "bpm_sm": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "bpm_erm": [
+      3,
+      3,
+      3,
+      3
+    ],
+    "keyframes_with_bpm": [
+      2,
+      2,
+      2,
+      2
+    ],
+    "dropped_bpm": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "first_ready_pts_ms": [
+      3014,
+      3017,
+      3053,
+      3039
+    ],
+    "first_output_key_pts_ms": [
+      2000,
+      2000,
+      2000,
+      2000
+    ],
+    "enhanced_primary_tags": 151
+  }
+}

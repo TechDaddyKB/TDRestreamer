@@ -1,10 +1,11 @@
 # M0 Twitch negotiation and bounded publish attempts
 
-Observed 2026-09-30 UTC. **M0 did not pass.** The owner separately approved at
+Observed 2026-09-30 UTC. **M0 did not pass.** The owner initially approved at
 most two public synthetic TechDaddy broadcasts of five minutes each, at no more
 than 6 Mbps aggregate nominal media bitrate. Both attempts were used. This
-approval did not cover a third attempt, any cloud deployment, or account-setting
-changes.
+approval did not cover a third attempt. The owner later authorized any further
+broadcast testing needed for this goal. Cloud deployment and account-setting
+changes remain outside that authorization.
 
 ## Negotiation and local control
 
@@ -40,28 +41,30 @@ This control used the negotiated ladder, but the sink was local.
 |---|---|---|---|
 | 1 | 20:00:28 | FFmpeg copy to Twitch RTMPS using the negotiated endpoint and configuration ID | Exited almost immediately; no remote diagnostic was retained |
 | 2 | 20:04:44 | Same media with explicit FFmpeg RTMP app/playpath options, first verified at a local sink | Exited during RTMPS writing; sanitized stderr showed a TLS broken pipe |
+| 3 | 21:21:31 | [Bounded libavformat publisher](m0-twitch-copy-candidate.md), after a passing route-free local six-stream bridge control | RTMPS media write returned EOF after about two seconds; [sanitized report](m0-twitch-third-attempt.json) records Helix never live and channel offline after stop |
+| 4 | 22:00:44 | Same publisher after BPM-aware startup and aligned outgoing first IDRs | RTMPS media write returned broken pipe after about three seconds; [sanitized report](m0-twitch-fourth-attempt.json) records Helix never live and channel offline after stop |
+| 5 | 22:09:18 | Same startup with primary H.264 converted to enhanced single-track `avc1` FLV tags | RTMPS media write returned EOF after about four seconds; [sanitized report](m0-twitch-fifth-attempt.json) records Helix never live and channel offline after stop |
 
-Neither attempt produced a Helix live-stream result. After each failure, the
+None of the attempts produced a Helix live-stream result. After each failure, the
 harness stopped OBS, MediaMTX and FFmpeg. A final check found the channel offline,
 no test listeners, and no video in Video Producer's current All Videos view.
 No horizontal/vertical viewer playback or live/VOD audio behavior was observed.
-The broken pipe does not identify whether Twitch rejected authentication,
-metadata, track packaging or some other part of the publish path.
+The disconnects do not identify which remaining ingest requirement was rejected.
 
-The exploratory live runners and their raw reports remain private/ignored. Their
-source was not committed, so the live observations are a **diagnostic record**, not
+The first two exploratory live runners and their raw reports remain private/ignored. Their
+source was not committed, so those observations are a **diagnostic record**, not
 a reproducible passing qualification artifact. A later
 [reproducible local ladder fixture](m0-twitch-ladder-local.md) uses the sanitized
 encoder settings but cannot establish Twitch ingest acceptance. The negotiated response, which
 contained an ingest credential, was removed from temporary memory storage after
-the attempts. No stream key, response, endpoint authentication or unredacted
+the first two attempts. The retained bounded runner keeps no negotiated response. No stream key, response, endpoint authentication or unredacted
 publisher log is committed.
 
 ## M0 blocker
 
 The appliance copy-publisher has not demonstrated Twitch Enhanced Broadcasting
-delivery. Its FLV/RTMP wire behavior must be compared with OBS's negotiated
-publisher path, and a reproducible bounded live harness must be retained before a
-further live qualification. Any additional broadcast requires separate owner
-approval. Do not infer Twitch H/V support or live/VOD correctness from the
+delivery. Its remaining FLV/RTMP wire behavior and per-track negotiated settings
+must be compared with OBS's negotiated publisher path before a further live
+qualification. The owner has authorized further necessary broadcast tests.
+Do not infer Twitch H/V support or live/VOD correctness from the
 successful negotiation and local fixture.

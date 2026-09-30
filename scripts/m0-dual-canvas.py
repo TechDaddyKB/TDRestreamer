@@ -8,6 +8,7 @@ import hashlib
 import json
 import math
 import os
+import re
 import secrets
 import shutil
 import signal
@@ -20,6 +21,7 @@ from pathlib import Path
 from m0_dual_checks import check_pixels, check_streams
 from m0_flv_checks import check_flv_track_ids
 from m0_protocols import require
+from m0_socket_bridge import serve_unix_to_tcp
 from m0_twitch_config import local_obs_config
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +56,9 @@ class Lab:
                 "Xvfb",
                 "bwrap",
                 "obs",
+                "gcc",
+                sys.executable,
+                str(self.work / "twitch-copy"),
                 str(ROOT / ".tools/mediamtx/mediamtx"),
             },
             "unexpected fixture executable",
@@ -79,7 +84,7 @@ class Lab:
         )
         return out
 
-    def start(self, name, args, env=None):
+    def start(self, name, args, env=None, input_line=None):
         self.check_command(args)
         log = (self.work / f"{name}.log").open("w")
         self.files.append(log)
@@ -90,9 +95,13 @@ class Lab:
             stderr=sp.STDOUT,
             cwd=self.work,
             env=env,
+            stdin=sp.PIPE if input_line is not None else None,
             start_new_session=True,
             shell=False,
         )
+        if input_line is not None:
+            p.stdin.write(input_line.encode())
+            p.stdin.close()
         self.processes.append(p)
         return p
 
@@ -173,6 +182,22 @@ def loaded_system_modules(log_path, pid):
                 f"OBS module path ambiguous or outside system plugin root: {name}")
         result[name] = digest(next(iter(paths)))
     return result
+
+
+def wait_copy_ready(lab, process, path):
+    deadline = time.monotonic() + 18
+    while time.monotonic() < deadline:
+        require(process.poll() is None, "libavformat copy publisher exited")
+        try:
+            lab.run([
+                "ffprobe", "-v", "error", "-rtsp_transport", "tcp", "-i",
+                f"rtsp://127.0.0.1:18555/dual/{path}",
+                "-show_streams", "-of", "json",
+            ], timeout=10)
+            return
+        except RuntimeError:
+            time.sleep(0.5)
+    raise RuntimeError("libavformat copy sink did not become ready")
 
 
 def observe(lab, path, ladder=False):
@@ -273,10 +298,12 @@ def observe(lab, path, ladder=False):
 def main():
     os.umask(0o077)
     ladder = "--twitch-ladder" in sys.argv
+    bridge_source = "--bridge-source" in sys.argv
     require(
-        set(sys.argv[1:]) <= {"--isolated", "--twitch-ladder"},
+        set(sys.argv[1:]) <= {"--isolated", "--twitch-ladder", "--bridge-source"},
         "unknown fixture option",
     )
+    require(not bridge_source or ladder, "bridged source requires the ladder fixture")
     if "--isolated" not in sys.argv:
         return sp.call(
             [
@@ -288,6 +315,7 @@ def main():
                 str(Path(__file__).resolve()),
                 "--isolated",
                 *(["--twitch-ladder"] if ladder else []),
+                *(["--bridge-source"] if bridge_source else []),
             ],
             shell=False,
         )
@@ -301,16 +329,14 @@ def main():
     )
     require(not any(routes.values()), "refusing external routes")
     sp.run(["ip", "link", "set", "lo", "up"], check=True)
+    isolation = {"initial_interfaces": [x["ifname"] for x in links], "routes": routes}
     work = ROOT / "runtime" / ("m0-dual-" + secrets.token_hex(6))
     work.mkdir(parents=True, mode=0o700)
     lab = Lab(work)
     report = {
         "status": "running",
         "recorded_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
-        "isolation": {
-            "initial_interfaces": [x["ifname"] for x in links],
-            "routes": routes,
-        },
+        "isolation": isolation,
         "tests": {},
         "limitations": [
             (
@@ -362,7 +388,10 @@ def main():
             source_files.extend(
                 [
                     ROOT / "scripts/m0_twitch_config.py",
+                    ROOT / "scripts/m0_socket_bridge.py",
+                    ROOT / "scripts/m0_rtmp_tap.py",
                     ROOT / "tests/m0/twitch-ladder-local.json",
+                    ROOT / "tests/m0/twitch_copy.c",
                 ]
             )
         report["harness_sha256"] = {
@@ -370,6 +399,14 @@ def main():
             for p in source_files
         }
         report["python_optimized"] = bool(sys.flags.optimize)
+        if ladder:
+            copy_binary = work / "twitch-copy"
+            lab.run([
+                "gcc", "-std=c11", "-O2", "-Wall", "-Wextra", "-Werror",
+                "-o", str(copy_binary), str(ROOT / "tests/m0/twitch_copy.c"),
+                "-lavformat", "-lavcodec", "-lavutil",
+            ])
+            report["copy_binary_sha256"] = digest(copy_binary)
         if not ladder:
             modules = work / "modules"
             modules.mkdir()
@@ -443,6 +480,13 @@ paths:
 """)
         gateway = lab.start("gateway", [str(gateway_bin), str(gateway_config)])
         lab.port(18555, gateway)
+        if ladder:
+            tap = lab.start(
+                "rtmp-tap",
+                [sys.executable, str(ROOT / "scripts/m0_rtmp_tap.py"),
+                 str(work / "rtmp-tap.json")],
+            )
+            lab.port(19350, tap)
         cfgdir = work / "config/obs-studio"
         profile = cfgdir / "basic/profiles/M0"
         profile.mkdir(parents=True)
@@ -452,7 +496,7 @@ paths:
                 {
                     "type": "rtmp_custom",
                     "settings": {
-                        "server": "rtmp://127.0.0.1:19351/dual",
+                        "server": f"rtmp://127.0.0.1:{19350 if ladder else 19351}/dual",
                         "key": "obs",
                         "use_auth": False,
                     },
@@ -529,7 +573,7 @@ paths:
             fixture = json.loads((ROOT / "tests/m0/twitch-ladder-local.json").read_text())
             source_key = "m0-local-synthetic-source-key"
             configuration, report["ladder_mapping"] = local_obs_config(
-                fixture, 19351, source_key
+                fixture, 19350, source_key
             )
         (profile / "basic.ini").write_text(
             """[General]
@@ -581,6 +625,7 @@ MultitrackVideoConfigOverride="""
             json.dumps(
                 {
                     "password": password,
+                    "server": f"rtmp://127.0.0.1:{19350 if ladder else 19351}/dual",
                     **{
                         name: str(work / f"{name}.{ext}")
                         for name, ext in [
@@ -680,6 +725,18 @@ MultitrackVideoConfigOverride="""
             "WebSocket version mismatch",
         )
         report["tests"]["obs_ingest_rtsp"] = observe(lab, source_key, ladder)
+        if bridge_source:
+            stop_requested = False
+
+            def request_stop(unused_signum, unused_frame):
+                nonlocal stop_requested
+                stop_requested = True
+
+            previous = signal.signal(signal.SIGTERM, request_stop)
+            serve_unix_to_tcp(work / "rtsp.sock", lambda: stop_requested, 420)
+            signal.signal(signal.SIGTERM, previous)
+            report["status"] = "bridged_source_stopped"
+            return 0
         flv = lab.run(
             [
                 "ffmpeg",
@@ -728,6 +785,19 @@ MultitrackVideoConfigOverride="""
         time.sleep(3)
         require(relay.poll() is None, "copy publisher exited")
         report["tests"]["enhanced_copy_publisher"] = observe(lab, "relay", ladder)
+        if ladder:
+            copy_publisher = lab.start(
+                "twitch-copy",
+                [
+                    str(copy_binary),
+                    f"rtsp://127.0.0.1:18555/dual/{source_key}",
+                    "rtmp://127.0.0.1:19351/dual",
+                    "90",
+                ],
+                input_line="copy\n",
+            )
+            wait_copy_ready(lab, copy_publisher, "copy")
+            report["tests"]["libavformat_copy_publisher"] = observe(lab, "copy", True)
         report["status"] = (
             "passed_local_twitch_ladder" if ladder else "passed_local_dual_canvas"
         )
@@ -737,6 +807,24 @@ MultitrackVideoConfigOverride="""
         raise
     finally:
         lab.close()
+        if ladder and (work / "rtmp-tap.json").exists():
+            report["obs_rtmp_bpm_tap"] = json.loads((work / "rtmp-tap.json").read_text())
+        if ladder and (work / "twitch-copy.log").exists():
+            log = (work / "twitch-copy.log").read_text(errors="replace")
+            for name, length in (("startup_missing_timestamps", 6),
+                                 ("keyframes", 4), ("first_key_pts_ms", 4),
+                                 ("bpm_ts", 4), ("bpm_sm", 4), ("bpm_erm", 4),
+                                 ("keyframes_with_bpm", 4), ("dropped_bpm", 4),
+                                 ("first_ready_pts_ms", 4),
+                                 ("first_output_key_pts_ms", 4)):
+                match = re.search(rf"^{name}=(-?\d+(?:,-?\d+){{{length - 1}}})$", log, re.M)
+                if match:
+                    report["tests"]["libavformat_" + name] = [
+                        int(value) for value in match.group(1).split(",")
+                    ]
+            match = re.search(r"^enhanced_primary_tags=(\d+)$", log, re.M)
+            if match:
+                report["tests"]["libavformat_enhanced_primary_tags"] = int(match.group(1))
         (work / "report.json").write_text(json.dumps(report, indent=2) + "\n")
         print(json.dumps(report, indent=2))
         print(f"Evidence: {work / 'report.json'}")
