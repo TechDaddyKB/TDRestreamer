@@ -47,13 +47,20 @@ This control used the negotiated ladder, but the sink was local.
 | 6 | 22:44:07 | [Direct isolated OBS control](m0-twitch-obs-control.md), 90 seconds | Helix live and public red horizontal playback; 1:30 VOD with 880 Hz audio |
 | 7 | 22:48:14 | Same direct OBS control, 150 seconds | Helix live; dashboard showed horizontal and vertical renditions, red H and blue V viewer previews; graceful stop and offline check passed |
 | 8 | 23:01:37 | Direct OBS control, 30-second smoke after WebSocket password-handoff change | Helix live, graceful OBS stop and offline check passed; [sanitized report](m0-twitch-obs-control-smoke.json) |
+| 9 | 23:31:05 | Copy publisher with first outgoing keyframes rebased to 0 ms after a passing local six-stream control | RTMPS write returned broken pipe after four seconds; Helix never live and channel offline after cleanup. The [wire comparison](m0-rtmp-wire-comparison.json) retains sanitized local header evidence |
 
-None of the five **copy-publisher** attempts produced a Helix live-stream result.
+None of the six **copy-publisher** attempts produced a Helix live-stream result.
 After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
 OBS attempts 6 and 7 then proved that the same channel and negotiated ladder
 can go live and deliver H/V scenes. The [control record](m0-twitch-obs-control.md)
 also establishes one VOD audio sample; live audio identity remains unverified.
 The copy disconnects do not identify which ingest requirement was rejected.
+The local wire comparison found that the earlier copy path first emitted coded
+video without an IDR and placed its first IDRs at 2000 ms, while OBS began with
+IDRs at 0 ms. The revised copy path places all four first IDRs at 0 ms, but
+still emits coded non-key video before them at that timestamp and differs from
+OBS in audio setup packets. Attempt 9 demonstrates that timestamp rebasing
+alone did not fix Twitch ingest.
 
 The first two exploratory live runners and their raw reports remain private/ignored. Their
 source was not committed, so those observations are a **diagnostic record**, not

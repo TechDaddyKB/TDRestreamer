@@ -391,6 +391,7 @@ def main():
                     ROOT / "scripts/m0_twitch_config.py",
                     ROOT / "scripts/m0_socket_bridge.py",
                     ROOT / "scripts/m0_rtmp_tap.py",
+                    ROOT / "scripts/m0_rtmp_wire.py",
                     ROOT / "tests/m0/twitch-ladder-local.json",
                     ROOT / "tests/m0/twitch_copy.c",
                 ]

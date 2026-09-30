@@ -7,6 +7,8 @@ import socket
 import sys
 from pathlib import Path
 
+from m0_rtmp_wire import Inspector
+
 UUIDS = {
     "bpm_ts": bytes.fromhex("0aecffe752724e2fa62fd19cd61a93b5"),
     "bpm_sm": bytes.fromhex("ca60e71c6a8b4388a377151df7bf8ac2"),
@@ -21,9 +23,11 @@ def stop(*_):
 
 
 def main():
-    if len(sys.argv) != 2:
-        raise SystemExit("usage: m0_rtmp_tap.py <private-report-path>")
+    if len(sys.argv) not in (2, 4):
+        raise SystemExit("usage: m0_rtmp_tap.py <private-report-path> [listen-port upstream-port]")
     report_path = Path(sys.argv[1])
+    listen_port, upstream_port = (map(int, sys.argv[2:]) if len(sys.argv) == 4
+                                  else (19350, 19351))
     signal.signal(signal.SIGTERM, stop)
     signal.signal(signal.SIGINT, stop)
     report = {"connections": 0, "upstream_bytes": 0,
@@ -31,7 +35,7 @@ def main():
     try:
         with socket.socket() as listener:
             listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-            listener.bind(("127.0.0.1", 19350))
+            listener.bind(("127.0.0.1", listen_port))
             listener.listen(4)
             listener.settimeout(0.5)
             while not STOP:
@@ -41,8 +45,9 @@ def main():
                     continue
                 report["connections"] += 1
                 try:
-                    with client, socket.create_connection(("127.0.0.1", 19351), timeout=3) as target:
+                    with client, socket.create_connection(("127.0.0.1", upstream_port), timeout=3) as target:
                         previous = b""
+                        inspector = Inspector()
                         while not STOP:
                             readable, _, _ = select.select([client, target], [], [], 0.5)
                             for source in readable:
@@ -55,13 +60,15 @@ def main():
                                     for name, marker in UUIDS.items():
                                         report["uuid_counts"][name] += combined.count(marker)
                                     previous = combined[-15:]
+                                    inspector.feed(data)
                                     target.sendall(data)
                                 else:
                                     client.sendall(data)
                             else:
                                 continue
                             break
-                except OSError:
+                        report["wire"] = inspector.report()
+                except (OSError, ValueError):
                     report["connection_errors"] = report.get("connection_errors", 0) + 1
     finally:
         report_path.write_text(json.dumps(report, indent=2) + "\n")
