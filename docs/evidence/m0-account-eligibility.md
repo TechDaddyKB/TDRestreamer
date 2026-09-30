@@ -101,8 +101,22 @@ distinct from the credit instrument's expiry shown in AWS Settings.
 ### Regional quota follow-up
 
 On 2026-09-30, the authenticated `index-zero` profile again passed STS identity
-verification. Read-only `service-quotas list-service-quotas --service-code ec2`
-in `us-east-2` returned these account-specific On-Demand vCPU limits:
+verification. Reproduce the read-only quota and regional-offering queries with
+the explicit project profile and selected Region (do not publish account IDs or
+other raw identity output):
+
+```sh
+aws service-quotas list-service-quotas --service-code ec2 \
+  --region us-east-2 --profile index-zero \
+  --query 'Quotas[?contains(QuotaName, `Running On-Demand`)].{Name:QuotaName,Code:QuotaCode,Value:Value}' \
+  --output json
+aws ec2 describe-instance-type-offerings --location-type region \
+  --filters Name=instance-type,Values=g4dn.xlarge,g5.xlarge,g6.xlarge \
+  --region us-east-2 --profile index-zero \
+  --query 'InstanceTypeOfferings[].InstanceType' --output json
+```
+
+The quota response returned these account-specific On-Demand vCPU limits:
 
 | Quota | Code | Limit (vCPUs) |
 |---|---|---:|
