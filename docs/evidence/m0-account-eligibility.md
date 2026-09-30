@@ -62,16 +62,34 @@ profile or cookie files were read. The observed account state was:
 | Google Cloud / YouTube | The selected existing project is unrelated to Restreamer and shows no OAuth clients. | Other projects and YouTube publishing grants were not qualified; the selected project was not changed. |
 | Rumble | The Livestream API settings page loads and offers user/channel sections. | No credential-bearing API URL was opened or copied, and no API request or control operation was tested. |
 
-These are current UI observations, not application API acceptance tests. No app,
-developer account, OAuth grant, stream, or billable resource was created. The
-browser connection did not expose stream keys or API URLs in the retained record.
+These were UI observations at the time of the read-only recheck. A later,
+separately approved Twitch app registration and app-token test are recorded below.
+The browser connection did not expose stream keys or API URLs in the retained record.
 
-Next prerequisites are a dedicated app/callback configuration and consent plan
-for the supported platform APIs, plus explicit approval wherever registration
-creates credentials or accepts terms. No existing unrelated app will be reused
-or modified implicitly. X developer enrollment, API product suitability and any
-associated charges need separate resolution; a normal X account is insufficient
-evidence. Rumble Live Stream API invocation remains untested.
+For platforms other than Twitch, next prerequisites remain a dedicated
+app/callback configuration and consent plan, plus explicit approval wherever
+registration creates credentials or accepts terms. No existing unrelated app
+will be reused or modified implicitly. X developer enrollment, API product
+suitability and any associated charges need separate resolution; a normal X
+account is insufficient evidence. Rumble Live Stream API invocation remains untested.
+
+### Approved Twitch app registration and API read
+
+On 2026-09-30, the owner approved the exact dedicated Twitch registration and
+signed in to a separate Chrome profile. The app `Tech Daddy's Restreamer M0`
+was registered under TechDaddy with Broadcaster Suite category, confidential
+client type and `http://localhost:18971/oauth/twitch/callback` redirect. Its
+client ID and newly generated secret were stored in the local Secret Service
+keyring; the secret-bearing tab was closed. The
+[reproducible read-only preflight](../../tests/m0/twitch-app-token.mjs) obtained
+an app token and read the public TechDaddy Helix user record. The
+[sanitized report](m0-twitch-app-token.json) records HTTP 200 for both calls
+and one matching user. No token or credential was retained in the report.
+
+This proves only client-credentials authentication and a public API read.
+No broadcaster OAuth consent, scope grant, refresh/revocation, stream-key access,
+Twitch H/V negotiation, or broadcast was performed. Other platform API gates
+remain open. See the [Twitch procedure](m0-twitch-qualification.md).
 
 ## AWS read-only results
 

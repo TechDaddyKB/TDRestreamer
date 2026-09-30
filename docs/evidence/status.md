@@ -4,7 +4,7 @@
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence and unresolved
-Twitch delivery and application API eligibility gates. Additional OBS input modes remain
+Twitch delivery and remaining application API eligibility gates. Additional OBS input modes remain
 later media qualification work; M1 has an implemented local control foundation but still
 needs OAuth, invitations and additional identity/operational hardening.
 
@@ -48,7 +48,9 @@ playback, forced HLS fallback, fresh-client access denials, RTMPS certificate
 validation and encrypted-SRT transport/denials. Platform/provider documentation
 is inventoried separately; it does not prove account-specific eligibility. The later
 [authenticated account checks](m0-account-eligibility.md) establish dashboard access
-and AWS read permissions, with application OAuth/API permissions still unverified.
+and AWS read permissions. A dedicated Twitch app also passed a
+[client-credentials public API read](m0-twitch-app-token.json); broadcaster consent,
+other platform APIs and delivery remain unverified.
 Application preview integration and Twitch live/VOD semantics remain unverified.
 
 Real FFmpeg frame tests also passed for crop, fill and blur output geometry,
@@ -79,6 +81,6 @@ Current owner instruction: **Check account eligibility first; approve broadcasts
 Authenticated platform dashboards and AWS Free Plan/EC2 read access were checked; see
 [the account eligibility record](m0-account-eligibility.md). No broadcasts, provisioning
 or provider spending were performed. Actual Twitch delivery/live-VOD behavior,
-application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,
+remaining application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,
 N100/Intel/AMD/ARM64/multi-GPU reference hardware, eight-hour soaks and comprehensive
 accessibility review remain unverified. They do not remove any v1 requirement.
