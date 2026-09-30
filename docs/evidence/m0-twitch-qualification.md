@@ -87,6 +87,19 @@ Stream-key access is a sensitive credential grant; do not request it merely to
 prove public channel reads. Client creation does not prove refresh, revocation,
 ingest rights or H/V negotiation. Keep credentials out of evidence and Git.
 
+## Offline negotiated-config guard
+
+The [M0 config guard](../../scripts/m0_twitch_config.py) checks an OBS 32.2.2
+GoLive response before it can be used in the isolated copy-publisher path. It
+requires the pinned schema, both canvas orientations, one AAC live and one AAC
+VOD track with output-order track IDs, and an RTMP(S) endpoint. Its summary
+contains no authentication or endpoint URL. It also constructs an OBS override
+with only a loopback ingest endpoint, removing the remote authentication from
+that override. Unit controls reject missing or swapped roles. These are
+synthetic contract checks: no actual Twitch response has been obtained, and the
+guard is not a working Twitch publisher. If a live response differs, record the
+difference and qualify it before changing the guard or sending media.
+
 ## Remaining execution sequence
 
 1. The [local fixture](m0-dual-canvas.md) passes labeled H/V frames and distinct
@@ -95,7 +108,8 @@ ingest rights or H/V negotiation. Keep credentials out of evidence and Git.
    the fixture to the actual negotiated rendition ladder once available; a
    synthetic two-video configuration is not evidence of Twitch's ladder.
 2. Implement the qualification publisher's negotiation and track mapping against
-   the observed contract. Do not claim that ordinary FFmpeg two-key fanout or a
+   the observed contract, using the offline guard as an initial check. Do not
+   claim that ordinary FFmpeg two-key fanout or a
    mocked response meets Twitch's contract. A direct OBS test is only a reference
    control; the chosen appliance transport/publisher path must also pass.
 3. Prepare a separate broadcast approval request once the executable path is
