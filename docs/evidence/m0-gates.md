@@ -29,6 +29,9 @@ Twitch dual-format negotiation, H/V viewer delivery and correct live/VOD semanti
 Account-specific failures require concrete blockers/design proposals, not invented
 success. The current instruction is eligibility checks first, with broadcasts
 approved separately. Cloud provisioning and spending remain unauthorized.
+The [Twitch qualification procedure](m0-twitch-qualification.md) records the
+pinned negotiation contract, Linux support uncertainty and remaining execution
+steps; it is preparation, not passing delivery evidence.
 
 Additional OBS modes, production gateway integration, GPU qualification, full
 platform rule fixtures, distributed recovery, cost reconciliation and soaks remain
