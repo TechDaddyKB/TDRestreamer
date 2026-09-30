@@ -62,15 +62,25 @@ configuration. Twitch negotiation, GPU capacity and platform delivery remain ope
 
 ## Separate API eligibility step
 
-Prepared, but not submitted: a Twitch registration under TechDaddy named
-`Tech Daddy's Restreamer M0`, category Broadcaster Suite, confidential client,
-redirect `http://localhost:18971/oauth/twitch/callback`. The form accepts this
-localhost redirect. No callback service or client credential has been created.
-The browser registration is awaiting action-time confirmation because it creates
-a persistent application identity. Registration is separate from channel consent.
+On 2026-09-30, after explicit owner approval, a dedicated app was registered
+under TechDaddy as `Tech Daddy's Restreamer M0`, category Broadcaster Suite,
+confidential client, redirect `http://localhost:18971/oauth/twitch/callback`.
+The application appeared in Developer Applications after submission; its manage
+page showed the approved settings. A new client secret was generated once and
+the client ID and secret were stored in the local Secret Service keyring under
+`service=tdrestreamer`, `account=twitch-m0`. The secret-bearing browser tab was
+closed. Neither credential was copied into this repository or chat.
+
+The [reproducible read-only preflight](../../tests/m0/twitch-app-token.mjs) used
+the app credentials to obtain a client-credentials bearer token, then queried
+Helix `GET /users?login=TechDaddy`. The [unaltered sanitized report](m0-twitch-app-token.json)
+records HTTP 200 for both calls and one matching user. This establishes basic
+app-token/API eligibility for public reads. It does not establish user consent,
+scope grants, refresh/revocation, ingest rights, or H/V negotiation. No callback
+service was started and no OAuth authorization-code flow was attempted.
 
 Use a dedicated client, as required by [Twitch's registration guide](https://dev.twitch.tv/docs/authentication/register-app/).
-Initial public channel/API reads can use an app access token with no user scopes.
+The public channel/API read used an app access token with no user scopes.
 Any later user consent must identify the exact endpoint and minimal scope using
 [Twitch's scope reference](https://dev.twitch.tv/docs/authentication/scopes/).
 Stream-key access is a sensitive credential grant; do not request it merely to
@@ -102,6 +112,6 @@ ingest rights or H/V negotiation. Keep credentials out of evidence and Git.
    sanitized results with exact tool versions and producing-source hashes. A
    failed or unsupported path remains a blocker; no local fixture waives it.
 
-No broadcasts, stream-key reads, app registrations, OAuth grants or changes to the
-user's OBS configuration occurred during this preparation. The other platforms'
+No broadcasts, stream-key reads, OAuth grants or changes to the user's OBS
+configuration occurred during this app preflight. The other platforms'
 application/API prerequisites remain in the [account record](m0-account-eligibility.md).
