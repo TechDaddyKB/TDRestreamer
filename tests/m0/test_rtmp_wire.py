@@ -39,6 +39,38 @@ class WireInspectorTest(unittest.TestCase):
         inspector.feed(wire)
         self.assertEqual(inspector.report()["first_media_messages"][0]["bytes"], len(body))
 
+    def test_reused_headers_and_extended_timestamp(self):
+        inspector = Inspector()
+        body = b"\xaf\x01"
+        first = message(4, 8, body, 0xFFFFFF)
+        first = first[:12] + (0x1000000).to_bytes(4, "big") + first[12:]
+        fmt1 = b"\x44\x00\x00\x21" + len(body).to_bytes(3, "big") + b"\x08" + body
+        fmt2 = b"\x84\x00\x00\x22" + body
+        fmt3 = b"\xc4" + body
+        inspector.feed(bytes(3073) + first + fmt1 + fmt2 + fmt3)
+        self.assertEqual([m["timestamp_ms"] for m in inspector.media],
+                         [0x1000000, 0x1000021, 0x1000043, 0x1000065])
+
+    def test_extended_chunk_stream_ids(self):
+        inspector = Inspector()
+        regular = message(4, 9, b"\x17")
+        extended_one = b"\x00\x06" + regular[1:]
+        extended_two = b"\x01\x01\x01" + regular[1:]
+        inspector.feed(bytes(3073) + extended_one + extended_two)
+        self.assertEqual(inspector.messages["9"], 2)
+
+    def test_invalid_control_and_missing_header(self):
+        with self.assertRaisesRegex(ValueError, "initial header"):
+            Inspector().feed(bytes(3073) + b"\xc4")
+        with self.assertRaisesRegex(ValueError, "out of bounds"):
+            Inspector().feed(bytes(3073) + message(2, 1, bytes(4)))
+
+    def test_media_sample_is_bounded(self):
+        inspector = Inspector()
+        inspector.feed(bytes(3073) + message(4, 9, b"\x17") * 100)
+        self.assertEqual(inspector.messages["9"], 100)
+        self.assertEqual(len(inspector.media), 96)
+
 
 if __name__ == "__main__":
     unittest.main()
