@@ -20,13 +20,42 @@ jobs:
           node-version: 26.7.0
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - run: make setup check
+      - run: python3 -m pip install coverage==7.10.7
+      - run: make setup lint coverage docs build COVERAGE='python3 -m coverage'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: |
+            coverage/go.out
+            coverage/python.xml
+            web/coverage/lcov.info
+          if-no-files-found: error
+          retention-days: 7
       - run: make generate && git diff --exit-code
       - run: python3 scripts/scan-secrets.py
       - run: go run github.com/zricethezav/gitleaks/v8@v8.30.1 git --redact --no-banner
       - run: cd web && npm audit --audit-level=high
       - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
       - run: docker build -t tdrestreamer:ci .
+  sonar:
+    needs: checks
+    if: github.event_name == 'push' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          name: coverage
+      - name: Verify coverage reports
+        run: test -s coverage/go.out && test -s coverage/python.xml && test -s web/coverage/lcov.info
+      - name: SonarQube analysis and quality gate
+        uses: SonarSource/sonarqube-scan-action@c7ee0f9df90b7aa20e8dcf9695dcfe2e7da5b4f2 # v7
+        with:
+          args: -Dsonar.qualitygate.wait=true
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   integration:
     runs-on: ubuntu-24.04
     steps:

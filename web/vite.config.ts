@@ -7,5 +7,15 @@ export default defineConfig({
     environment: "jsdom",
     setupFiles: ["./src/test-setup.ts"],
     include: ["src/**/*.test.tsx"],
+    coverage: {
+      provider: "v8",
+      reporter: ["text", ["lcov", { projectRoot: ".." }]],
+      include: ["src/**/*.{ts,tsx}"],
+      exclude: [
+        "src/**/*.test.tsx",
+        "src/test-setup.ts",
+        "src/generated-api.ts",
+      ],
+    },
   },
 });
