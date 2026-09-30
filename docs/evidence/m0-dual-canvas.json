@@ -1,6 +1,6 @@
 {
   "status": "passed_local_dual_canvas",
-  "recorded_at": "2026-09-30T16:05:55Z",
+  "recorded_at": "2026-09-30T16:12:02Z",
   "isolation": {
     "initial_interfaces": [
       "lo"
@@ -143,11 +143,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 5438810.11
+          "opposite_power_ratio": 15473631.14
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 6271573.2
+          "opposite_power_ratio": 4553461.29
         }
       ]
     },
@@ -283,11 +283,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_power_ratio": 1229066.63
+          "opposite_power_ratio": 5937328.64
         },
         {
           "expected_hz": 880,
-          "opposite_power_ratio": 1016531.25
+          "opposite_power_ratio": 4254568.49
         }
       ]
     }
@@ -301,10 +301,11 @@
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
   "gateway": "v1.21.1",
   "harness_sha256": {
-    "scripts/m0-dual-canvas.py": "f3c8d7984f7b92e137924560d70323b6fcb9d7330d7fdd4c2f4b304c153e2ac7",
+    "scripts/m0-dual-canvas.py": "5801d710ab2ebfe16af60ca1cd6ac1ede2058b0ffec7c7aea65befc1f100d925",
     "scripts/m0_dual_checks.py": "855a3a0a9fff380f579d4ee6436bebdb5b4f88863a8ac16d4f858daaad2f73e4",
     "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
-    "tests/m0/dual-canvas.mjs": "ef55a3a564345df2883b7b2b1eee148d270df56c6df2944339a495a41f23cbd6",
+    "tests/m0/dual-canvas.mjs": "02cdb6fc6d99ac261757e4408990b9d1f22662dd58e280e289792b9a4ecafcca",
+    "tests/m0/obs-rpc.mjs": "1e91784568bbe1c3a8f614387857f2fc35703ce29e76bf57188a065f2f07e0eb",
     "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180"
   },
   "python_optimized": true,
@@ -347,6 +348,6 @@
         }
       }
     ],
-    "bytes": 694611
+    "bytes": 712462
   }
 }

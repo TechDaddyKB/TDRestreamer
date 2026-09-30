@@ -1,4 +1,4 @@
-import { createHash } from "node:crypto";
+import { obsConnection } from "./obs-rpc.mjs";
 import fs from "node:fs";
 import path from "node:path";
 
@@ -15,53 +15,10 @@ const configPath = fs.realpathSync(expectedConfig);
 if (configPath !== expectedConfig)
   throw new Error("Symlinked fixture configuration refused");
 const cfg = JSON.parse(fs.readFileSync(configPath, "utf8"));
-const ws = new WebSocket("ws://127.0.0.1:19447");
-const pending = new Map();
-let counter = 0;
-const ready = new Promise((resolve, reject) => {
-  ws.addEventListener("error", () =>
-    reject(new Error("OBS connection failed")),
-  );
-  ws.addEventListener("message", ({ data }) => {
-    const msg = JSON.parse(data);
-    if (msg.op === 0) {
-      const a = msg.d.authentication;
-      // OBS WebSocket v5 mandates this challenge response, not a password-storage KDF.
-      // The fixture uses a fresh 192-bit random credential in its isolated network.
-      const sha = (x) => createHash("sha256").update(x).digest("base64");
-      ws.send(
-        JSON.stringify({
-          op: 1,
-          d: {
-            rpcVersion: 1,
-            eventSubscriptions: 0,
-            authentication: sha(sha(cfg.password + a.salt) + a.challenge),
-          },
-        }),
-      );
-    }
-    if (msg.op === 2) resolve();
-    if (msg.op === 7) {
-      const p = pending.get(msg.d.requestId);
-      if (!p) return;
-      pending.delete(msg.d.requestId);
-      if (msg.d.requestStatus.result) p.resolve(msg.d.responseData);
-      else
-        p.reject(
-          new Error(msg.d.requestType + ": " + msg.d.requestStatus.comment),
-        );
-    }
-  });
-});
-function request(requestType, requestData = {}) {
-  return new Promise((resolve, reject) => {
-    const requestId = String(++counter);
-    pending.set(requestId, { resolve, reject });
-    ws.send(
-      JSON.stringify({ op: 6, d: { requestType, requestId, requestData } }),
-    );
-  });
-}
+const { ready, request, close } = obsConnection(
+  "ws://127.0.0.1:19447",
+  cfg.password,
+);
 const timeout = setTimeout(() => {
   console.error("Dual-canvas setup timed out");
   process.exit(1);
@@ -163,5 +120,5 @@ try {
   );
 } finally {
   clearTimeout(timeout);
-  ws.close();
+  close();
 }

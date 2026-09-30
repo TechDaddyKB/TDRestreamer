@@ -13,18 +13,18 @@
     "obs_audio_identity": [
       {
         "expected_hz": 440,
-        "opposite_tone_power_ratio": 13822962.44
+        "opposite_tone_power_ratio": 15020939.77
       },
       {
         "expected_hz": 880,
-        "opposite_tone_power_ratio": 7441661.58
+        "opposite_tone_power_ratio": 4113111.83
       }
     ],
     "preview": {
       "browserVersion": "153.0.8010.12",
       "webrtc": {
         "frames": 31,
-        "time": 1.019,
+        "time": 1.017,
         "tracks": [
           "audio",
           "video"
@@ -34,7 +34,7 @@
       "hls": {
         "fallbackTriggered": true,
         "frames": 31,
-        "time": 0.83
+        "time": 0.82732
       },
       "access_denials": [
         {
@@ -54,32 +54,32 @@
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/54c6cb99b35d_video1_init.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/54c6cb99b35d_video1_seg0.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/54c6cb99b35d_audio2_init.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/54c6cb99b35d_audio2_seg0.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/54c6cb99b35d_video1_seg1.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "anonymous",
-          "path": "/a/hls/54c6cb99b35d_audio2_seg1.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -104,32 +104,32 @@
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/54c6cb99b35d_video1_init.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/54c6cb99b35d_video1_seg0.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/54c6cb99b35d_audio2_init.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/54c6cb99b35d_audio2_seg0.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/54c6cb99b35d_video1_seg1.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "reader-b",
-          "path": "/a/hls/54c6cb99b35d_audio2_seg1.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -154,32 +154,32 @@
         },
         {
           "identity": "expired",
-          "path": "/a/hls/54c6cb99b35d_video1_init.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_init.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/54c6cb99b35d_video1_seg0.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_seg0.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/54c6cb99b35d_audio2_init.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_init.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/54c6cb99b35d_audio2_seg0.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_seg0.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/54c6cb99b35d_video1_seg1.mp4",
+          "path": "/a/hls/3b322d5e7149_video1_seg1.mp4",
           "status": 401
         },
         {
           "identity": "expired",
-          "path": "/a/hls/54c6cb99b35d_audio2_seg1.mp4",
+          "path": "/a/hls/3b322d5e7149_audio2_seg1.mp4",
           "status": 401
         },
         {
@@ -198,11 +198,11 @@
       "audio_identity": [
         {
           "expected_hz": 440,
-          "opposite_tone_power_ratio": 4393350.92
+          "opposite_tone_power_ratio": 12787053.81
         },
         {
           "expected_hz": 880,
-          "opposite_tone_power_ratio": 4117012.37
+          "opposite_tone_power_ratio": 10417158.54
         }
       ]
     },
@@ -222,11 +222,11 @@
         "audio_identity": [
           {
             "expected_hz": 440,
-            "opposite_tone_power_ratio": 5094757.45
+            "opposite_tone_power_ratio": 6771961.07
           },
           {
             "expected_hz": 880,
-            "opposite_tone_power_ratio": 7859456.95
+            "opposite_tone_power_ratio": 12272274.32
           }
         ]
       },
@@ -239,11 +239,11 @@
         "audio_identity": [
           {
             "expected_hz": 440,
-            "opposite_tone_power_ratio": 16339220.11
+            "opposite_tone_power_ratio": 9286691.42
           },
           {
             "expected_hz": 880,
-            "opposite_tone_power_ratio": 11008402.54
+            "opposite_tone_power_ratio": 7372430.02
           }
         ],
         "own_tenant_positive_control": {
@@ -278,15 +278,16 @@
     "Browser audio is negotiated but not sample-analyzed; no latency, synchronization or soak qualification"
   ],
   "harness_sha256": {
-    "scripts/m0-local.py": "dddf4ea07bfe72400abf770e10240adf1fc8e59fbd9cd5449a6ee8e5c8ac038a",
+    "scripts/m0-local.py": "60dfc7422983f140c8012eca69b14938b82264895e2d58d4afa3d2b98fd83603",
     "scripts/m0_protocols.py": "b98909802c86dd6ec1d682b08431a6763a115215193f65a5f11865f08763de48",
-    "tests/m0/obs-control.mjs": "eb8a0dfd97db5baec16d89366384ea0f9dc23a6f4bb719a0d6e503af289b0118",
+    "tests/m0/obs-control.mjs": "0fff00c187f5c0a92a58b17dcce287102c77d6277b94824afb8c6f85d4b0ea71",
     "tests/m0/preview.mjs": "ccecda73ea0111f0df84e614f2e7d0e5ff35311ba9da605b4f418f71cfe718ca",
+    "tests/m0/obs-rpc.mjs": "1e91784568bbe1c3a8f614387857f2fc35703ce29e76bf57188a065f2f07e0eb",
     "tests/m0/toolchain.json": "4aea53bcb6febceda30e7310f73e96301e1646657827d0e26b082d8ea7ff3180",
     "web/package-lock.json": "890995d5d6a64de1348e1f0a9d900009e267aa131f91ae14a77106762797c9ab"
   },
   "python_optimized": true,
-  "recorded_at": "2026-09-30T14:31:39Z",
+  "recorded_at": "2026-09-30T16:12:02Z",
   "gateway": "v1.21.1",
   "gateway_sha256": "2b45b2999f22c8a1ecd376ce407b6337b68466fdeac54a8fdc448a79f818474f",
   "ffmpeg": "ffmpeg version n9.0.1 Copyright (c) 2000-2026 the FFmpeg developers",
@@ -326,7 +327,7 @@
         "group": "default",
         "txqlen": 1000,
         "link_type": "ether",
-        "address": "3a:cb:b6:29:f5:4f",
+        "address": "56:29:53:e2:ee:58",
         "broadcast": "ff:ff:ff:ff:ff:ff"
       }
     ],
@@ -355,7 +356,7 @@
     "obsVersion": "32.2.2",
     "websocketVersion": "5.7.4",
     "active": true,
-    "bytes": 367884
+    "bytes": 362656
   },
   "auth_events": [
     {
@@ -486,14 +487,14 @@
     },
     {
       "user": "publisher",
-      "path": "a/hls",
+      "path": "a/webrtc",
       "action": "publish",
       "protocol": "rtsp",
       "allowed": true
     },
     {
       "user": "publisher",
-      "path": "a/webrtc",
+      "path": "a/hls",
       "action": "publish",
       "protocol": "rtsp",
       "allowed": true
@@ -527,14 +528,14 @@
       "allowed": false
     },
     {
-      "user": "reader-b",
+      "user": "expired",
       "path": "a/hls",
       "action": "read",
       "protocol": "hls",
       "allowed": false
     },
     {
-      "user": "expired",
+      "user": "reader-b",
       "path": "a/hls",
       "action": "read",
       "protocol": "hls",
@@ -592,6 +593,20 @@
     {
       "user": "publisher",
       "path": "a/obs",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/relay",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/relay",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -646,20 +661,6 @@
       "allowed": true
     },
     {
-      "user": "",
-      "path": "a/relay",
-      "action": "read",
-      "protocol": "rtsp",
-      "allowed": false
-    },
-    {
-      "user": "publisher",
-      "path": "a/relay",
-      "action": "read",
-      "protocol": "rtsp",
-      "allowed": true
-    },
-    {
       "user": "publisher",
       "path": "a/relay",
       "action": "read",
@@ -704,6 +705,20 @@
     {
       "user": "publisher",
       "path": "a/relay",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": true
+    },
+    {
+      "user": "",
+      "path": "a/tls",
+      "action": "read",
+      "protocol": "rtsp",
+      "allowed": false
+    },
+    {
+      "user": "publisher",
+      "path": "a/tls",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -716,22 +731,8 @@
       "allowed": false
     },
     {
-      "user": "",
-      "path": "a/tls",
-      "action": "read",
-      "protocol": "rtsp",
-      "allowed": false
-    },
-    {
       "user": "publisher",
       "path": "a/obs",
-      "action": "read",
-      "protocol": "rtsp",
-      "allowed": true
-    },
-    {
-      "user": "publisher",
-      "path": "a/tls",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -857,28 +858,28 @@
     },
     {
       "user": "",
-      "path": "a/srt",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": false
     },
     {
       "user": "",
-      "path": "a/obs",
+      "path": "a/srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": false
     },
     {
       "user": "publisher",
-      "path": "a/srt",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
     },
     {
       "user": "publisher",
-      "path": "a/obs",
+      "path": "a/srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
@@ -1004,28 +1005,28 @@
     },
     {
       "user": "",
-      "path": "b/owned-srt",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": false
     },
     {
       "user": "",
-      "path": "a/obs",
+      "path": "b/owned-srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": false
     },
     {
-      "user": "reader-b",
-      "path": "b/owned-srt",
+      "user": "publisher",
+      "path": "a/obs",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true
     },
     {
-      "user": "publisher",
-      "path": "a/obs",
+      "user": "reader-b",
+      "path": "b/owned-srt",
       "action": "read",
       "protocol": "rtsp",
       "allowed": true

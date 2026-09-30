@@ -294,6 +294,7 @@ def main():
                 ROOT / "scripts/m0_dual_checks.py",
                 ROOT / "scripts/m0_protocols.py",
                 ROOT / "tests/m0/dual-canvas.mjs",
+                ROOT / "tests/m0/obs-rpc.mjs",
                 ROOT / "tests/m0/toolchain.json",
             ]
         }

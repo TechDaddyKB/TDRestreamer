@@ -93,3 +93,9 @@ executables are allowlisted, arguments are fixed commands or generated local
 fixture values, no webpage/configuration supplies executable commands, and shell
 parsing is disabled. The narrow audit annotations document that boundary rather
 than changing command arguments with shell escaping.
+
+SonarQube's two temporary-file findings on the fixed X11 paths were also reviewed
+as false positives: these lines only check existence and refuse an occupied
+display; they do not create a file, read its contents or execute it. The standard
+X11 lock/socket names cannot be relocated by renaming a temporary-file variable.
+Review comments and dispositions are retained on PR #6 and in SonarQube.
