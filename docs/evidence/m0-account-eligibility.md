@@ -10,7 +10,8 @@ For this preflight, the owner replaced the original local-only restriction with:
 signed into the platforms and completed AWS project creation and CLI login. At
 the time of these observations, no broadcast, provisioning, paid-plan upgrade,
 RunPod funding, or spending limit was authorized. A later bounded Twitch
-broadcast approval and its two failed attempts are recorded
+broadcast approval, followed by standing authorization for any further broadcast
+testing needed for M0, and the failed attempts are recorded
 [separately](m0-twitch-live-attempts.md).
 AWS credits are available; their existence is not permission to consume them.
 
@@ -206,8 +207,8 @@ edge design.
 
 Account UI eligibility is partially established; application API eligibility is
 still pending. Twitch H/V delivery and live/VOD semantics require a successful
-separately approved broadcast test. Neither this record nor successful AWS
-authentication closes that gate. See the [gate audit](m0-gates.md).
+broadcast test under the owner's standing authorization. Neither this record nor
+successful AWS authentication closes that gate. See the [gate audit](m0-gates.md).
 
 A later separately approved [Twitch diagnostic attempt](m0-twitch-live-attempts.md)
 established an account-specific negotiated ladder, but both bounded publisher

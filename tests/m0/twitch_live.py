@@ -1,6 +1,6 @@
 """One bounded TechDaddy M0 qualification attempt; default is local-only.
 
-The broadcast option requires a separate owner approval outside this program.
+The broadcast option is covered by the owner's standing M0 test authorization.
 It does not retain the stream key, negotiated response, or ingest playpath.
 """
 
@@ -299,7 +299,7 @@ def negotiate(key):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--broadcast", action="store_true",
-                        help="one separately approved public Twitch attempt")
+                        help="one bounded public Twitch attempt")
     parser.add_argument("--seconds", type=int, default=300)
     args = parser.parse_args()
     require(1 <= args.seconds <= 300, "broadcast duration must be 1..300 seconds")

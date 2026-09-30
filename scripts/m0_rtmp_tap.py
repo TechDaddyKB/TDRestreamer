@@ -28,42 +28,43 @@ def main():
     signal.signal(signal.SIGINT, stop)
     report = {"connections": 0, "upstream_bytes": 0,
               "uuid_counts": {name: 0 for name in UUIDS}}
-    with socket.socket() as listener:
-        listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
-        listener.bind(("127.0.0.1", 19350))
-        listener.listen(4)
-        listener.settimeout(0.5)
-        while not STOP:
-            try:
-                client, _ = listener.accept()
-            except socket.timeout:
-                continue
-            report["connections"] += 1
-            with client, socket.create_connection(("127.0.0.1", 19351), timeout=3) as target:
-                previous = b""
-                while not STOP:
-                    readable, _, _ = select.select([client, target], [], [], 0.5)
-                    for source in readable:
-                        data = source.recv(65536)
-                        if not data:
+    try:
+        with socket.socket() as listener:
+            listener.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            listener.bind(("127.0.0.1", 19350))
+            listener.listen(4)
+            listener.settimeout(0.5)
+            while not STOP:
+                try:
+                    client, _ = listener.accept()
+                except socket.timeout:
+                    continue
+                report["connections"] += 1
+                try:
+                    with client, socket.create_connection(("127.0.0.1", 19351), timeout=3) as target:
+                        previous = b""
+                        while not STOP:
+                            readable, _, _ = select.select([client, target], [], [], 0.5)
+                            for source in readable:
+                                data = source.recv(65536)
+                                if not data:
+                                    break
+                                if source is client:
+                                    report["upstream_bytes"] += len(data)
+                                    combined = previous + data
+                                    for name, marker in UUIDS.items():
+                                        report["uuid_counts"][name] += combined.count(marker)
+                                    previous = combined[-15:]
+                                    target.sendall(data)
+                                else:
+                                    client.sendall(data)
+                            else:
+                                continue
                             break
-                        if source is client:
-                            report["upstream_bytes"] += len(data)
-                            combined = previous + data
-                            for name, marker in UUIDS.items():
-                                report["uuid_counts"][name] += sum(
-                                    combined[i:i + len(marker)] == marker
-                                    for i in range(max(0, len(previous) - len(marker) + 1),
-                                                   len(combined) - len(marker) + 1)
-                                )
-                            previous = combined[-15:]
-                            target.sendall(data)
-                        else:
-                            client.sendall(data)
-                    else:
-                        continue
-                    break
-    report_path.write_text(json.dumps(report, indent=2) + "\n")
+                except OSError:
+                    report["connection_errors"] = report.get("connection_errors", 0) + 1
+    finally:
+        report_path.write_text(json.dumps(report, indent=2) + "\n")
 
 
 if __name__ == "__main__":
