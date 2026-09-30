@@ -4,7 +4,7 @@ Reviewed 2026-09-30. These records distinguish documentation, code and tested be
 
 | Component | Evidence / source | Remaining gate |
 |---|---|---|
-| MediaMTX 1.21.1 / FFmpeg 9.0.1 | Local synthetic multi-audio RTSP and enhanced RTMP spike; see media-spike.json | Real OBS, live/VOD mapping, authenticated preview, production supervision |
+| MediaMTX 1.21.1 / FFmpeg 9.0.1 | Synthetic transport spike plus real OBS dual-audio and Chromium WebRTC/HLS fallback; see [local qualification](m0-local.md) | Twitch semantics, additional OBS modes, RTMPS/SRT, production supervision |
 | YouTube H/V | https://developers.google.com/youtube/v3/live/docs | OAuth scopes/approval, broadcast association and real-account delivery |
 | Twitch H/V | https://dev.twitch.tv/docs/video-broadcast/ and https://help.twitch.tv/s/article/multiple-encodes | Enhanced Broadcasting dual-format protocol and account eligibility; ordinary two-key fanout is not proof |
 | Kick | https://docs.kick.com/ | API/ingest/account capabilities and delivery not verified |
