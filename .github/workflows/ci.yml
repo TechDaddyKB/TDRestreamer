@@ -20,7 +20,8 @@ jobs:
           node-version: 26.7.0
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - run: python3 -m pip install --only-binary :all: coverage==7.10.7
+      - run: |
+          python3 -m pip install --only-binary :all: coverage==7.10.7
       - run: make setup lint coverage docs build COVERAGE='python3 -m coverage'
       - uses: actions/upload-artifact@v4
         with:
