@@ -19,6 +19,7 @@ import sys
 import time
 
 from m0_dual_checks import check_pixels, check_streams
+from m0_flv_checks import check_flv_track_ids
 from m0_protocols import require
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -263,7 +264,8 @@ def main():
             "Local synthetic configuration, not a Twitch negotiation response",
             "No platform broadcasting, OAuth, cloud calls, preview, GPU or soak qualification",
             "Standalone feasibility, not application integration; anonymous loopback fixture sinks",
-            "Pixel/color and audio identity only; no timing, motion, latency or A/V sync qualification",
+            "Pixel/color, audio identity and local FLV headers only; no timing, motion, latency or A/V sync qualification",
+            "FLV sample is not a capture of the later RTMP publisher connection",
         ],
     }
     try:
@@ -292,6 +294,7 @@ def main():
             for p in [
                 Path(__file__).resolve(),
                 ROOT / "scripts/m0_dual_checks.py",
+                ROOT / "scripts/m0_flv_checks.py",
                 ROOT / "scripts/m0_protocols.py",
                 ROOT / "tests/m0/dual-canvas.mjs",
                 ROOT / "tests/m0/obs-rpc.mjs",
@@ -594,6 +597,28 @@ MultitrackVideoConfigOverride="""
             "WebSocket version mismatch",
         )
         report["tests"]["obs_ingest_rtsp"] = observe(lab, "obs")
+        flv = lab.run(
+            [
+                "ffmpeg",
+                "-nostdin",
+                "-v",
+                "error",
+                "-rtsp_transport",
+                "tcp",
+                "-i",
+                "rtsp://127.0.0.1:18555/dual/obs",
+                "-t",
+                "2",
+                "-map",
+                "0",
+                "-c",
+                "copy",
+                "-f",
+                "flv",
+                "pipe:1",
+            ],
+        )
+        report["tests"]["flv_track_ids"] = check_flv_track_ids(flv)
         relay = lab.start(
             "relay",
             [

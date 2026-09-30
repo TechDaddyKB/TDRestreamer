@@ -16,6 +16,7 @@ can be reproduced without the original developer's workstation.
 | `m0_protocols.py` | Shared transport assertions for M0 qualification | Imported by the M0 harnesses |
 | `m0-dual-canvas.py` | Run isolated OBS horizontal/vertical transport and copy-publisher qualification | `make m0-dual` |
 | `m0_dual_checks.py` | Validate ordered streams and decoded video pixels | Dual-canvas harness and unit tests |
+| `m0_flv_checks.py` | Inspect local enhanced-FLV track headers and reject changed IDs or missing packets | Dual-canvas harness and unit tests |
 
 Private configuration and raw output remain in ignored `.env` and `runtime/`
 paths. Only reviewed, sanitized evidence is copied into `docs/evidence/` for
