@@ -2,11 +2,18 @@
 
 Reviewed 2026-09-30 against official documentation. AWS EC2 and RunPod **Pods**
 remain the selected v1 providers. Subsequent [account preflight](m0-account-eligibility.md)
-verified AWS STS/Free Tier/EC2 read APIs and RunPod console access. Regional quota,
-GPU availability, lifecycle, media throughput and cost attribution remain
-unverified. The owner authorizes eligibility checks only; lifecycle tests and
+verified AWS STS/Free Tier/EC2 read APIs and RunPod console access. Regional
+quotas are recorded below; GPU execution, lifecycle, media throughput and cost
+attribution remain unverified. The owner authorizes eligibility checks only; lifecycle tests and
 spending have no approval. No provider resources were created. Adapter version
 tested: none. These records are not provider certification or an approved budget.
+
+A later [read-only quota preflight](m0-account-eligibility.md#regional-quota-follow-up)
+established `us-east-2` Standard On-Demand quota of 32 vCPUs and zero G/VT and P
+GPU vCPU quotas for the signed-in project. GPU instance types are offered in the
+regional catalog, but those offers do not establish launch eligibility. Region
+and account-specific GPU capacity remains unavailable to qualification under the
+current zero quotas; no quota change was requested.
 
 ## AWS EC2
 

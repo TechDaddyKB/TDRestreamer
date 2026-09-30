@@ -98,6 +98,41 @@ or availability of every operation under the new AWS experience. No RunInstances
 or DryRun was issued; Cost Explorer queries were not made. Free Plan expiry is
 distinct from the credit instrument's expiry shown in AWS Settings.
 
+### Regional quota follow-up
+
+On 2026-09-30, the authenticated `index-zero` profile again passed STS identity
+verification. Reproduce the read-only quota and regional-offering queries with
+the explicit project profile and selected Region (do not publish account IDs or
+other raw identity output):
+
+```sh
+aws service-quotas list-service-quotas --service-code ec2 \
+  --region us-east-2 --profile index-zero \
+  --query 'Quotas[?contains(QuotaName, `Running On-Demand`)].{Name:QuotaName,Code:QuotaCode,Value:Value}' \
+  --output json
+aws ec2 describe-instance-type-offerings --location-type region \
+  --filters Name=instance-type,Values=g4dn.xlarge,g5.xlarge,g6.xlarge \
+  --region us-east-2 --profile index-zero \
+  --query 'InstanceTypeOfferings[].InstanceType' --output json
+```
+
+The quota response returned these account-specific On-Demand vCPU limits:
+
+| Quota | Code | Limit (vCPUs) |
+|---|---|---:|
+| Standard (A, C, D, H, I, M, R, T, Z) | `L-1216C47A` | 32 |
+| G and VT | `L-DB2E81BA` | 0 |
+| P | `L-417A185B` | 0 |
+
+`describe-instance-type-offerings` listed `g4dn.xlarge`, `g5.xlarge`, and
+`g6.xlarge` for the Region. An offering means the type appears in the regional
+catalog; it does not override the zero GPU vCPU quota or prove available capacity,
+Free Plan eligibility, launch authorization, driver access, or codec performance.
+AWS [defines these On-Demand limits as vCPU quotas](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-on-demand-instances.html)
+and [describes the offerings API as a location catalog](https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_DescribeInstanceTypeOfferings.html).
+No quota increase was requested. GPU qualification on this AWS project requires
+a separate eligibility and spending decision before any launch attempt.
+
 The [toolkit setup](aws-agent-toolkit.md) separately passed MCP initialization and
 catalog discovery. Those tools were not used to provision anything.
 
