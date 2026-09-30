@@ -1,5 +1,5 @@
 GO ?= go
-.PHONY: setup check fmt lint unit integration browser media m0 docs build image generate
+.PHONY: setup check fmt lint unit integration browser media m0 m0-dual docs build image generate
 setup:
 	cd web && npm ci --ignore-scripts
 fmt:
@@ -21,6 +21,8 @@ media:
 	python3 scripts/media-spike.py
 m0:
 	python3 scripts/m0-local.py
+m0-dual:
+	python3 scripts/m0-dual-canvas.py
 build:
 	mkdir -p bin
 	$(GO) build -trimpath -o bin/control ./cmd/control

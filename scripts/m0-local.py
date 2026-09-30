@@ -263,6 +263,7 @@ try:
             ROOT / "scripts/m0_protocols.py",
             ROOT / "tests/m0/obs-control.mjs",
             ROOT / "tests/m0/preview.mjs",
+            ROOT / "tests/m0/obs-rpc.mjs",
             ROOT / "tests/m0/toolchain.json",
             ROOT / "web/package-lock.json",
         ]

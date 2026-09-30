@@ -55,9 +55,10 @@ the installed one, and the temporary WebSocket configuration omitted
 corrected that configuration. Temporary OBS/Xvfb processes were terminated;
 the user's OBS profile and system plugin installation were not changed.
 
-Canvas enumeration proves local creation, not encoded frames, track mapping,
-negotiation, GPU capacity, or delivery. A checked-in, repeatable dual-canvas media
-fixture is still required for execution step 1 below.
+Canvas enumeration alone proves local creation, not encoded frames or delivery.
+The later [repeatable dual-canvas fixture](m0-dual-canvas.md) now establishes actual
+local encoding, transport and copy-publisher video/audio identity using synthetic
+configuration. Twitch negotiation, GPU capacity and platform delivery remain open.
 
 ## Separate API eligibility step
 
@@ -78,9 +79,11 @@ ingest rights or H/V negotiation. Keep credentials out of evidence and Git.
 
 ## Remaining execution sequence
 
-1. Exercise the actual additional-canvas encoder locally with labeled H/V frames
-   and distinguishable supplied live/VOD audio. Keep external networking disabled.
-   Probe each transport boundary, including track order, dimensions and identity.
+1. The [local fixture](m0-dual-canvas.md) passes labeled H/V frames and distinct
+   supplied audio through each transport boundary with external networking
+   disabled. It checks order, dimensions and identity at low resolution. Extend
+   the fixture to the actual negotiated rendition ladder once available; a
+   synthetic two-video configuration is not evidence of Twitch's ladder.
 2. Implement the qualification publisher's negotiation and track mapping against
    the observed contract. Do not claim that ordinary FFmpeg two-key fanout or a
    mocked response meets Twitch's contract. A direct OBS test is only a reference
