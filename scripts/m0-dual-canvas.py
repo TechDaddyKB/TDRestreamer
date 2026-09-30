@@ -1,4 +1,3 @@
-#!/usr/bin/env python3
 """Real two-canvas OBS -> MediaMTX -> RTSP -> FFmpeg -> enhanced RTMP fixture.
 
 Synthetic local configuration only: never Twitch negotiation or platform evidence.
@@ -9,7 +8,6 @@ import hashlib
 import json
 import math
 import os
-from pathlib import Path
 import secrets
 import shutil
 import signal
@@ -17,6 +15,7 @@ import socket
 import subprocess as sp
 import sys
 import time
+from pathlib import Path
 
 from m0_dual_checks import check_pixels, check_streams
 from m0_flv_checks import check_flv_track_ids
@@ -24,6 +23,7 @@ from m0_protocols import require
 
 ROOT = Path(__file__).resolve().parents[1]
 AITUM_SHA256 = "484c9663d00f3a2c2322600e6178833b7edde71019c2537b6eb35cf81e71e346"
+OUTPUT_PIPE = "pipe:1"
 MODULES = (
     "obs-websocket",
     "obs-outputs",
@@ -115,6 +115,7 @@ class Lab:
                     stderr=sp.DEVNULL,
                     timeout=1,
                     shell=False,
+                    check=False,
                 )
                 if result.returncode == 0:
                     return
@@ -173,7 +174,7 @@ def observe(lab, path):
                 "rgb24",
                 "-f",
                 "rawvideo",
-                "pipe:1",
+                OUTPUT_PIPE,
             ]
         )
         result["video_identity"].append(check_pixels(pixels, channel))
@@ -195,13 +196,13 @@ def observe(lab, path):
                 "1",
                 "-f",
                 "s16le",
-                "pipe:1",
+                OUTPUT_PIPE,
             ]
         )
         samples = array.array("h", pcm)
         require(len(samples) >= 24000, "insufficient decoded audio")
 
-        def power(frequency):
+        def power(frequency, samples=samples):
             return (
                 abs(
                     sum(
@@ -615,7 +616,7 @@ MultitrackVideoConfigOverride="""
                 "copy",
                 "-f",
                 "flv",
-                "pipe:1",
+                OUTPUT_PIPE,
             ],
         )
         report["tests"]["flv_track_ids"] = check_flv_track_ids(flv)
