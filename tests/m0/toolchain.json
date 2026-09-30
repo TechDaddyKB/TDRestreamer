@@ -1,0 +1,9 @@
+{
+  "mediamtx_version": "v1.21.1",
+  "linux_amd64_binary_sha256": "2b45b2999f22c8a1ecd376ce407b6337b68466fdeac54a8fdc448a79f818474f",
+  "linux_amd64_archive_sha256": "653abc672a3e693f8d3b2717752492fdcfb8072291ec108d03d3dd857411b0ee",
+  "release_checksums": "https://github.com/bluenviron/mediamtx/releases/download/v1.21.1/checksums.sha256",
+  "ffmpeg_version": "n9.0.1",
+  "obs_version": "32.2.2",
+  "obs_websocket_version": "5.7.4"
+}

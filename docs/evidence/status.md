@@ -3,8 +3,8 @@
 ## Release status
 
 **Development foundation; the requested full v1 is not complete.** No M0–M7
-milestone is certified complete. M0 has local transport evidence and unresolved
-OBS/Twitch/preview gates; M1 has an implemented local control foundation but still
+milestone is certified complete. M0 has local OBS/transport/browser-preview evidence and unresolved
+Twitch and additional OBS input-mode gates; M1 has an implemented local control foundation but still
 needs OAuth, invitations and additional identity/operational hardening.
 
 ## Implemented and exercised
@@ -39,7 +39,14 @@ MediaMTX 1.21.1 / host FFmpeg 9.0.1: see media-spike.json. Synthetic two-AAC-tra
 RTSP and enhanced-RTMP preservation, selected-track relay with decoded 880 Hz
 tone identity verification, isolated publisher
 connection refusal and HLS playlist generation passed. This does not establish
-OBS, live/VOD semantics, WebRTC, platform compatibility or full fault qualification.
+OBS, live/VOD semantics, WebRTC, platform compatibility or full fault qualification
+on its own. The later [OBS and preview harness](m0-local.md) and
+[machine-readable results](m0-obs-preview.json) establish real OBS dual-audio ingest,
+internal RTSP and enhanced-RTMP relay audio identity, authenticated Chromium WebRTC
+playback, forced HLS fallback, fresh-client access denials, RTMPS certificate
+validation and encrypted-SRT transport/denials. Platform/provider documentation
+is inventoried separately; it does not prove account-specific eligibility. Application preview
+integration and Twitch live/VOD semantics remain unverified.
 
 Real FFmpeg frame tests also passed for crop, fill and blur output geometry,
 black fill padding, foreground preservation and positioned red/blue crop selection.
@@ -66,7 +73,7 @@ importable Streamer.bot workflows; complete release images/SBOM/notices.
 ## External qualification blockers
 
 Owner instruction: **local tests only for now**. No public broadcasting, provider
-spending or external account tests were performed. Actual OBS/Twitch behavior,
+spending or external account tests were performed. Actual Twitch behavior,
 YouTube/Kick/X/Rumble account approvals, AWS/RunPod lifecycle and billing access,
 N100/Intel/AMD/ARM64/multi-GPU reference hardware, eight-hour soaks and comprehensive
 accessibility review remain unverified. They do not remove any v1 requirement.

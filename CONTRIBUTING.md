@@ -1,7 +1,10 @@
 # Contributing
 
 Use short feature branches and focused commits. Open a pull request against main;
-CI must pass before merging. Include tests, user/API documentation and updated
+CI must pass before merging. Review every finding from Sourcery-ai, gitar-bot,
+and SonarQube Cloud on the current PR revision. Fix actionable findings, and
+document evidence for any false-positive disposition; do not ignore a finding
+just because another CI check passes. Recheck all three reviewers after pushing fixes. Include tests, user/API documentation and updated
 requirement evidence with each behavior change. Do not commit credentials, real
 stream captures, database data or backup archives. Use synthetic fixtures.
 
