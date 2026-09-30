@@ -23,9 +23,12 @@ qualification or authorization to deploy or broadcast.
 
 The CLI and MCP configuration are user-local and are not committed. No credentials,
 login caches, project identifiers, or private configuration files are included.
-Project guidance is in [AGENTS.md](../../AGENTS.md) and
-[CLAUDE.md](../../CLAUDE.md), with local authorization taking precedence over the
-delimited upstream AWS rules. Both files were absent before setup.
+Project guidance has one canonical source, [AGENTS.md](../../AGENTS.md).
+[CLAUDE.md](../../CLAUDE.md) imports it using Claude Code’s supported `@AGENTS.md`
+syntax. Local authorization takes precedence over the delimited upstream AWS
+rules. Both files were absent before setup. The pinned rules were byte-compared
+with the original download. The official scanner is installed in the user-owned
+local bin directory; permanent instructions do not depend on a temporary binary.
 
 ## Renewal and activation
 
@@ -49,6 +52,6 @@ paid-plan upgrades, funding, or broadcasts were performed by this setup. M0's re
 platform-delivery gates and cloud lifecycle/device/billing qualification remain
 unverified. Toolkit connectivity is not evidence of those capabilities.
 
-Sources: [AWS setup instructions](https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/refs/heads/main/setup-instructions/setup.md),
-[new-experience rules](https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/refs/heads/main/rules/aws-starter-rules.md),
+Sources: [AWS setup instructions](https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/6b8b4f77cb277badd878a0edfcf13692da2eb3fb/setup-instructions/setup.md),
+[new-experience rules](https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/6b8b4f77cb277badd878a0edfcf13692da2eb3fb/rules/aws-starter-rules.md),
 [OpenCode MCP schema](https://opencode.ai/docs/mcp-servers/).

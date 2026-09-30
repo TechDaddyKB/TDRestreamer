@@ -27,13 +27,15 @@ Inform the user that reading it would expose the value in chat history, logs, an
 any downstream telemetry. Advise them to rotate the credential at its source of
 truth and remove it from the file. Do not proceed until the secret has been removed.
 
-Current session scanner: `/tmp/tdr-sonar-cli/sonar`. If unavailable, restore the
-official scanner before reading workspace files; do not bypass the scan.
+Use the official `sonar` CLI from a trusted, user-owned or administrator-managed
+installation on PATH. Verify its source and file ownership before use. If it is
+unavailable, install the official scanner before reading workspace files; do not
+bypass the scan or execute scanner binaries from shared temporary directories.
 <!-- sonar:end:codex-secrets-on-read -->
 
 ## Upstream AWS guidance
 
-Source: https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/refs/heads/main/rules/aws-starter-rules.md
+Source: https://raw.githubusercontent.com/aws/agent-toolkit-for-aws/6b8b4f77cb277badd878a0edfcf13692da2eb3fb/rules/aws-starter-rules.md
 Retrieved: 2026-09-30. Local authorization above takes precedence.
 
 <!-- BEGIN AWS Agent Toolkit rules -->
