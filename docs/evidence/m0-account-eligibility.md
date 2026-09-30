@@ -25,6 +25,35 @@ No stream keys were revealed or copied during these observations. No platform
 broadcast was created or started. Browser access is evidence of those particular
 controls being available, not proof of application API permissions or delivery.
 
+## Developer-console observations
+
+These follow-up checks also stopped before any registration, consent, credential
+creation, or billable API request:
+
+- Twitch's authenticated developer console lists an existing unrelated app. The
+  new-application form is accessible and offers public/confidential client types
+  and redirect URI configuration. No Restreamer app or consent grant was created.
+- Kick's authenticated developer page explicitly reports **No KICK App**. Its
+  creation form is accessible with scope choices for user information, stream-key
+  read, channel read/update and other features. The form states creation accepts
+  terms; it was left unsubmitted. Scope choices are not granted permissions.
+- Google Cloud APIs & Services is accessible. The project picker search for
+  `restream` returned **No resources to display**. This is only a name search,
+  not proof that no usable OAuth client exists under another project. No existing
+  project, enabled service or OAuth consent configuration was changed.
+- X's legacy developer portal links to the current `console.x.com`. For the
+  signed-in profile, that console presents **Create a developer account** and
+  **Start Building**, with pay-per-use API access described. Enrollment was not
+  submitted. Existing Live Studio access does not establish enrollment or a
+  supported public broadcast-lifecycle API.
+
+Next prerequisites are a dedicated app/callback configuration and consent plan
+for the supported platform APIs, plus explicit approval wherever registration
+creates credentials or accepts terms. No existing unrelated app will be reused
+or modified implicitly. X developer enrollment, API product suitability and any
+associated charges need separate resolution; a normal X account is insufficient
+evidence. Rumble Live Stream API access remains untested.
+
 ## AWS read-only results
 
 Project: Index Zero. Profile: `index-zero`. Selected Region: `us-east-2`.
