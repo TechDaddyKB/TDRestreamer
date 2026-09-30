@@ -64,6 +64,43 @@ then check scanner logs for successful Go, LCOV, and Python imports. LCOV paths
 must resolve under `web/src`; Python uses relative paths. Do not suppress a
 coverage failure by excluding application code or lowering the quality gate.
 
+## GitHub Actions runtime
+
+The CI workflow pins the official actions to reviewed release commits:
+checkout 7.0.1, setup-go 7.0.0, setup-node 7.0.0, upload-artifact 7.0.1,
+and download-artifact 8.0.1. Their action manifests use Node.js 24; this runtime
+is independent of the application's Node.js 26.7.0 toolchain. GitHub-hosted
+Ubuntu 24.04 runners support it. Downloaded artifacts retain digest verification;
+the newer download action fails on a digest mismatch.
+
+When updating actions, verify the official release and `action.yml`, retain the
+version comment beside the commit pin, and run the complete workflow to validate
+checkout, dependency caches, report transfer, and scanner import. Do not opt back
+into an insecure Node.js runtime to suppress deprecation annotations.
+
+## Repository and deployment contents
+
+GitHub retains source, tests, documentation, the original specification,
+sanitized acceptance evidence, migrations, deployment definitions, dependency
+lockfiles, and generated API/sqlc source. These are needed to review, test,
+reproduce, maintain, and qualify the application even when they are not runtime
+files. Raw test output and private working files belong in ignored `runtime/`,
+`coverage/`, `.tools/`, `.venv/`, `data/`, `backups/`, or `secrets/` directories.
+Environment files, private keys, dependencies, builds, browser artifacts, and
+tool/editor caches stay local. Sanitized `.env.example` files remain tracked.
+
+`.gitignore` affects untracked files; it does not unpublish an already tracked
+file. Before pushing, inspect `git status --short`, `git diff --cached`, and
+`git ls-files -ci --exclude-standard`, then run secret scanning. Avoid `git add
+-f` for local artifacts. If a harmless local file was tracked accidentally,
+`git rm --cached -- path` stops tracking it while retaining the local copy;
+credential exposure also requires rotation and history assessment.
+
+`.dockerignore` independently limits the build context. The Dockerfile's final
+stage contains the three Go executables, compiled UI, license, and base runtime
+dependencies. Development documentation, test results, source dependencies, and
+local credentials are not copied into the released image.
+
 ## Runtime architecture
 
 `cmd/control` serves the React build and REST API. `cmd/admin migrate` applies
