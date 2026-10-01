@@ -31,3 +31,14 @@ identity checks. Its bounded Twitch attempt still failed, so the remaining
 wire and audio setup differences require investigation. A later
 [legacy-primary probe](m0-twitch-legacy-primary.json) also failed after
 matching OBS's primary H.264 header form. That temporary switch was reverted.
+
+The later [sanitized control comparison](m0-rtmp-control-comparison.json)
+compares RTMP command names and metadata field names/numeric values from
+separate passing local controls. Both publishers sent the same five initial
+command names. Setting the copy publisher's negotiated output bitrates and
+frame rate made its primary `videodatarate=1200`, `audiodatarate=160`, and
+`framerate=30` metadata match OBS. OBS still sent AAC setup before video;
+the copy publisher sent video setup first. OBS included `audiochannels=2`,
+while the copy metadata omitted that field. The bounded [attempt 13](m0-twitch-live-attempts.md)
+still disconnected at Twitch ingest after four seconds. The comparison
+does not isolate a rejection cause.

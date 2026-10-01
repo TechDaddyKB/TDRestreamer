@@ -1,0 +1,201 @@
+{
+  "observed_utc": "2026-10-01",
+  "scope": "sanitized local RTMP setup comparison; independent bounded Twitch retry",
+  "obs_local": {
+    "first_message_types": [
+      1,
+      20,
+      20,
+      20,
+      20,
+      20,
+      18,
+      8,
+      8,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      8,
+      8,
+      9
+    ],
+    "control_fields": [
+      {
+        "type": 20,
+        "command": "connect",
+        "fields": [
+          "app",
+          "flashVer",
+          "tcUrl"
+        ],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "releaseStream",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "FCPublish",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "createStream",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "publish",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 18,
+        "command": "metadata",
+        "fields": [
+          "encoder",
+          "videocodecid",
+          "audiocodecid",
+          "width",
+          "height",
+          "framerate",
+          "videodatarate",
+          "audiodatarate",
+          "stereo",
+          "audiochannels",
+          "audiosamplerate",
+          "duration"
+        ],
+        "numeric": {
+          "videocodecid": 7.0,
+          "audiocodecid": 10.0,
+          "width": 640.0,
+          "height": 360.0,
+          "framerate": 30.0,
+          "videodatarate": 1200.0,
+          "audiodatarate": 160.0,
+          "audiochannels": 2.0,
+          "audiosamplerate": 48000.0,
+          "duration": 0.0
+        }
+      }
+    ]
+  },
+  "copy_local": {
+    "first_message_types": [
+      20,
+      1,
+      20,
+      20,
+      20,
+      20,
+      18,
+      9,
+      9,
+      9,
+      9,
+      8,
+      8,
+      8,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9,
+      9
+    ],
+    "control_fields": [
+      {
+        "type": 20,
+        "command": "connect",
+        "fields": [
+          "app",
+          "flashVer",
+          "tcUrl"
+        ],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "releaseStream",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "FCPublish",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "createStream",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 20,
+        "command": "publish",
+        "fields": [],
+        "numeric": {}
+      },
+      {
+        "type": 18,
+        "command": "metadata",
+        "fields": [
+          "encoder",
+          "videocodecid",
+          "audiocodecid",
+          "width",
+          "height",
+          "framerate",
+          "videodatarate",
+          "audiodatarate",
+          "stereo",
+          "audiosamplerate",
+          "filesize",
+          "duration"
+        ],
+        "numeric": {
+          "videocodecid": 7.0,
+          "audiocodecid": 10.0,
+          "width": 640.0,
+          "height": 360.0,
+          "framerate": 30.0,
+          "videodatarate": 1200.0,
+          "audiodatarate": 160.0,
+          "audiosamplerate": 48000.0,
+          "duration": 0.0,
+          "filesize": 0.0
+        }
+      }
+    ],
+    "status": "passed_local_bridge",
+    "six_stream_control": "six_streams_passed"
+  },
+  "twitch_retry": {
+    "broadcast_start_utc": "2026-10-01T01:26:44Z",
+    "broadcast_end_utc": "2026-10-01T01:26:48Z",
+    "status": "failed",
+    "publisher_exit_code": 1,
+    "helix_offline_after_stop": true
+  }
+}

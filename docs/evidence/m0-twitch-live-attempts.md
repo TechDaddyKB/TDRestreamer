@@ -51,8 +51,9 @@ This control used the negotiated ladder, but the sink was local.
 | 10 | 2026-10-01 00:18:26 | Copy publisher with BPM SEI NALs merged into each first IDR, after local six-stream and decoded identity controls | RTMPS write failed after five seconds; Helix never live and channel returned offline. [Sanitized report](m0-twitch-sei-merge.json) |
 | 11 | 2026-10-01 00:42:04 | Direct OBS control, 300-second cap, with public live HLS audio sample | Helix live; public horizontal 256×144 rendition showed red video and 440 Hz audio at 40 and 80 seconds after a pre-roll ad; 880 Hz was below displayed precision. Graceful stop and offline check passed. [Control](m0-twitch-obs-control-live-audio.json), [audio analysis](m0-twitch-live-audio.json) |
 | 12 | 2026-10-01 01:00:02 | Temporary copy-publisher probe preserving legacy H.264 on primary track, after passing local bridge and decoded identity controls | RTMPS publisher failed after about three seconds; Helix never live, channel offline after cleanup. The format switch was reverted. [Sanitized diagnostic](m0-twitch-legacy-primary.json) |
+| 13 | 2026-10-01 01:26:44 | Copy publisher with primary video/audio bitrate and frame-rate metadata matching the negotiated OBS ladder, after a passing local six-stream bridge | RTMPS write returned broken pipe after four seconds; Helix never live and channel offline after cleanup. [Sanitized control comparison](m0-rtmp-control-comparison.json) |
 
-None of the eight **copy-publisher** attempts produced a Helix live-stream result.
+None of the nine **copy-publisher** attempts produced a Helix live-stream result.
 After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
 OBS attempts 6 and 7 then proved that the same channel and negotiated ladder
 can go live and deliver H/V scenes. The [control record](m0-twitch-obs-control.md)
@@ -73,6 +74,12 @@ sole rejection cause. Attempt 12 used OBS's legacy primary H.264 FLV form
 with the corrected 0 ms keyframe and BPM startup, but still failed. Its
 temporary code change was reverted, so it is a diagnostic observation rather
 than a retained publisher qualification artifact.
+Attempt 13 matched OBS's reported 30 fps, 1200 kbps primary video, and
+160 kbps audio metadata values in the local RTMP control trace. The local
+six-stream bridge passed, but Twitch still disconnected after four seconds.
+The copy path still sends video setup before audio and lacks OBS's numeric
+audio channel metadata field; these are observed differences, not established
+causes of rejection.
 
 The first two exploratory live runners and their raw reports remain private/ignored. Their
 source was not committed, so those observations are a **diagnostic record**, not
