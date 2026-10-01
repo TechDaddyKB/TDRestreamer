@@ -132,10 +132,10 @@ static int write_rebased(AVFormatContext *input, AVFormatContext *output,
 {
     unsigned index = (unsigned)packet->stream_index;
     AVRational source_time_base = input->streams[index]->time_base;
-    int64_t offset = av_rescale_q(base_us[index] - 2000000,
-                                  AV_TIME_BASE_Q, source_time_base);
-    packet->pts -= offset;
-    packet->dts -= offset;
+    int64_t offset = av_rescale_q(base_us[index], AV_TIME_BASE_Q,
+                                  source_time_base);
+    packet->pts = FFMAX(0, packet->pts - offset);
+    packet->dts = FFMAX(0, packet->dts - offset);
     av_packet_rescale_ts(packet, source_time_base, output->streams[index]->time_base);
     if (index < 4 && (packet->flags & AV_PKT_FLAG_KEY) &&
         first_output_key_ms[index] == AV_NOPTS_VALUE)
@@ -416,9 +416,21 @@ static int copy_media(const char *source, const char *destination,
             for (size_t i = 0; i < buffered_count; ++i) {
                 AVPacket *held = buffered[i];
                 unsigned stream = (unsigned)held->stream_index;
-                int include = stream < 4 ? (int64_t)i >= start_index[stream] :
-                    av_rescale_q(held->pts, input->streams[stream]->time_base,
-                                 AV_TIME_BASE_Q) >= latest_start - 100000;
+                int64_t held_us = av_rescale_q(
+                    held->pts, input->streams[stream]->time_base, AV_TIME_BASE_Q);
+                int include;
+                if (stream < 4) {
+                    int bpm_packet = contains_bytes(held->data, held->size,
+                                                    ts_uuid, sizeof(ts_uuid)) ||
+                                     contains_bytes(held->data, held->size,
+                                                    sm_uuid, sizeof(sm_uuid)) ||
+                                     contains_bytes(held->data, held->size,
+                                                    erm_uuid, sizeof(erm_uuid));
+                    include = held_us >= first_ready_pts_us[stream] ||
+                              ((int64_t)i >= start_index[stream] && bpm_packet);
+                } else {
+                    include = held_us >= latest_start;
+                }
                 if (include) {
                     code = write_rebased(input, output, held, base_us,
                                          first_output_key_ms);

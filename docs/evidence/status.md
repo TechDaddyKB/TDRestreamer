@@ -6,7 +6,7 @@
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence,
 including a [four-rendition local ladder run](m0-twitch-ladder-local.md) and a
 [bounded local bridge control](m0-twitch-copy-candidate.md),
-account-specific Twitch negotiation, five failed appliance publisher attempts,
+account-specific Twitch negotiation, six failed appliance publisher attempts,
 and a successful direct OBS control with H/V viewer delivery and one VOD audio
 sample; appliance delivery, live audio identity, and remaining application API
 eligibility gates are unresolved.
@@ -87,7 +87,7 @@ importable Streamer.bot workflows; complete release images/SBOM/notices.
 The owner approved further broadcast testing necessary to complete M0 after the
 first two bounded attempts. This does not authorize provider provisioning.
 Authenticated platform dashboards and AWS Free Plan/EC2 read access were checked; see
-[the account eligibility record](m0-account-eligibility.md). Five bounded appliance
+[the account eligibility record](m0-account-eligibility.md). Six bounded appliance
 Twitch attempts failed at external ingest, as recorded in
 [the attempt record](m0-twitch-live-attempts.md). A subsequent
 [direct OBS control](m0-twitch-obs-control.md) delivered H/V viewer scenes and

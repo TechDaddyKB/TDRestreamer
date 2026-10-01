@@ -46,7 +46,7 @@ def utc_now():
 
 
 def check_host_ports():
-    for port in (18556, 18557, 19351):
+    for port in (18556, 18557, 19351, 19352):
         with socket.socket() as probe:
             probe.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             probe.bind(("127.0.0.1", port))
@@ -330,7 +330,7 @@ def main():
 moq: false
 rtspAddress: 127.0.0.1:18557
 rtspTransports: [tcp]
-rtmpAddress: 127.0.0.1:19351
+rtmpAddress: 127.0.0.1:19352
 hls: false
 webrtc: false
 srt: false
@@ -340,6 +340,11 @@ paths:
         gateway = start_process(
             [str(ROOT / ".tools/mediamtx/mediamtx"), str(config)], work / "gateway.log")
         processes.append(gateway)
+        tap = start_process(
+            [sys.executable, str(ROOT / "scripts/m0_rtmp_tap.py"),
+             str(work / "copy-rtmp-tap.json"), "19351", "19352"],
+            work / "copy-rtmp-tap.log")
+        processes.append(tap)
         source = start_process(
             [sys.executable, str(ROOT / "scripts/m0-dual-canvas.py"),
              "--twitch-ladder", "--bridge-source"], work / "source.log")
@@ -415,6 +420,9 @@ paths:
         bridge_stop.set()
         if bridge is not None:
             bridge.join(timeout=3)
+        if (work / "copy-rtmp-tap.json").exists():
+            report["local_copy_wire"] = json.loads(
+                (work / "copy-rtmp-tap.json").read_text())
         if args.broadcast and "client_id" in locals() and "token" in locals():
             try:
                 offline_deadline = time.monotonic() + 30

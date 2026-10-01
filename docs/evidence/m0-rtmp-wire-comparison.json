@@ -1,0 +1,492 @@
+{
+  "recorded_at": "2026-09-30",
+  "scope": "Synthetic loopback RTMP message summaries and up to eight leading media bytes; no credentials or full media payload retained",
+  "obs_local": {
+    "status": "passed_local_twitch_ladder",
+    "message_types": {
+      "1": 1,
+      "20": 5,
+      "18": 1,
+      "8": 5824,
+      "9": 7461
+    },
+    "first_media_messages": [
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 7,
+        "header_hex": "af00119056e500"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 12,
+        "header_hex": "95006d7034610111"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 56,
+        "header_hex": "1700000000014d40"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 56,
+        "header_hex": "9600617663310101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 63,
+        "header_hex": "9600617663310201"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310301"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 5296,
+        "header_hex": "1701000042000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 1494,
+        "header_hex": "9601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10718,
+        "header_hex": "9601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 3145,
+        "header_hex": "9601617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 33,
+        "bytes": 5006,
+        "header_hex": "2701000085000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 33,
+        "bytes": 484,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 33,
+        "bytes": 10428,
+        "header_hex": "a601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 33,
+        "bytes": 1333,
+        "header_hex": "a601617663310300"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 45,
+        "bytes": 389,
+        "header_hex": "af01dc004c617663"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 45,
+        "bytes": 362,
+        "header_hex": "95016d70346101dc"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 5006,
+        "header_hex": "2701000021000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 845,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 10427,
+        "header_hex": "a601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 2094,
+        "header_hex": "a601617663310300"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 66,
+        "bytes": 481,
+        "header_hex": "af01214c6cfe07fe"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 66,
+        "bytes": 503,
+        "header_hex": "95016d7034610121"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 87,
+        "bytes": 388,
+        "header_hex": "af01217acfffffff"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 87,
+        "bytes": 394,
+        "header_hex": "95016d7034610121"
+      }
+    ]
+  },
+  "copy_before": {
+    "status": "passed_local_bridge",
+    "message_types": {
+      "20": 5,
+      "1": 1,
+      "18": 1,
+      "9": 600,
+      "8": 288
+    },
+    "first_media_messages": [
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 55,
+        "header_hex": "9061766331014d40"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310201"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310301"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 4,
+        "header_hex": "af001190"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 9,
+        "header_hex": "95006d7034610111"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 13,
+        "header_hex": "95046d7034610101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 4232,
+        "header_hex": "a161766331000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 5009,
+        "header_hex": "a161766331000021"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 361,
+        "header_hex": "a603617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 626,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10708,
+        "header_hex": "a603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10427,
+        "header_hex": "a601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 1374,
+        "header_hex": "a603617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 2094,
+        "header_hex": "a601617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 5009,
+        "header_hex": "a161766331000021"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 844,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 10428,
+        "header_hex": "a601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 66,
+        "bytes": 2094,
+        "header_hex": "a601617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 99,
+        "bytes": 5009,
+        "header_hex": "a161766331000086"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 99,
+        "bytes": 844,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 99,
+        "bytes": 2094,
+        "header_hex": "a601617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 133,
+        "bytes": 10424,
+        "header_hex": "a603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 166,
+        "bytes": 5009,
+        "header_hex": "a161766331000000"
+      }
+    ]
+  },
+  "copy_after": {
+    "status": "passed_local_bridge",
+    "message_types": {
+      "20": 5,
+      "1": 1,
+      "18": 1,
+      "9": 610,
+      "8": 478
+    },
+    "first_media_messages": [
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 55,
+        "header_hex": "9061766331014d40"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310201"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310301"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 4,
+        "header_hex": "af001190"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 9,
+        "header_hex": "95006d7034610111"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 13,
+        "header_hex": "95046d7034610101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 4232,
+        "header_hex": "a161766331000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 6116,
+        "header_hex": "9161766331000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 4232,
+        "header_hex": "a161766331000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 5009,
+        "header_hex": "a161766331000021"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 361,
+        "header_hex": "a603617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 1867,
+        "header_hex": "9603617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 361,
+        "header_hex": "a603617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 626,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10708,
+        "header_hex": "a603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10474,
+        "header_hex": "9603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10708,
+        "header_hex": "a603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10427,
+        "header_hex": "a601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 1374,
+        "header_hex": "a603617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 3138,
+        "header_hex": "9603617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 1374,
+        "header_hex": "a603617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 2094,
+        "header_hex": "a601617663310300"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 431,
+        "header_hex": "af01dc004c617663"
+      }
+    ]
+  },
+  "copy_before_first_output_key_ms": [
+    2000,
+    2000,
+    2000,
+    2000
+  ],
+  "copy_after_first_output_key_ms": [
+    0,
+    0,
+    0,
+    0
+  ],
+  "twitch_attempt": {
+    "status": "failed",
+    "broadcast_start_utc": "2026-09-30T23:31:05Z",
+    "broadcast_end_utc": "2026-09-30T23:31:09Z",
+    "helix_live_observed": false,
+    "helix_offline_after_stop": true,
+    "publisher_exit_code": 1
+  }
+}

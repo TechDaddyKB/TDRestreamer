@@ -26,16 +26,21 @@ includes both audio tracks at the start. A small FLV filter changes the
 primary H.264 rendition from FFmpeg's legacy AVC tags to enhanced RTMP
 single-track `avc1` tags, matching the IVS packaging requirement. The local
 ladder report recorded 572 transformed primary tags and aligned first output
-keyframes at 2000 ms.
+keyframes at 2000 ms. The [wire comparison](m0-rtmp-wire-comparison.json)
+subsequently showed that this also sent non-key coded video for two seconds
+before the first IDRs. A local revision rebased first IDRs to 0 ms, preserving
+six-stream decode, but still sent non-key coded packets immediately before
+them. Its bounded Twitch attempt still failed after four seconds. The wire
+comparison and external failure keep the startup path unqualified.
 
 `--broadcast` is a separate runner mode. It checks that the channel is offline,
 obtains account-specific negotiation, requires an exact match to the locally
 qualified encoder/audio settings and RTMPS endpoint, caps negotiated nominal
 bitrate at 6000 kbps, then runs one bounded publisher. Its report has no stream
 key, ingest authorization or token. The owner authorized the remaining
-necessary broadcast tests. Three bounded runs of this publisher are retained in
+necessary broadcast tests. Four bounded runs of this publisher are retained in
 the [attempt record](m0-twitch-live-attempts.md). The latest, with BPM-aware
-startup and enhanced primary tags, still ended at Twitch ingest after roughly
+startup, enhanced primary tags, and 0 ms first IDRs, still ended at Twitch ingest after roughly
 four seconds. Helix never reported the channel live, and the channel was
 offline after cleanup. The local controls passed in those runs.
 
