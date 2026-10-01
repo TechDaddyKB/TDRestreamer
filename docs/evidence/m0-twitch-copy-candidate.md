@@ -31,17 +31,21 @@ subsequently showed that this also sent non-key coded video for two seconds
 before the first IDRs. A local revision rebased first IDRs to 0 ms, preserving
 six-stream decode, but still sent non-key coded packets immediately before
 them. Its bounded Twitch attempt still failed after four seconds. The wire
-comparison and external failure keep the startup path unqualified.
+comparison and external failure keep the startup path unqualified. A later
+[SEI merge control](m0-twitch-sei-merge.json) moved the BPM SEI NALs into each
+first key packet and emitted the first coded video as an IDR at 0 ms. The full
+local ladder preserved decoded colors and tones, but a bounded Twitch retry
+still disconnected after five seconds.
 
 `--broadcast` is a separate runner mode. It checks that the channel is offline,
 obtains account-specific negotiation, requires an exact match to the locally
 qualified encoder/audio settings and RTMPS endpoint, caps negotiated nominal
 bitrate at 6000 kbps, then runs one bounded publisher. Its report has no stream
 key, ingest authorization or token. The owner authorized the remaining
-necessary broadcast tests. Four bounded runs of this publisher are retained in
-the [attempt record](m0-twitch-live-attempts.md). The latest, with BPM-aware
-startup, enhanced primary tags, and 0 ms first IDRs, still ended at Twitch ingest after roughly
-four seconds. Helix never reported the channel live, and the channel was
+necessary broadcast tests. Five bounded runs of this publisher are retained in
+the [attempt record](m0-twitch-live-attempts.md). The latest, with BPM SEI merged
+into 0 ms first IDRs, still ended at Twitch ingest after roughly
+five seconds. Helix never reported the channel live, and the channel was
 offline after cleanup. The local controls passed in those runs.
 
 A later [direct OBS control](m0-twitch-obs-control.md) delivered distinct

@@ -1,6 +1,6 @@
 # M0 Twitch negotiation and bounded publish attempts
 
-Observed 2026-09-30 UTC. **M0 did not pass.** The owner initially approved at
+Observed 2026-09-30 through 2026-10-01 UTC. **M0 did not pass.** The owner initially approved at
 most two public synthetic TechDaddy broadcasts of five minutes each, at no more
 than 6 Mbps aggregate nominal media bitrate. Both attempts were used. This
 approval did not cover a third attempt. The owner later authorized any further
@@ -48,8 +48,9 @@ This control used the negotiated ladder, but the sink was local.
 | 7 | 22:48:14 | Same direct OBS control, 150 seconds | Helix live; dashboard showed horizontal and vertical renditions, red H and blue V viewer previews; graceful stop and offline check passed |
 | 8 | 23:01:37 | Direct OBS control, 30-second smoke after WebSocket password-handoff change | Helix live, graceful OBS stop and offline check passed; [sanitized report](m0-twitch-obs-control-smoke.json) |
 | 9 | 23:31:05 | Copy publisher with first outgoing keyframes rebased to 0 ms after a passing local six-stream control | RTMPS write returned broken pipe after four seconds; Helix never live and channel offline after cleanup. The [wire comparison](m0-rtmp-wire-comparison.json) retains sanitized local header evidence |
+| 10 | 2026-10-01 00:18:26 | Copy publisher with BPM SEI NALs merged into each first IDR, after local six-stream and decoded identity controls | RTMPS write failed after five seconds; Helix never live and channel returned offline. [Sanitized report](m0-twitch-sei-merge.json) |
 
-None of the six **copy-publisher** attempts produced a Helix live-stream result.
+None of the seven **copy-publisher** attempts produced a Helix live-stream result.
 After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
 OBS attempts 6 and 7 then proved that the same channel and negotiated ladder
 can go live and deliver H/V scenes. The [control record](m0-twitch-obs-control.md)
@@ -60,7 +61,12 @@ video without an IDR and placed its first IDRs at 2000 ms, while OBS began with
 IDRs at 0 ms. The revised copy path places all four first IDRs at 0 ms, but
 still emits coded non-key video before them at that timestamp and differs from
 OBS in audio setup packets. Attempt 9 demonstrates that timestamp rebasing
-alone did not fix Twitch ingest.
+alone did not fix Twitch ingest. Attempt 10 then moved the BPM SEI NALs into
+the initial key packet for each rendition, so the local wire started coded
+video with IDRs at 0 ms while retaining the three BPM UUIDs per track. The
+full local ladder decoded the expected colors and separate audio tones. This
+also failed at Twitch ingest, so the initial keyframe ordering was not the
+sole rejection cause.
 
 The first two exploratory live runners and their raw reports remain private/ignored. Their
 source was not committed, so those observations are a **diagnostic record**, not
