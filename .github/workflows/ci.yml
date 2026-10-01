@@ -5,11 +5,11 @@ on:
   pull_request:
 concurrency:
   group: ci-${{ github.event.pull_request.number || github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 permissions:
   contents: read
 jobs:
-  checks:
+  static:
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
@@ -53,6 +53,12 @@ jobs:
             web/coverage/lcov.info
           if-no-files-found: error
           retention-days: 7
+  checks:
+    if: always()
+    needs: [static, coverage]
+    runs-on: ubuntu-24.04
+    steps:
+      - run: test "${{ needs.static.result }}" = success && test "${{ needs.coverage.result }}" = success
   sonar:
     needs: coverage
     if: github.event_name == 'push' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
