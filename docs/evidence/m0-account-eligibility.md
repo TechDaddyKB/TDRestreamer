@@ -207,8 +207,8 @@ edge design.
 
 Account UI eligibility is partially established; application API eligibility is
 still pending. A later [direct OBS control](m0-twitch-obs-control.md) established
-H/V viewer delivery and a VOD audio sample on the negotiated Twitch ladder.
-The appliance copy-publisher and Twitch live audio identity remain unverified;
+H/V viewer delivery, a VOD audio sample, and public horizontal live-audio
+identity on the negotiated Twitch ladder. The appliance copy-publisher remains unverified;
 see the [gate audit](m0-gates.md). The observations above remain the eligibility
 preflight at their recorded time. The owner has standing authorization for
 further broadcast testing, but provider provisioning is still unauthorized.

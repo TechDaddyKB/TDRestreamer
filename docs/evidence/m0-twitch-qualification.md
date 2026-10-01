@@ -123,9 +123,10 @@ response differs, record the difference and qualify it before sending media.
    appliance run.
 4. During the authorized tests, use the actual negotiated H/V ladder and audio
    track roles. Redact credentials from retained evidence, logs and artifacts.
-   The direct OBS control established distinct H/V viewer playback and an 880 Hz
-   VOD audio sample; live 440 Hz delivery and appliance H/V/audio delivery still
-   require external verification. An Inspector bandwidth test cannot prove them.
+   The direct OBS control established distinct H/V viewer playback, an 880 Hz
+   VOD audio sample, and 440 Hz live audio in public horizontal playback;
+   appliance H/V/audio delivery still requires external verification. An
+   Inspector bandwidth test cannot prove that path.
 5. Stop outputs on completion/failure, verify the channel is offline, and retain
    sanitized results with exact tool versions and producing-source hashes. A
    failed or unsupported path remains a blocker; no local fixture waives it.
