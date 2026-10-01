@@ -25,6 +25,7 @@ pipe after four seconds and Helix never reported live. The wire evidence shows
 that the revised stream still starts coded video with a non-key packet; the
 audio setup also differs. It does not prove which difference Twitch rejected.
 
-The next publisher change must make the initial coded video decode from an
-IDR while preserving the BPM metadata required before that IDR, then compare
-the resulting local wire sequence and run a bounded Twitch qualification.
+The [following SEI merge control](m0-twitch-sei-merge.json) made the initial
+coded video an IDR with BPM metadata and passed the full local decode and
+identity checks. Its bounded Twitch attempt still failed, so the remaining
+wire and audio setup differences require investigation.

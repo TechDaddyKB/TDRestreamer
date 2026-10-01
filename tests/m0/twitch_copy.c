@@ -13,6 +13,7 @@
 #include <libavutil/time.h>
 
 #define FLV_FILTER_CAPACITY (4 * 1024 * 1024)
+#define BPM_SEI_CAPACITY 65536
 
 typedef struct FlvFilter {
     AVIOContext *target;
@@ -168,6 +169,123 @@ static int contains_bytes(const uint8_t *data, size_t size,
             return 1;
     }
     return 0;
+}
+
+static size_t annexb_start(const uint8_t *data, size_t size, size_t from,
+                           size_t *prefix_size)
+{
+    for (size_t i = from; i + 3 < size; ++i) {
+        if (data[i] != 0 || data[i + 1] != 0)
+            continue;
+        if (data[i + 2] == 0 && data[i + 3] == 1) {
+            *prefix_size = 4;
+            return i;
+        }
+        if (data[i + 2] == 1) {
+            *prefix_size = 3;
+            return i;
+        }
+    }
+    return SIZE_MAX;
+}
+
+static int collect_bpm_sei(const AVPacket *packet, uint8_t *sei,
+                           size_t *used, unsigned seen[3],
+                           const uint8_t *const uuids[3])
+{
+    size_t size = (size_t)packet->size;
+    size_t prefix_size;
+    size_t start = annexb_start(packet->data, size, 0, &prefix_size);
+    while (start != SIZE_MAX) {
+        size_t next_prefix;
+        size_t next = annexb_start(packet->data, size, start + prefix_size,
+                                   &next_prefix);
+        size_t end = next == SIZE_MAX ? size : next;
+        const uint8_t *nal = packet->data + start + prefix_size;
+        size_t nal_size = end - start - prefix_size;
+        if (nal_size > 0 && (nal[0] & 31) == 6) {
+            unsigned hits[3];
+            for (unsigned j = 0; j < 3; ++j)
+                hits[j] = contains_bytes(nal, nal_size, uuids[j], 16);
+            if (hits[0] || hits[1] || hits[2]) {
+                size_t bytes = end - start;
+                if (bytes > BPM_SEI_CAPACITY - *used)
+                    return AVERROR_INVALIDDATA;
+                memcpy(sei + *used, packet->data + start, bytes);
+                *used += bytes;
+                for (unsigned j = 0; j < 3; ++j)
+                    seen[j] |= hits[j];
+            }
+        }
+        start = next;
+        prefix_size = next_prefix;
+    }
+    return 0;
+}
+
+static int merge_bpm_into_key(AVPacket **slot, const uint8_t *sei,
+                              size_t sei_size)
+{
+    AVPacket *old = *slot;
+    size_t size = (size_t)old->size;
+    size_t prefix_size;
+    size_t start = annexb_start(old->data, size, 0, &prefix_size);
+    while (start != SIZE_MAX &&
+           (start + prefix_size >= size ||
+            (old->data[start + prefix_size] & 31) != 5))
+        start = annexb_start(old->data, size, start + prefix_size, &prefix_size);
+    if (start == SIZE_MAX || sei_size == 0 || size + sei_size > INT32_MAX)
+        return AVERROR_INVALIDDATA;
+    AVPacket *merged = av_packet_alloc();
+    if (merged == NULL)
+        return AVERROR(ENOMEM);
+    int code = av_new_packet(merged, (int)(size + sei_size));
+    if (code >= 0)
+        code = av_packet_copy_props(merged, old);
+    if (code < 0) {
+        av_packet_free(&merged);
+        return code;
+    }
+    merged->stream_index = old->stream_index;
+    memcpy(merged->data, old->data, start);
+    memcpy(merged->data + start, sei, sei_size);
+    memcpy(merged->data + start + sei_size, old->data + start, size - start);
+    av_packet_free(slot);
+    *slot = merged;
+    return 0;
+}
+
+static int prepare_first_key(AVPacket **buffered, size_t count,
+                             AVFormatContext *input, unsigned stream,
+                             int64_t start_index, int64_t ready_pts_us,
+                             const uint8_t *const uuids[3])
+{
+    uint8_t *sei = malloc(BPM_SEI_CAPACITY);
+    if (sei == NULL)
+        return AVERROR(ENOMEM);
+    size_t used = 0;
+    unsigned seen[3] = {0};
+    int result = AVERROR_INVALIDDATA;
+    for (size_t i = (size_t)start_index; i < count; ++i) {
+        AVPacket *held = buffered[i];
+        if ((unsigned)held->stream_index != stream)
+            continue;
+        int64_t pts_us = av_rescale_q(held->pts,
+                                     input->streams[stream]->time_base,
+                                     AV_TIME_BASE_Q);
+        if ((held->flags & AV_PKT_FLAG_KEY) && pts_us == ready_pts_us) {
+            result = seen[0] && seen[1] && seen[2] ?
+                merge_bpm_into_key(&buffered[i], sei, used) : AVERROR_INVALIDDATA;
+            break;
+        }
+        int code = collect_bpm_sei(held, sei, &used, seen, uuids);
+        if (code < 0) {
+            result = code;
+            break;
+        }
+    }
+    free(sei);
+    return result;
 }
 
 static int copy_media(const char *source, const char *destination,
@@ -378,6 +496,15 @@ static int copy_media(const char *source, const char *destination,
                     latest_start = first_ready_pts_us[i];
             }
             base_us[4] = base_us[5] = latest_start;
+            const uint8_t *const uuids[3] = {ts_uuid, sm_uuid, erm_uuid};
+            for (unsigned i = 0; i < 4; ++i) {
+                code = prepare_first_key(buffered, buffered_count, input, i,
+                                         start_index[i], first_ready_pts_us[i], uuids);
+                if (code < 0) {
+                    result = report_error("bpm_key_merge", code);
+                    goto done;
+                }
+            }
             av_dict_set(&options, "rtmp_app", app, 0);
             av_dict_set(&options, "rtmp_playpath", playpath, 0);
             if (strcmp(destination, "rtmps://ingest.global-contribute.live-video.net/app") == 0)
@@ -420,14 +547,7 @@ static int copy_media(const char *source, const char *destination,
                     held->pts, input->streams[stream]->time_base, AV_TIME_BASE_Q);
                 int include;
                 if (stream < 4) {
-                    int bpm_packet = contains_bytes(held->data, held->size,
-                                                    ts_uuid, sizeof(ts_uuid)) ||
-                                     contains_bytes(held->data, held->size,
-                                                    sm_uuid, sizeof(sm_uuid)) ||
-                                     contains_bytes(held->data, held->size,
-                                                    erm_uuid, sizeof(erm_uuid));
-                    include = held_us >= first_ready_pts_us[stream] ||
-                              ((int64_t)i >= start_index[stream] && bpm_packet);
+                    include = held_us >= first_ready_pts_us[stream];
                 } else {
                     include = held_us >= latest_start;
                 }

@@ -1,0 +1,143 @@
+{
+  "recorded_at_utc": "2026-10-01",
+  "scope": "Synthetic local control and one bounded public Twitch retry after BPM SEI merge",
+  "local_bridge": {
+    "status": "passed_local_bridge",
+    "first_output_key_pts_ms": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "uuid_counts": {
+      "bpm_ts": 16,
+      "bpm_sm": 16,
+      "bpm_erm": 16
+    },
+    "first_media_messages": [
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 55,
+        "header_hex": "9061766331014d40"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310201"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 57,
+        "header_hex": "9600617663310301"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 4,
+        "header_hex": "af001190"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 9,
+        "header_hex": "95006d7034610111"
+      },
+      {
+        "type": "audio",
+        "timestamp_ms": 0,
+        "bytes": 13,
+        "header_hex": "95046d7034610101"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 6399,
+        "header_hex": "9161766331000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 4232,
+        "header_hex": "a161766331000000"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 5009,
+        "header_hex": "a161766331000021"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 2150,
+        "header_hex": "9603617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 361,
+        "header_hex": "a603617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 626,
+        "header_hex": "a601617663310100"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10757,
+        "header_hex": "9603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10708,
+        "header_hex": "a603617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 10427,
+        "header_hex": "a601617663310200"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 3421,
+        "header_hex": "9603617663310300"
+      },
+      {
+        "type": "video",
+        "timestamp_ms": 0,
+        "bytes": 1374,
+        "header_hex": "a603617663310300"
+      }
+    ]
+  },
+  "full_ladder": {
+    "status": "passed_local_twitch_ladder",
+    "stream_count": 6,
+    "decoded_video_identity_passed": true,
+    "decoded_audio_identity_passed": true
+  },
+  "twitch": {
+    "status": "failed",
+    "broadcast_start_utc": "2026-10-01T00:18:26Z",
+    "broadcast_end_utc": "2026-10-01T00:18:31Z",
+    "helix_live_observed": false,
+    "helix_offline_after_stop": true,
+    "publisher_exit_code": 1,
+    "negotiated_nominal_kbps": 4720
+  }
+}
