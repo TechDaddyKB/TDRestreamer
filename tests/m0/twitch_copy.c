@@ -274,8 +274,15 @@ static int prepare_first_key(AVPacket **buffered, size_t count,
                                      input->streams[stream]->time_base,
                                      AV_TIME_BASE_Q);
         if ((held->flags & AV_PKT_FLAG_KEY) && pts_us == ready_pts_us) {
-            result = seen[0] && seen[1] && seen[2] ?
-                merge_bpm_into_key(&buffered[i], sei, used) : AVERROR_INVALIDDATA;
+            for (unsigned j = 0; j < 3; ++j)
+                seen[j] |= contains_bytes(held->data, (size_t)held->size,
+                                          uuids[j], 16);
+            if (!(seen[0] && seen[1] && seen[2]))
+                result = AVERROR_INVALIDDATA;
+            else if (used > 0)
+                result = merge_bpm_into_key(&buffered[i], sei, used);
+            else
+                result = 0;
             break;
         }
         int code = collect_bpm_sei(held, sei, &used, seen, uuids);
