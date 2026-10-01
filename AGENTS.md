@@ -3,15 +3,16 @@
 ## Authorization and project context
 
 - Product: Tech Daddy’s Restreamer; public repository: camarokris/TDRestreamer.
-- AWS experience: new AWS experience; project: Index Zero; selected Region: us-east-2.
-- AWS CLI profile: index-zero. Toolkit catalog and MCP endpoint use us-east-1;
-  that service endpoint does not authorize regional deployments outside us-east-2.
-- Current authorization is account eligibility checks only. Broadcast tests require
-  separate user approval. Do not provision resources, consume deployment credits,
-  upgrade the AWS plan, or fund RunPod without explicit authorization.
+- Current v1 scope is a complete local appliance on a streamer's secondary
+  system; [ADR 0003](docs/adr/0003-local-appliance-scope.md) removes AWS/RunPod,
+  cloud provider testing, and remote-worker qualification from the plan.
+- The owner has authorized further broadcast tests needed for M0. Do not seek
+  another broadcast approval for this goal. Cloud provider provisioning,
+  spending, plan upgrades and RunPod funding remain outside the current plan.
 - Address findings from Sourcery-ai, gitar-bot, and SonarQube Cloud on pull requests.
 - These project instructions and subsequent user instructions take precedence over
-  the upstream AWS guidance below. Toolkit installation is not M0 qualification.
+  the archived upstream AWS guidance below. It is relevant only if the owner
+  explicitly reintroduces AWS work. Toolkit installation is not M0 qualification.
 
 <!-- sonar:begin:codex-secrets-on-read -->
 ## SonarQube secrets scanning for files protocol

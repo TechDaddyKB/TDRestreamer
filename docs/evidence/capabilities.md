@@ -2,6 +2,9 @@
 
 Reviewed 2026-09-30. These records distinguish documentation, code and tested behavior.
 
+The AWS and RunPod rows are historical research. [ADR 0003](../adr/0003-local-appliance-scope.md)
+removes provider testing, orchestration and billing from the active v1 plan.
+
 | Component | Evidence / source | Remaining gate |
 |---|---|---|
 | MediaMTX 1.21.1 / FFmpeg 9.0.1 | Synthetic transport spike plus real OBS dual-audio and Chromium WebRTC/HLS fallback; RTMPS/encrypted-SRT preservation and denials; see [local qualification](m0-local.md) | Twitch semantics, additional OBS modes, production supervision |
@@ -15,8 +18,8 @@ Reviewed 2026-09-30. These records distinguish documentation, code and tested be
 
 MediaMTX multiple-track FFmpeg requirements:
 https://mediamtx.org/docs/read/ffmpeg . The local spike is not complete platform
-acceptance. The owner now authorizes account eligibility checks; external broadcasts,
-cloud provisioning and spending require separate approval.
+acceptance. The owner has authorized further M0 broadcast testing. Provider
+provisioning and spending are outside the current plan.
 
 Detailed, dated records: [platform inventory](platform-inventory.md) and
 [provider inventory](provider-inventory.md). The [authenticated eligibility record](m0-account-eligibility.md)

@@ -1,5 +1,10 @@
 # Provider feasibility inventory
 
+**Historical record:** [ADR 0003](../adr/0003-local-appliance-scope.md)
+supersedes the provider selection and testing plan described below. AWS/RunPod
+qualification is no longer an M0 or v1 gate. No lifecycle or billing test is
+planned.
+
 Reviewed 2026-09-30 against official documentation. AWS EC2 and RunPod **Pods**
 remain the selected v1 providers. Subsequent [account preflight](m0-account-eligibility.md)
 verified AWS STS/Free Tier/EC2 read APIs and RunPod console access. Regional
