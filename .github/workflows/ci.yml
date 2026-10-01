@@ -3,6 +3,9 @@ on:
   push:
     branches: [main]
   pull_request:
+concurrency:
+  group: ci-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 permissions:
   contents: read
 jobs:
@@ -20,8 +23,25 @@ jobs:
           node-version: 26.7.0
           cache: npm
           cache-dependency-path: web/package-lock.json
-      - run: |
-          python3 -m pip install --only-binary :all: coverage==7.10.7
+      - run: make setup generate && git diff --exit-code
+      - run: python3 scripts/scan-secrets.py
+      - run: go run github.com/zricethezav/gitleaks/v8@v8.30.1 git --redact --no-banner
+      - run: cd web && npm audit --audit-level=high
+      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
+      - run: docker build -t tdrestreamer:ci .
+  coverage:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7.0.0
+        with:
+          go-version-file: go.mod
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 26.7.0
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: python3 -m pip install --only-binary :all: coverage==7.10.7
       - run: make setup lint coverage docs build COVERAGE='python3 -m coverage'
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
@@ -32,14 +52,8 @@ jobs:
             web/coverage/lcov.info
           if-no-files-found: error
           retention-days: 7
-      - run: make generate && git diff --exit-code
-      - run: python3 scripts/scan-secrets.py
-      - run: go run github.com/zricethezav/gitleaks/v8@v8.30.1 git --redact --no-banner
-      - run: cd web && npm audit --audit-level=high
-      - run: go run golang.org/x/vuln/cmd/govulncheck@v1.8.0 ./...
-      - run: docker build -t tdrestreamer:ci .
   sonar:
-    needs: checks
+    needs: coverage
     if: github.event_name == 'push' || (github.event.pull_request.head.repo.full_name == github.repository && github.actor != 'dependabot[bot]')
     runs-on: ubuntu-24.04
     steps:
