@@ -429,7 +429,7 @@ static int copy_media(const char *source, const char *destination,
                     include = held_us >= first_ready_pts_us[stream] ||
                               ((int64_t)i >= start_index[stream] && bpm_packet);
                 } else {
-                    include = held_us >= latest_start - 100000;
+                    include = held_us >= latest_start;
                 }
                 if (include) {
                     code = write_rebased(input, output, held, base_us,

@@ -60,15 +60,22 @@ def main():
                                     for name, marker in UUIDS.items():
                                         report["uuid_counts"][name] += combined.count(marker)
                                     previous = combined[-15:]
-                                    inspector.feed(data)
+                                    if inspector is not None:
+                                        try:
+                                            inspector.feed(data)
+                                        except ValueError:
+                                            report["wire_error"] = "parse_error"
+                                            report["wire"] = inspector.report()
+                                            inspector = None
                                     target.sendall(data)
                                 else:
                                     client.sendall(data)
                             else:
                                 continue
                             break
-                        report["wire"] = inspector.report()
-                except (OSError, ValueError):
+                        if inspector is not None:
+                            report["wire"] = inspector.report()
+                except OSError:
                     report["connection_errors"] = report.get("connection_errors", 0) + 1
     finally:
         report_path.write_text(json.dumps(report, indent=2) + "\n")

@@ -59,6 +59,11 @@ class WireInspectorTest(unittest.TestCase):
         inspector.feed(bytes(3073) + extended_one + extended_two)
         self.assertEqual(inspector.messages["9"], 2)
 
+    def test_fmt_zero_time_is_reused_by_next_fmt_three_message(self):
+        inspector = Inspector()
+        inspector.feed(bytes(3073) + message(4, 9, b"\x17", 42) + b"\xc4\x27")
+        self.assertEqual([m["timestamp_ms"] for m in inspector.media], [42, 84])
+
     def test_invalid_control_and_missing_header(self):
         inspector = Inspector()
         missing_header = bytes(3073) + b"\xc4"

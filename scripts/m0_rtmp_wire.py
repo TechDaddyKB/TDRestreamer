@@ -62,7 +62,7 @@ class Inspector:
 
     def _update_state(self, fmt, csid, state, header, raw_time, time_value):
         if fmt == 0:
-            state = {"time": time_value, "delta": 0,
+            state = {"time": time_value, "delta": time_value,
                      "size": int.from_bytes(header[3:6], "big"),
                      "type": header[6], "raw_time": raw_time,
                      "body": bytearray()}
