@@ -366,6 +366,7 @@ static int copy_media(const char *source, const char *destination,
         fprintf(stderr, "stream_count: expected four video and two audio tracks\n");
         goto done;
     }
+    static const int bitrates_kbps[6] = {1200, 200, 2500, 500, 160, 160};
     for (unsigned i = 0; i < 6; ++i) {
         enum AVCodecID expected = i < 4 ? AV_CODEC_ID_H264 : AV_CODEC_ID_AAC;
         if (input->streams[i]->codecpar->codec_id != expected) {
@@ -391,6 +392,9 @@ static int copy_media(const char *source, const char *destination,
             goto done;
         }
         stream->codecpar->codec_tag = 0;
+        stream->codecpar->bit_rate = (int64_t)bitrates_kbps[i] * 1024;
+        if (i < 4)
+            stream->avg_frame_rate = (AVRational){30, 1};
         stream->time_base = input->streams[i]->time_base;
     }
 

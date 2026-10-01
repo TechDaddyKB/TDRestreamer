@@ -1,6 +1,48 @@
 """Bounded, credential-free summary of client-to-server RTMP media messages."""
 
 from collections import Counter
+import math
+import struct
+
+COMMANDS = frozenset(("connect", "releaseStream", "FCPublish", "createStream",
+                      "publish", "deleteStream"))
+FIELDS = ("app", "flashVer", "tcUrl", "fpad", "capabilities", "audioCodecs",
+          "videoCodecs", "videoFunction", "pageUrl", "objectEncoding",
+          "fourCcList", "enhancedCodecs", "encoder", "videocodecid",
+          "audiocodecid", "width", "height", "framerate", "videodatarate",
+          "audiodatarate", "stereo", "audiochannels", "audiosamplerate",
+          "filesize", "duration")
+NUMERIC_FIELDS = ("videocodecid", "audiocodecid", "width", "height",
+                  "framerate", "videodatarate", "audiodatarate",
+                  "audiochannels", "audiosamplerate", "duration", "filesize")
+
+
+def command_name(body):
+    if len(body) < 3 or body[0] != 2:
+        return "other"
+    length = int.from_bytes(body[1:3], "big")
+    if length > 32 or len(body) < length + 3:
+        return "other"
+    name = bytes(body[3:3 + length]).decode("ascii", errors="replace")
+    return name if name in COMMANDS else "other"
+
+
+def field_names(body):
+    return [name for name in FIELDS
+            if len(name).to_bytes(2, "big") + name.encode() in body]
+
+
+def numeric_fields(body):
+    values = {}
+    for name in NUMERIC_FIELDS:
+        marker = len(name).to_bytes(2, "big") + name.encode() + b"\x00"
+        at = body.find(marker)
+        if at < 0 or len(body) < at + len(marker) + 8:
+            continue
+        value = struct.unpack(">d", body[at + len(marker):at + len(marker) + 8])[0]
+        if math.isfinite(value):
+            values[name] = round(value, 5)
+    return values
 
 
 class Inspector:
@@ -11,6 +53,8 @@ class Inspector:
         self.streams = {}
         self.messages = Counter()
         self.media = []
+        self.control = []
+        self.order = []
 
     def feed(self, data):
         self.buffer.extend(data)
@@ -105,6 +149,13 @@ class Inspector:
         kind = state["type"]
         self.messages[str(kind)] += 1
         body = state["body"]
+        if len(self.order) < 24:
+            self.order.append(kind)
+        if kind in (18, 20) and len(self.control) < 16:
+            self.control.append({"type": kind,
+                                 "command": command_name(body) if kind == 20 else "metadata",
+                                 "fields": field_names(body),
+                                 "numeric": numeric_fields(body) if kind == 18 else {}})
         if kind == 1 and len(body) == 4:
             value = int.from_bytes(body, "big")
             if not 1 <= value <= 1024 * 1024:
@@ -117,4 +168,6 @@ class Inspector:
 
     def report(self):
         return {"message_types": dict(self.messages),
-                "first_media_messages": self.media}
+                "first_media_messages": self.media,
+                "first_message_types": self.order,
+                "control_fields": self.control}

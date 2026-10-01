@@ -1,6 +1,7 @@
 """Verify bounded RTMP media summaries across handshake and chunk boundaries."""
 
 import sys
+import struct
 import unittest
 from pathlib import Path
 
@@ -79,6 +80,25 @@ class WireInspectorTest(unittest.TestCase):
         inspector.feed(bytes(3073) + message(4, 9, b"\x17") * 100)
         self.assertEqual(inspector.messages["9"], 100)
         self.assertEqual(len(inspector.media), 96)
+
+    def test_control_summary_records_field_names_without_values(self):
+        inspector = Inspector()
+        connect = (b"\x02\x00\x07connect" + b"\x00" * 8 +
+                   b"\x00\x03app\x02\x00\x12private-stream-key" +
+                   b"\x00\x05tcUrl\x02\x00\x12private-stream-key")
+        metadata = (b"\x00\x07encoder\x00\x09framerate\x00" +
+                    struct.pack(">d", 30.0))
+        inspector.feed(bytes(3073) + message(3, 20, connect) +
+                       message(4, 18, metadata))
+        summary = inspector.report()
+        self.assertEqual(summary["first_message_types"], [20, 18])
+        self.assertEqual(summary["control_fields"][0],
+                         {"type": 20, "command": "connect", "fields": ["app", "tcUrl"],
+                          "numeric": {}})
+        self.assertEqual(summary["control_fields"][1]["fields"],
+                         ["encoder", "framerate"])
+        self.assertEqual(summary["control_fields"][1]["numeric"], {"framerate": 30.0})
+        self.assertNotIn("private-stream-key", str(summary))
 
 
 if __name__ == "__main__":
