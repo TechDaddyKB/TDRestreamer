@@ -42,11 +42,13 @@ obtains account-specific negotiation, requires an exact match to the locally
 qualified encoder/audio settings and RTMPS endpoint, caps negotiated nominal
 bitrate at 6000 kbps, then runs one bounded publisher. Its report has no stream
 key, ingest authorization or token. The owner authorized the remaining
-necessary broadcast tests. Five bounded runs of this publisher are retained in
+necessary broadcast tests. Five reproducible bounded runs of this publisher are retained in
 the [attempt record](m0-twitch-live-attempts.md). The latest, with BPM SEI merged
 into 0 ms first IDRs, still ended at Twitch ingest after roughly
 five seconds. Helix never reported the channel live, and the channel was
-offline after cleanup. The local controls passed in those runs.
+offline after cleanup. The local controls passed in those runs. A later
+[temporary legacy-primary probe](m0-twitch-legacy-primary.json) also failed and
+was reverted after the diagnostic.
 
 A later [direct OBS control](m0-twitch-obs-control.md) delivered distinct
 horizontal and vertical viewer scenes and an 880 Hz VOD audio sample on this

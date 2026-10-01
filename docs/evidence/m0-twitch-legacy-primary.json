@@ -1,0 +1,38 @@
+{
+  "recorded_at_utc": "2026-10-01",
+  "scope": "Temporary legacy primary H.264 FLV header probe; diagnostic source change reverted after failure",
+  "reproducible_artifact": false,
+  "local": {
+    "bridge_status": "passed_local_bridge",
+    "first_output_key_pts_ms": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "enhanced_primary_tags": 0,
+    "first_primary_sequence_header": {
+      "type": "video",
+      "timestamp_ms": 0,
+      "bytes": 55,
+      "header_hex": "1700000000014d40"
+    },
+    "bpm_uuid_counts": {
+      "bpm_ts": 16,
+      "bpm_sm": 16,
+      "bpm_erm": 16
+    },
+    "full_ladder_status": "passed_local_twitch_ladder",
+    "decoded_video_identity_passed": true,
+    "decoded_audio_identity_passed": true
+  },
+  "twitch": {
+    "status": "failed",
+    "broadcast_start_utc": "2026-10-01T01:00:02Z",
+    "broadcast_end_utc": "2026-10-01T01:00:05Z",
+    "helix_live_observed": false,
+    "helix_offline_after_stop": true,
+    "publisher_exit_code": 1,
+    "negotiated_nominal_kbps": 4720
+  }
+}

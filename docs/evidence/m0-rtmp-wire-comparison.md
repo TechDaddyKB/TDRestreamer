@@ -28,4 +28,6 @@ audio setup also differs. It does not prove which difference Twitch rejected.
 The [following SEI merge control](m0-twitch-sei-merge.json) made the initial
 coded video an IDR with BPM metadata and passed the full local decode and
 identity checks. Its bounded Twitch attempt still failed, so the remaining
-wire and audio setup differences require investigation.
+wire and audio setup differences require investigation. A later
+[legacy-primary probe](m0-twitch-legacy-primary.json) also failed after
+matching OBS's primary H.264 header form. That temporary switch was reverted.

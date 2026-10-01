@@ -50,8 +50,9 @@ This control used the negotiated ladder, but the sink was local.
 | 9 | 23:31:05 | Copy publisher with first outgoing keyframes rebased to 0 ms after a passing local six-stream control | RTMPS write returned broken pipe after four seconds; Helix never live and channel offline after cleanup. The [wire comparison](m0-rtmp-wire-comparison.json) retains sanitized local header evidence |
 | 10 | 2026-10-01 00:18:26 | Copy publisher with BPM SEI NALs merged into each first IDR, after local six-stream and decoded identity controls | RTMPS write failed after five seconds; Helix never live and channel returned offline. [Sanitized report](m0-twitch-sei-merge.json) |
 | 11 | 2026-10-01 00:42:04 | Direct OBS control, 300-second cap, with public live HLS audio sample | Helix live; public horizontal 256×144 rendition showed red video and 440 Hz audio at 40 and 80 seconds after a pre-roll ad; 880 Hz was below displayed precision. Graceful stop and offline check passed. [Control](m0-twitch-obs-control-live-audio.json), [audio analysis](m0-twitch-live-audio.json) |
+| 12 | 2026-10-01 01:00:02 | Temporary copy-publisher probe preserving legacy H.264 on primary track, after passing local bridge and decoded identity controls | RTMPS publisher failed after about three seconds; Helix never live, channel offline after cleanup. The format switch was reverted. [Sanitized diagnostic](m0-twitch-legacy-primary.json) |
 
-None of the seven **copy-publisher** attempts produced a Helix live-stream result.
+None of the eight **copy-publisher** attempts produced a Helix live-stream result.
 After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
 OBS attempts 6 and 7 then proved that the same channel and negotiated ladder
 can go live and deliver H/V scenes. The [control record](m0-twitch-obs-control.md)
@@ -68,7 +69,10 @@ the initial key packet for each rendition, so the local wire started coded
 video with IDRs at 0 ms while retaining the three BPM UUIDs per track. The
 full local ladder decoded the expected colors and separate audio tones. This
 also failed at Twitch ingest, so the initial keyframe ordering was not the
-sole rejection cause.
+sole rejection cause. Attempt 12 used OBS's legacy primary H.264 FLV form
+with the corrected 0 ms keyframe and BPM startup, but still failed. Its
+temporary code change was reverted, so it is a diagnostic observation rather
+than a retained publisher qualification artifact.
 
 The first two exploratory live runners and their raw reports remain private/ignored. Their
 source was not committed, so those observations are a **diagnostic record**, not
