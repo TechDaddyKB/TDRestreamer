@@ -49,12 +49,14 @@ This control used the negotiated ladder, but the sink was local.
 | 8 | 23:01:37 | Direct OBS control, 30-second smoke after WebSocket password-handoff change | Helix live, graceful OBS stop and offline check passed; [sanitized report](m0-twitch-obs-control-smoke.json) |
 | 9 | 23:31:05 | Copy publisher with first outgoing keyframes rebased to 0 ms after a passing local six-stream control | RTMPS write returned broken pipe after four seconds; Helix never live and channel offline after cleanup. The [wire comparison](m0-rtmp-wire-comparison.json) retains sanitized local header evidence |
 | 10 | 2026-10-01 00:18:26 | Copy publisher with BPM SEI NALs merged into each first IDR, after local six-stream and decoded identity controls | RTMPS write failed after five seconds; Helix never live and channel returned offline. [Sanitized report](m0-twitch-sei-merge.json) |
+| 11 | 2026-10-01 00:42:04 | Direct OBS control, 300-second cap, with public live HLS audio sample | Helix live; public horizontal 256×144 rendition showed red video and 440 Hz audio at 40 and 80 seconds after a pre-roll ad; 880 Hz was below displayed precision. Graceful stop and offline check passed. [Control](m0-twitch-obs-control-live-audio.json), [audio analysis](m0-twitch-live-audio.json) |
 
 None of the seven **copy-publisher** attempts produced a Helix live-stream result.
 After each copy failure, the harness stopped OBS, MediaMTX and FFmpeg. Direct
 OBS attempts 6 and 7 then proved that the same channel and negotiated ladder
 can go live and deliver H/V scenes. The [control record](m0-twitch-obs-control.md)
-also establishes one VOD audio sample; live audio identity remains unverified.
+also establishes an 880 Hz VOD sample and 440 Hz live audio in a public
+horizontal rendition.
 The copy disconnects do not identify which ingest requirement was rejected.
 The local wire comparison found that the earlier copy path first emitted coded
 video without an IDR and placed its first IDRs at 2000 ms, while OBS began with

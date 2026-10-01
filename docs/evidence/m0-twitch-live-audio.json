@@ -1,0 +1,51 @@
+{
+  "recorded_at_utc": "2026-10-01",
+  "scope": "Public anonymous TechDaddy live HLS playback during bounded direct OBS synthetic broadcast",
+  "capture_seconds": 105.095667,
+  "capture_video": "H.264 256x144 public rendition",
+  "capture_audio": "AAC mono analysis at 48 kHz",
+  "analysis": "Two-second PCM windows; normalized single-frequency DFT power at 440 and 880 Hz; one RGB frame scaled to 1x1",
+  "samples": [
+    {
+      "offset_seconds": 10,
+      "samples": 80608,
+      "power_440": 0.0,
+      "power_880": 0.0,
+      "rgb": [
+        79,
+        82,
+        189
+      ],
+      "interpretation": "pre-roll ad, not stream evidence"
+    },
+    {
+      "offset_seconds": 40,
+      "samples": 96000,
+      "power_440": 0.003901887,
+      "power_880": 0.0,
+      "rgb": [
+        253,
+        26,
+        1
+      ],
+      "interpretation": "red horizontal stream with live 440 Hz mix"
+    },
+    {
+      "offset_seconds": 80,
+      "samples": 96000,
+      "power_440": 0.003901887,
+      "power_880": 0.0,
+      "rgb": [
+        253,
+        26,
+        1
+      ],
+      "interpretation": "red horizontal stream with live 440 Hz mix"
+    }
+  ],
+  "limitations": [
+    "Public HLS rendition was 256x144, so this capture does not reverify vertical resolution",
+    "The first 10-second window was an ad and was excluded from live-audio inference",
+    "The source media file was temporary and removed after analysis"
+  ]
+}

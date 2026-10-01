@@ -50,7 +50,8 @@ offline after cleanup. The local controls passed in those runs.
 
 A later [direct OBS control](m0-twitch-obs-control.md) delivered distinct
 horizontal and vertical viewer scenes and an 880 Hz VOD audio sample on this
-channel and ladder. Live 440 Hz audio identity remains unverified, and none of
+channel and ladder. A later public horizontal playback sample identified the
+440 Hz live mix; none of
 those direct OBS results qualify the appliance copy-publisher. A local sink
 result or a successful publisher exit alone cannot close its M0 gate.
 

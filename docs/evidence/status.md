@@ -7,8 +7,8 @@ milestone is certified complete. M0 has local OBS/transport/browser-preview evid
 including a [four-rendition local ladder run](m0-twitch-ladder-local.md) and a
 [bounded local bridge control](m0-twitch-copy-candidate.md),
 account-specific Twitch negotiation, seven failed appliance publisher attempts,
-and a successful direct OBS control with H/V viewer delivery and one VOD audio
-sample; appliance delivery, live audio identity, and remaining application API
+and a successful direct OBS control with H/V viewer delivery, a VOD audio
+sample, and a public horizontal live-audio sample; appliance delivery and remaining application API
 eligibility gates are unresolved.
 Additional OBS input modes remain
 later media qualification work; M1 has an implemented local control foundation but still
@@ -57,7 +57,7 @@ is inventoried separately; it does not prove account-specific eligibility. The l
 and AWS read permissions. A dedicated Twitch app also passed a
 [client-credentials public API read](m0-twitch-app-token.json); broadcaster consent,
 other platform APIs and appliance delivery remain unverified. Direct OBS H/V
-delivery and an 880 Hz VOD sample passed; live 440 Hz delivery and application
+delivery, an 880 Hz VOD sample, and 440 Hz public horizontal live audio passed; application
 preview integration remain unverified.
 
 Real FFmpeg frame tests also passed for crop, fill and blur output geometry,
@@ -92,7 +92,7 @@ Twitch attempts failed at external ingest, as recorded in
 [the attempt record](m0-twitch-live-attempts.md). A subsequent
 [direct OBS control](m0-twitch-obs-control.md) delivered H/V viewer scenes and
 an 880 Hz VOD sample. No provider provisioning or spending was performed.
-Appliance Twitch delivery and live audio behavior,
+Appliance Twitch delivery and its live audio behavior,
 remaining application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,
 N100/Intel/AMD/ARM64/multi-GPU reference hardware, eight-hour soaks and comprehensive
 accessibility review remain unverified. They do not remove any v1 requirement.

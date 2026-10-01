@@ -35,14 +35,18 @@ container duration. A two-second audio sample at 10 seconds had normalized
 duration discrepancy is a container observation; the channel page labels the
 broadcast 1:30.
 
-Live audio identity is **not established**. Anonymous live HLS downloads
-returned a 256×144 silent pre-roll ad, even when the 360p source rendition was
-requested; those samples cannot test the stream's 440 Hz audio. The local
-six-stream fixture separately decodes 440 Hz live and 880 Hz VOD tracks before
-Twitch delivery.
+An earlier anonymous live HLS download returned only a 256×144 silent pre-roll
+ad and could not test live audio. A later 300-second-cap direct OBS broadcast
+was [observed live and offline](m0-twitch-obs-control-live-audio.json). Its
+[public HLS capture](m0-twitch-live-audio.json) began with an ad, then showed
+red horizontal video and strong 440 Hz with no measurable 880 Hz tone in
+two-second windows at 40 and 80 seconds. This establishes the intended live
+mix in the sampled public horizontal rendition. The temporary media file was
+removed after analysis. The local six-stream fixture separately decodes both
+audio tracks before Twitch delivery.
 
 The direct OBS control establishes that this TechDaddy channel and the
 negotiated ladder can deliver H/V video. It does **not** qualify the appliance
-copy-publisher: its five preceding RTMPS attempts never reached Helix live.
+copy-publisher: seven RTMPS attempts have not reached Helix live.
 The publisher's wire-format or timing difference from OBS remains the next
 diagnostic target. The M0 Twitch gate and milestone remain open.
