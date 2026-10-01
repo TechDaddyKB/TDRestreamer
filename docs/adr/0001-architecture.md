@@ -2,6 +2,10 @@
 
 Status: accepted by project owner, 2026-09-30.
 
+**Scope amendment:** [ADR 0003](0003-local-appliance-scope.md) supersedes
+Q02 and the cloud/remote-worker parts of Q01, Q04, Q08, Q11, Q17 and Q18 for
+v1. Their text below records the earlier decision; it is not an active gate.
+
 Go control/worker/admin binaries; React/TypeScript/Vite UI; PostgreSQL, pgx, sqlc;
 SQL migrations; FFmpeg and initially MediaMTX; Compose; Redis only for distributed
 mode. MediaMTX remains subject to multi-track protocol qualification. AGPL-3.0-or-later.

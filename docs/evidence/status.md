@@ -2,11 +2,16 @@
 
 ## Release status
 
+[ADR 0003](../adr/0003-local-appliance-scope.md) makes the complete local
+appliance on a secondary system the v1 target. AWS/RunPod and remote-worker
+qualification are outside the active plan; earlier provider records remain
+historical.
+
 **Development foundation; the requested full v1 is not complete.** No M0–M7
 milestone is certified complete. M0 has local OBS/transport/browser-preview evidence,
 including a [four-rendition local ladder run](m0-twitch-ladder-local.md) and a
 [bounded local bridge control](m0-twitch-copy-candidate.md),
-account-specific Twitch negotiation, eight failed appliance publisher attempts,
+account-specific Twitch negotiation, nine failed appliance publisher attempts,
 and a successful direct OBS control with H/V viewer delivery, a VOD audio
 sample, and a public horizontal live-audio sample; appliance delivery and remaining application API
 eligibility gates are unresolved.
@@ -78,21 +83,22 @@ crashed on Go 1.27; replaced with 1.8.0. Gitleaks history scan passed.
 OAuth/identity linking/invitations/recovery; full profile persistence/platform rules;
 application media gateway auth, ingest/probing/worker supervision/publishing/retry,
 authenticated WebRTC/HLS playback, canvas editor and GPU execution; platform adapters;
-health/history/notifications; distributed protocol/Redis/provisioning/cost connectors;
+health/history/notifications; local worker supervision and recovery;
 backup/restore/updater; discovery/proxy deployment; scoped automation tokens and
 importable Streamer.bot workflows; complete release images/SBOM/notices.
 
 ## External qualification blockers
 
 The owner approved further broadcast testing necessary to complete M0 after the
-first two bounded attempts. This does not authorize provider provisioning.
-Authenticated platform dashboards and AWS Free Plan/EC2 read access were checked; see
-[the account eligibility record](m0-account-eligibility.md). Eight bounded appliance
+first two bounded attempts. Provider testing is outside the revised plan.
+Authenticated platform dashboards and historical AWS Free Plan/EC2 read access were checked; see
+[the account eligibility record](m0-account-eligibility.md). Nine bounded appliance
 Twitch attempts failed at external ingest, as recorded in
 [the attempt record](m0-twitch-live-attempts.md). A subsequent
 [direct OBS control](m0-twitch-obs-control.md) delivered H/V viewer scenes and
 an 880 Hz VOD sample. No provider provisioning or spending was performed.
 Appliance Twitch delivery and its live audio behavior,
-remaining application OAuth/API permissions, AWS/RunPod lifecycle and cost-reporting access,
+remaining application OAuth/API permissions,
 N100/Intel/AMD/ARM64/multi-GPU reference hardware, eight-hour soaks and comprehensive
-accessibility review remain unverified. They do not remove any v1 requirement.
+accessibility review remain unverified. Provider lifecycle and cost-reporting
+access were removed from v1 by ADR 0003; the remaining active gates stand.

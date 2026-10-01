@@ -2,6 +2,14 @@
 
 **Revision:** 0.1 · **Date:** 2026-09-30 · **Status:** requirements baseline and proposed implementation plan; unresolved decisions explicitly listed.
 
+**Current scope amendment:** The owner subsequently selected a complete local
+appliance on a secondary system for v1. [ADR 0003](docs/adr/0003-local-appliance-scope.md)
+and the [approved plan](docs/plan.md) supersede this baseline's cloud,
+AWS/RunPod, remote-worker, Redis, and provider-billing requirements and tests.
+The original register below is retained for traceability; its R26, R29–R31,
+Q02, A01, A14, A17 and M5 text is no longer an active v1 gate where it
+requires those deferred capabilities.
+
 ## 1. Purpose and authority
 
 Build a self-hosted restreaming appliance for non-technical streamers. OBS sends one or two feeds to the appliance. The appliance validates, optionally transforms, and distributes those feeds to selected streaming platforms, with test previews, health monitoring, historical statistics, and cost visibility. Deploy the same product locally or in the cloud, with optional remote and dynamically provisioned media workers.

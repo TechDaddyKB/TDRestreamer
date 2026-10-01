@@ -1,11 +1,14 @@
 # Requirement and acceptance ledger
 
-Statuses record evidence, not intent. Pending entries remain v1 blockers.
+Statuses record evidence, not intent. Pending active entries remain v1
+blockers. [ADR 0003](adr/0003-local-appliance-scope.md) supersedes the cloud
+clauses in the original requirement register. Deferred entries are retained
+for traceability and are not v1 release gates.
 
 | ID | Requirement | Status | Implementation / tests / evidence |
 |---|---|---|---|
-| R01 | Multi-tenant design everywhere; local installs generally single-user, cloud may be multi-user | Partial | Tenant RLS and pooled isolation: internal/store, tests/integration/control_test.go; identity membership hardening pending |
-| R02 | Discord primary login, Google fallback; local authentication for LAN and initial cloud setup | Partial | Local bootstrap/login implemented; Discord/Google and recovery pending |
+| R01 | Multi-tenant design with a single visible local user by default and optional local collaboration | Partial | Tenant RLS and pooled isolation: internal/store, tests/integration/control_test.go; identity membership hardening pending |
+| R02 | Discord primary login, Google fallback; local authentication for LAN setup and recovery | Partial | Local bootstrap/login implemented; Discord/Google and recovery pending |
 | R03 | Admin, operator/mod, streamer, viewer/read-only roles | Partial | Permission engine and viewer denial tested; invitations/delegation UI pending |
 | R04 | Plain RTMP allowed on private LAN by default; no default public exposure | Partial | No production media ports published; actual LAN ingress policy pending |
 | R05 | Standard, dual-input, combined-canvas modes | Pending | Real OBS dual-audio feasibility passed; application standard/dual/canvas modes not integrated |
@@ -29,14 +32,14 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 | R23 | Notification priority: Discord webhook/DM, web, email | Pending | — |
 | R24 | Input and output metrics, drops, state, CPU/RAM/GPU/encoder usage, uptime, bandwidth | Pending | — |
 | R25 | Historical statistics | Pending | — |
-| R26 | Bandwidth accounting, connected provider costs where available, manual pricing fallback; popular providers in v1 | Partial | Tiered decimal egress math tested; resource attribution/providers/UI pending |
+| R26 | Local bandwidth accounting and optional manual pricing; connected provider billing deferred by ADR 0003 | Partial | Tiered decimal egress math tested; local media byte counters and UI pending |
 | R27 | Secrets write/replace, never reveal stored values | Partial | Scoped envelope encryption and write-only metadata integration tests; rotation/export workflows pending |
 | R28 | PostgreSQL everywhere | Implemented foundation | PostgreSQL Compose/migrations, pgx and sqlc queries; clean install tested |
-| R29 | Redis only in distributed/cloud-worker mode | Partial | Local deployment contains no Redis; distributed mode not implemented |
-| R30 | Cloud orchestration starts in v1 | Pending | — |
-| R31 | Remote workers in v1 | Pending | — |
+| R29 | Redis only in distributed/cloud-worker mode | Deferred by owner | Local deployment contains no Redis; distributed mode removed from v1 by ADR 0003 |
+| R30 | Cloud orchestration starts in v1 | Deferred by owner | AWS/RunPod and other provider orchestration removed from v1 by ADR 0003 |
+| R31 | Remote workers in v1 | Deferred by owner | A secondary system runs a complete local appliance; enrollment removed from v1 by ADR 0003 |
 | R32 | LAN discovery via mDNS and IP/hostname | Pending | — |
-| R33 | LAN HTTP sufficient; HTTPS elsewhere | Partial | Local authenticated HTTP implemented; public HTTPS/cloud preflight pending |
+| R33 | LAN HTTP sufficient; HTTPS elsewhere | Partial | Local authenticated HTTP implemented; public HTTPS configuration pending |
 | R34 | Optional bundled Caddy; external proxy including Nginx Proxy Manager | Pending | — |
 | R35 | Standard networking default, configurable host/bridge options | Partial | Compose bridge and loopback binding tested; optional host mode pending |
 | R36 | Most configuration in web UI/database | Partial | Input/destination/session configuration stored via UI/API; full settings pending |
@@ -57,7 +60,7 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 
 | Test | Acceptance condition | Requirements | Status / evidence |
 |---|---|---|---|
-| A01 | Fresh local and cloud installs run documented services; local mode has PostgreSQL and no Redis; distributed mode enables Redis | R28–35 | Partial: local Compose clean start/restart and no Redis; cloud/distributed pending |
+| A01 | Fresh local appliance installs and restarts run documented services with PostgreSQL and no Redis | R28, R32–35 | Partial: local Compose clean start/restart and no Redis; complete media application install pending |
 | A02 | Discord/Google identities link safely; local bootstrap cannot be replayed; revoked sessions fail; tenant B cannot access tenant A through API, preview, events, history, or jobs | R01–03 | Partial: bootstrap replay, logout, viewer denial and pooled RLS tests; OAuth/invitations/preview/jobs pending |
 | A03 | Stored credentials never appear in API reads, logs, errors, telemetry, or diagnostic exports; rotation and encrypted restore work | R27, R37 | Partial: encrypted storage, metadata reads, token hashes and scoped tamper tests; restore/rotation/log audit pending |
 | A04 | Standard/dual compatible feeds preserve encoded video without a video encoder; incompatible audio can be converted independently | R05, R10–12, R15 | Partial: local synthetic copy relay; application execution pending |
@@ -70,10 +73,10 @@ Statuses record evidence, not intent. Pending entries remain v1 blockers.
 | A11 | Manual mode waits; automatic mode follows saved policy; repeated start/stop requests do not duplicate outputs; Stop cancels retries durably | R20–21 | Partial: desired-state revision/idempotency/stop tests; real retry/execution pending |
 | A12 | Blackhole/disconnect one publisher; unaffected destinations continue without correlated stalls; retry rate is bounded; encoder failures identify all affected outputs | R21–22 | Partial: separate-process connection refusal spike; stalled-socket/encoder failure pending |
 | A13 | All required metrics appear with units/source; unavailable GPU metrics are explicit; counters survive aggregation/reset correctly; notification preferences and recovery dedup work | R22–25, R39 | Pending |
-| A14 | Cost fixtures cover tiered egress, allowances, worker startup/idle time, shared resources, GB/GiB, missing provider data, delayed reports, and no duplicate hop accounting | R26 | Partial: basic tiered decimal egress tests; full pricing/attribution fixtures pending |
+| A14 | Local bandwidth counters and optional manual prices use clear units and avoid counting a media hop twice | R26 | Partial: tiered decimal egress math tested; media counters and UI pending |
 | A15 | Every backend performs a real supported encode on documented hardware; GPU selection respects reservations; software fallback is explicit; insufficient resources fail clearly | R13–14, R43, R47 | Partial: pure capacity/fencing tests; hardware execution unverified |
 | A16 | Five concurrent logical sessions pass the ratified workload; no arbitrary five-session product quota; capacity advice matches observed limits | R43, R49 | Pending |
-| A17 | Kill worker/controller, partition Redis/control links, and lose provider responses: no competing fenced publishers, duplicate VMs, unbounded retries, or unreconciled owned resources | R29–31 | Pending |
+| A17 | Kill or restart the local worker/controller during a session: recovery creates no duplicate destination publishers, unbounded retries, or orphan processes | R21, R28 | Pending |
 | A18 | LAN/public binding and IPv6 checks prevent accidental public plain RTMP; Caddy and Nginx Proxy Manager recipes work; mDNS and direct addressing documented/tested | R04, R32–35 | Partial: loopback HTTP/private DB observed; media IPv6/proxy/discovery pending |
 | A19 | Backup restores on clean host with publishers disabled; interrupted update has a verified recovery procedure and records accurate status | R37–38 | Pending |
 | A20 | OpenAPI matches runtime; automation scopes enforced; Streamer.bot examples prepare/test/go-live/stop/query/react without public local-control exposure | R40–42 | Partial: REST reference and generated types; automation tokens/Streamer.bot pending |

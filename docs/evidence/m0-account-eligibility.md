@@ -1,5 +1,9 @@
 # M0 account eligibility preflight
 
+**Scope update:** The AWS observations below are historical. [ADR 0003](../adr/0003-local-appliance-scope.md)
+removed AWS/RunPod testing from M0 and v1; the platform account observations
+remain relevant to named-platform eligibility.
+
 Observed: 2026-09-30. This is a sanitized, manually compiled record of browser
 observations and read-only CLI results. It is not a media-delivery test report.
 
@@ -211,4 +215,5 @@ H/V viewer delivery, a VOD audio sample, and public horizontal live-audio
 identity on the negotiated Twitch ladder. The appliance copy-publisher remains unverified;
 see the [gate audit](m0-gates.md). The observations above remain the eligibility
 preflight at their recorded time. The owner has standing authorization for
-further broadcast testing, but provider provisioning is still unauthorized.
+further broadcast testing. Provider provisioning has since been removed from
+the plan by ADR 0003.
