@@ -113,7 +113,7 @@ response differs, record the difference and qualify it before sending media.
    mocked response meets Twitch's contract. A direct OBS test is only a reference
    control; the chosen appliance transport/publisher path must also pass.
 3. The owner authorized any additional broadcast testing necessary for this
-   goal after the first two attempts. The seven appliance
+   goal after the first two attempts. The eight appliance
    [bounded attempts](m0-twitch-live-attempts.md) failed at external ingest
    after locally qualifying BPM-aware startup, aligned 0 ms first output IDRs,
    SEI merging into those IDRs, and enhanced primary H.264 tags. A later

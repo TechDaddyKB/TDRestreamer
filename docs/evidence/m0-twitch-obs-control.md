@@ -47,6 +47,6 @@ audio tracks before Twitch delivery.
 
 The direct OBS control establishes that this TechDaddy channel and the
 negotiated ladder can deliver H/V video. It does **not** qualify the appliance
-copy-publisher: seven RTMPS attempts have not reached Helix live.
+copy-publisher: eight RTMPS attempts have not reached Helix live.
 The publisher's wire-format or timing difference from OBS remains the next
 diagnostic target. The M0 Twitch gate and milestone remain open.
